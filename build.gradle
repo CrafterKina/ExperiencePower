@@ -1,0 +1,12 @@
+//build.gradle(sub project)
+sourceSets.main {
+    java.srcDirs project.projectDir.name
+    resources.srcDirs project.projectDir.name
+}
+
+version = "1.0.0"
+minecraft {
+    // replacing stuff in the source
+    replace '@VERSION@', project.version
+    replace '@MC_VERSION@', version
+}

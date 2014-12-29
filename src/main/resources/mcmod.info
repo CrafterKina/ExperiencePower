@@ -1,0 +1,16 @@
+[
+{
+  "modid": "kina_ExperiencePower",
+  "name": "Experience Power",
+  "description": "Now Experience is Power.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["CrafterKina"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
