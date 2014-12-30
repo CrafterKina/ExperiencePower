@@ -4,15 +4,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 
 public class ContainerMachineBase extends Container{
     public TileEntityMachineBase machineBase;
 
-    public ContainerMachineBase(World world, IInventory inventory, BlockPos pos){
-        machineBase = (TileEntityMachineBase) world.getTileEntity(pos);
-        machineBase.initContainer(this);
+    public ContainerMachineBase(IInventory inventory, TileEntityMachineBase machineBase){
+        this.machineBase = machineBase;
+        this.machineBase.initContainer(this);
         int i;
         int j;
         for(i = 0; i < 3; ++i){

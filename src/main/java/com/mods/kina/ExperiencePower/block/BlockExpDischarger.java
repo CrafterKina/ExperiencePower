@@ -2,6 +2,7 @@ package com.mods.kina.ExperiencePower.block;
 
 import com.mods.kina.ExperiencePower.ExperiencePowerCore;
 import com.mods.kina.ExperiencePower.base.BlockMachineBase;
+import com.mods.kina.ExperiencePower.base.IReceiveEnergy;
 import com.mods.kina.ExperiencePower.collection.EnumEPGui;
 import com.mods.kina.ExperiencePower.tileentity.TileEntityExpDischarger;
 import net.minecraft.block.material.Material;
@@ -16,7 +17,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 /**
  経験をくれるいいやつ
  */
-public class BlockExpDischarger extends BlockMachineBase{
+public class BlockExpDischarger extends BlockMachineBase implements IReceiveEnergy{
     public BlockExpDischarger(){
         super(Material.rock);
         setUnlocalizedName("exp_discharger");

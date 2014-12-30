@@ -2,6 +2,7 @@ package com.mods.kina.ExperiencePower.block;
 
 import com.mods.kina.ExperiencePower.ExperiencePowerCore;
 import com.mods.kina.ExperiencePower.base.BlockMachineBase;
+import com.mods.kina.ExperiencePower.base.ISendEnergy;
 import com.mods.kina.ExperiencePower.collection.EnumEPGui;
 import com.mods.kina.ExperiencePower.tileentity.TileEntityExpAbsorber;
 import net.minecraft.block.material.Material;
@@ -16,7 +17,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 /**
  経験を吸いとる怖いやつ
  */
-public class BlockExpAbsorber extends BlockMachineBase{
+public class BlockExpAbsorber extends BlockMachineBase implements ISendEnergy{
     public BlockExpAbsorber(){
         super(Material.rock);
         setUnlocalizedName("exp_absorber");
