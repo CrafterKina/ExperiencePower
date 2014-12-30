@@ -1,17 +1,17 @@
 package com.mods.kina.ExperiencePower.base;
 
 import com.mods.kina.KinaCore.toExtends.IInventoryImpl;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.util.IChatComponent;
 
-public abstract class TileEntityEPBase extends IInventoryImpl implements IInventory{
-    /**
-     ここでコンテナー内のアイテムを全部空にする処理を詰め込むっぽい。
-     */
-    public abstract void clear();
+public abstract class TileEntityEPBase extends IInventoryImpl{
 
-    /**
-     ローカライズ後の名前。
-     */
-    public abstract IChatComponent getDisplayName();
+    public TileEntityEPBase(String title, boolean hasCustomName, int slotsCount){
+        super(title, hasCustomName, slotsCount);
+    }
+
+    public TileEntityEPBase(IChatComponent title, int slotsCount){
+        super(title, slotsCount);
+    }
+
+    //public TileEntityEPBase(){}
 }

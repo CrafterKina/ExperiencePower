@@ -1,47 +1,46 @@
 package com.mods.kina.ExperiencePower.tileentity;
 
+import com.mods.kina.ExperiencePower.base.ContainerMachineBase;
 import com.mods.kina.ExperiencePower.base.TileEntityMachineBase;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.inventory.Slot;
+import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IChatComponent;
 
-import java.util.List;
+public class TileEntityExpAbsorber extends TileEntityMachineBase implements IUpdatePlayerListBox{
 
-public class TileEntityExpAbsorber extends TileEntityMachineBase{
+    public TileEntityExpAbsorber(){
+        super("exp_absorber", false, 1);
+    }
 
-    /*
-    空エンチャ本に詰めるためのスロット。
+    /**
+     Updates the JList with a new model.
      */
-    private ItemStack[] itemStacks=new ItemStack[2];
-
+    public void update(){
+        EntityPlayer player = getOnPlayer();
+        if(player != null && player.isSneaking() && getStackInSlot(0).getItemDamage() < getStackInSlot(0).getMaxDamage()){
+            player.removeExperienceLevel(1);
+            getStackInSlot(0).setItemDamage(getStackInSlot(0).getItemDamage() + 1);
+        }
+    }
 
     @SuppressWarnings("unchecked")
-    protected List<EntityPlayer> getOnPlayers() {
+    protected EntityPlayer getOnPlayer(){
         AxisAlignedBB aabb = new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 2, pos.getZ() + 1);
-        return worldObj.getEntitiesWithinAABB(EntityPlayer.class, aabb);
+        return !worldObj.getEntitiesWithinAABB(EntityPlayer.class, aabb).isEmpty() ? (EntityPlayer) worldObj.getEntitiesWithinAABB(EntityPlayer.class, aabb).get(0) : null;
     }
 
     @SuppressWarnings("unchecked")
-    protected List<EntityXPOrb> getOnXPOrbs() {
+    protected EntityXPOrb getOnXPOrb(){
         AxisAlignedBB aabb = new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1.3, pos.getZ() + 1);
-        return worldObj.getEntitiesWithinAABB(EntityXPOrb.class, aabb);
-    }
-
-    /*IInventory*/
-
-    /**
-     ここでコンテナー内のアイテムを全部空にする処理を詰め込むっぽい。
-     */
-    public void clear(){
-
+        return (EntityXPOrb) worldObj.getEntitiesWithinAABB(EntityXPOrb.class, aabb).get(0);
     }
 
     /**
-     ローカライズ後の名前。
+     Containerにスロットを追加したりする。 やろうと思えばなんでもできるが多分スロット追加だけ。
      */
-    public IChatComponent getDisplayName(){
-        return null;
+    public void initContainer(ContainerMachineBase container){
+        container.addSlotToContainer(new Slot(this, 0, 98, 53));
     }
 }

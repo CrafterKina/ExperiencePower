@@ -14,6 +14,7 @@ public class ItemExpSealableBook extends Item{
     public ItemExpSealableBook(){
         setUnlocalizedName("book_sealable");
         setCreativeTab(EnumEPCreativeTab.ITEM.getCreativeTab());
+        setMaxDamage(Short.MAX_VALUE);
     }
 
     //経験値が入っていれば光る

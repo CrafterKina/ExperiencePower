@@ -1,17 +1,24 @@
 package com.mods.kina.ExperiencePower.collection;
 
+import com.mods.kina.ExperiencePower.base.ContainerMachineBase;
+import com.mods.kina.ExperiencePower.base.GuiMachineBase;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.inventory.Container;
 
 public enum EnumEPGui{
-    ;
+    ExperienceAbsorber,
+    ExperienceDischarger,;
 
-    private Container container;
-    private Gui gui;
+    private Class<? extends Container> container;
+    private Class<? extends Gui> gui;
 
-    EnumEPGui(Container container, Gui gui){
+    EnumEPGui(Class<? extends Container> container, Class<? extends Gui> gui){
         this.container = container;
         this.gui = gui;
+    }
+
+    EnumEPGui(){
+        this(ContainerMachineBase.class, GuiMachineBase.class);
     }
 
     public static EnumEPGui getGuiContainer(int id){
@@ -20,11 +27,11 @@ public enum EnumEPGui{
         else return epGui[id];
     }
 
-    public Container getContainer(){
+    public Class<? extends Container> getContainer(){
         return container;
     }
 
-    public Gui getGui(){
+    public Class<? extends Gui> getGui(){
         return gui;
     }
 }

@@ -40,8 +40,6 @@ public class ExperiencePowerCore{
         FMLCommonHandler.instance().bus().register(EventHandler.fml);
         BlockRegistrar.registerBlock();
         ItemRegistrar.registerItem();
-        BlockRegistrar.registerModel();
-        ItemRegistrar.registerModel();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
     }
 
@@ -50,6 +48,8 @@ public class ExperiencePowerCore{
      */
     @Mod.EventHandler
     public void init(FMLInitializationEvent e){
+        BlockRegistrar.registerModel();
+        ItemRegistrar.registerModel();
     }
 
     /**
