@@ -13,6 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockBlowFan extends BlockEPContainerBase{
     public static final PropertyDirection FACING = PropertyDirection.create("facing");
@@ -21,6 +22,7 @@ public class BlockBlowFan extends BlockEPContainerBase{
         super(Material.rock);
         setUnlocalizedName("blow_fan");
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
+        GameRegistry.registerTileEntity(TileEntityBlowFan.class, "TileEntityBlowFan");
     }
 
     /**

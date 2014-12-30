@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 /**
  根幹クラス。大したことはしないはず。
@@ -38,8 +39,10 @@ public class ExperiencePowerCore{
         MinecraftForge.ORE_GEN_BUS.register(EventHandler.oreGen);
         FMLCommonHandler.instance().bus().register(EventHandler.fml);
         BlockRegistrar.registerBlock();
-        BlockRegistrar.registerTileEntity();
         ItemRegistrar.registerItem();
+        BlockRegistrar.registerModel();
+        ItemRegistrar.registerModel();
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
     }
 
     /**
@@ -47,8 +50,6 @@ public class ExperiencePowerCore{
      */
     @Mod.EventHandler
     public void init(FMLInitializationEvent e){
-        BlockRegistrar.registerModel();
-        ItemRegistrar.registerModel();
     }
 
     /**
@@ -56,7 +57,6 @@ public class ExperiencePowerCore{
      */
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent e){
-
     }
 
 }

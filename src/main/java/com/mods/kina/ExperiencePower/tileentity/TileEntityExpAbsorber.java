@@ -10,21 +10,22 @@ import net.minecraft.util.IChatComponent;
 import java.util.List;
 
 public class TileEntityExpAbsorber extends TileEntityMachineBase{
+
     /*
-    空エンチャ本に詰めたり出したりするためのスロット。
+    空エンチャ本に詰めるためのスロット。
      */
     private ItemStack[] itemStacks=new ItemStack[2];
 
 
     @SuppressWarnings("unchecked")
     protected List<EntityPlayer> getOnPlayers() {
-        AxisAlignedBB aabb = new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1);
+        AxisAlignedBB aabb = new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 2, pos.getZ() + 1);
         return worldObj.getEntitiesWithinAABB(EntityPlayer.class, aabb);
     }
 
     @SuppressWarnings("unchecked")
     protected List<EntityXPOrb> getOnXPOrbs() {
-        AxisAlignedBB aabb = new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 0.3, pos.getZ() + 1);
+        AxisAlignedBB aabb = new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1.3, pos.getZ() + 1);
         return worldObj.getEntitiesWithinAABB(EntityXPOrb.class, aabb);
     }
 

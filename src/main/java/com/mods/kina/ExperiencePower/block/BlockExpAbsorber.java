@@ -5,6 +5,7 @@ import com.mods.kina.ExperiencePower.tileentity.TileEntityExpAbsorber;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  経験を吸いとる怖いやつ
@@ -13,6 +14,7 @@ public class BlockExpAbsorber extends BlockMachineBase{
     public BlockExpAbsorber(){
         super(Material.rock);
         setUnlocalizedName("exp_absorber");
+        GameRegistry.registerTileEntity(TileEntityExpAbsorber.class, "TileEntityExpAbsorber");
     }
 
     /**

@@ -5,3 +5,4 @@ item.book_sealable.name=経験の書
 
 #BLOCK
 tile.exp_absorber.name=経験吸引機
+tile.blow_fan.name=送風機
