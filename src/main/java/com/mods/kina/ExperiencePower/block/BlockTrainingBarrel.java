@@ -21,7 +21,6 @@ public class BlockTrainingBarrel extends Block implements ISendEnergy{
         setHardness(1.5f);
     }
 
-    @Override
     public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn){
         EnumFacing[] connectingFacings = getConnectingFacings(worldIn, pos);
         if(connectingFacings.length > 0){
