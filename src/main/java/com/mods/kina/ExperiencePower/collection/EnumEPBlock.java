@@ -1,9 +1,6 @@
 package com.mods.kina.ExperiencePower.collection;
 
-import com.mods.kina.ExperiencePower.block.BlockBlowFan;
-import com.mods.kina.ExperiencePower.block.BlockExpAbsorber;
-import com.mods.kina.ExperiencePower.block.BlockExpDischarger;
-import com.mods.kina.ExperiencePower.block.BlockTrainingBarrel;
+import com.mods.kina.ExperiencePower.block.*;
 import net.minecraft.block.Block;
 
 /**
@@ -14,7 +11,8 @@ public enum EnumEPBlock{
     ExperienceAbsorber(new BlockExpAbsorber()),
     ExperienceDischarger(new BlockExpDischarger()),
     BlowFan(new BlockBlowFan()),
-    TrainingBarrel(new BlockTrainingBarrel()),;
+    TrainingBarrel(new BlockTrainingBarrel()),
+    ExperienceCrop(new BlockExpWheat()),;
 
     private Block block;
 
