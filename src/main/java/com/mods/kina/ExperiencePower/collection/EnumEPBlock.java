@@ -12,7 +12,8 @@ public enum EnumEPBlock{
     ExperienceDischarger(new BlockExpDischarger()),
     BlowFan(new BlockBlowFan()),
     TrainingBarrel(new BlockTrainingBarrel()),
-    ExperienceCrop(new BlockExpWheat()),;
+    ExperienceCrop(new BlockExpWheat()),
+    ExperienceFurnace(new BlockExpFurnace());
 
     private Block block;
 

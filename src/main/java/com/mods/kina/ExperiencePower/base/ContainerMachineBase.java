@@ -7,9 +7,11 @@ import net.minecraft.inventory.Slot;
 
 public class ContainerMachineBase extends Container{
     public TileEntityMachineBase machineBase;
+    public IInventory playerInventory;
 
     public ContainerMachineBase(IInventory inventory, TileEntityMachineBase machineBase){
         this.machineBase = machineBase;
+        this.playerInventory = inventory;
         this.machineBase.initContainer(this);
         int i;
         int j;

@@ -1,10 +1,10 @@
 package com.mods.kina.ExperiencePower.block;
 
 import com.mods.kina.ExperiencePower.base.BlockMachineBase;
+import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
 import com.mods.kina.ExperiencePower.tileentity.TileEntityExpFurnace;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
@@ -20,6 +20,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -32,6 +33,9 @@ public class BlockExpFurnace extends BlockMachineBase{
 
     public BlockExpFurnace(){
         super(Material.rock);
+        setUnlocalizedName("exp_furnace");
+        setCreativeTab(EnumEPCreativeTab.BLOCK.getCreativeTab());
+        GameRegistry.registerTileEntity(TileEntityExpFurnace.class, "TileEntityExpFurnace");
     }
 
     protected BlockExpFurnace(boolean p_i45407_1_){
@@ -109,20 +113,20 @@ public class BlockExpFurnace extends BlockMachineBase{
 
             switch(SwitchEnumFacing.field_180356_a[enumfacing.ordinal()]){
                 case 1:
-                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 - d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
-                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 - d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
+                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 - d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D);
+                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 - d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D);
                     break;
                 case 2:
-                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
-                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
+                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D);
+                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D);
                     break;
                 case 3:
-                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1, d2 - d3, 0.0D, 0.0D, 0.0D, new int[0]);
-                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d4, d1, d2 - d3, 0.0D, 0.0D, 0.0D, new int[0]);
+                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1, d2 - d3, 0.0D, 0.0D, 0.0D);
+                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d4, d1, d2 - d3, 0.0D, 0.0D, 0.0D);
                     break;
                 case 4:
-                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1, d2 + d3, 0.0D, 0.0D, 0.0D, new int[0]);
-                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d4, d1, d2 + d3, 0.0D, 0.0D, 0.0D, new int[0]);
+                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1, d2 + d3, 0.0D, 0.0D, 0.0D);
+                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d4, d1, d2 + d3, 0.0D, 0.0D, 0.0D);
             }
         }
     }
@@ -218,7 +222,7 @@ public class BlockExpFurnace extends BlockMachineBase{
     }
 
     protected BlockState createBlockState(){
-        return new BlockState(this, new IProperty[]{FACING});
+        return new BlockState(this, FACING);
     }
 
     @SideOnly(Side.CLIENT)
@@ -231,25 +235,21 @@ public class BlockExpFurnace extends BlockMachineBase{
             try{
                 field_180356_a[EnumFacing.WEST.ordinal()] = 1;
             } catch(NoSuchFieldError var4){
-                ;
             }
 
             try{
                 field_180356_a[EnumFacing.EAST.ordinal()] = 2;
             } catch(NoSuchFieldError var3){
-                ;
             }
 
             try{
                 field_180356_a[EnumFacing.NORTH.ordinal()] = 3;
             } catch(NoSuchFieldError var2){
-                ;
             }
 
             try{
                 field_180356_a[EnumFacing.SOUTH.ordinal()] = 4;
             } catch(NoSuchFieldError var1){
-                ;
             }
         }
     }
