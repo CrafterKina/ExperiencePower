@@ -1,0 +1,18 @@
+{
+  "parent": "kina_experiencepower:block/blockcolored",
+  "textures": {
+    "particle": "#all",
+    "down": "#all",
+    "top": "#all",
+    "north": "#all",
+    "east": "#all",
+    "south": "#all",
+    "west": "#all",
+    "overlaydown": "#overlayall",
+    "overlaytop": "#overlayall",
+    "overlaynorth": "#overlayall",
+    "overlayeast": "#overlayall",
+    "overlaysouth": "#overlayall",
+    "overlaywest": "#overlayall"
+  }
+}

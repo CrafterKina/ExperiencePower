@@ -1,6 +1,7 @@
 package com.mods.kina.ExperiencePower.collection;
 
 import com.mods.kina.ExperiencePower.block.*;
+import com.mods.kina.ExperiencePower.item.ItemOre;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 
@@ -14,32 +15,36 @@ public enum EnumEPBlock{
     BlowFan(new BlockBlowFan()),
     TrainingBarrel(new BlockTrainingBarrel()),
     ExperienceCrop(new BlockExpWheat()),
-    ExperienceFurnace(new BlockExpFurnace());
+    ExperienceFurnace(new BlockExpFurnace()),
+    OreCopper(new BlockOre(), ItemOre.class, "kina_experiencepower:copper", "kina_experiencepower:tin", "kina_experiencepower:silver", "kina_experiencepower:wise");
 
     private Class<? extends ItemBlock> itemBlock;
     private Block block;
     private int modelCount;
+    private Object[] itemConstructorsArgs;
     private String[] modelNames;
 
     EnumEPBlock(Block block){
-        this.block=block;
-        itemBlock = ItemBlock.class;
-        modelCount = 1;
+        this(block, ItemBlock.class);
     }
 
     EnumEPBlock(Block block, Class<? extends ItemBlock> itemBlock){
-        this(block);
-        this.itemBlock = itemBlock;
+        this(block, itemBlock, 1);
     }
 
     EnumEPBlock(Block block, Class<? extends ItemBlock> itemBlock, int modelCount){
-        this(block, itemBlock);
+        this(block, itemBlock, modelCount, new Object[0]);
+    }
+
+    EnumEPBlock(Block block, Class<? extends ItemBlock> itemBlock, int modelCount, Object... itemCtorArgs){
+        this.block = block;
+        this.itemBlock = itemBlock;
         this.modelCount = modelCount;
+        itemConstructorsArgs = itemCtorArgs;
     }
 
     EnumEPBlock(Block block, Class<? extends ItemBlock> itemBlock, String... modelNames){
-        this(block, itemBlock);
-        modelCount = modelNames.length;
+        this(block, itemBlock, modelNames.length);
         this.modelNames = modelNames;
     }
 
@@ -61,5 +66,9 @@ public enum EnumEPBlock{
 
     public String[] getModelNames(){
         return modelNames;
+    }
+
+    public Object[] getItemConstructorsArgs(){
+        return itemConstructorsArgs;
     }
 }

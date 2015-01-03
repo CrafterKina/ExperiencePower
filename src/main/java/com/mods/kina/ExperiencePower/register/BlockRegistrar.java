@@ -14,7 +14,7 @@ public class BlockRegistrar{
 
     public static void registerBlock(){
         for(EnumEPBlock epBlock:EnumEPBlock.values()){
-            GameRegistry.registerBlock(epBlock.getBlock(), epBlock.getItemBlock(), epBlock.getBlockName());
+            GameRegistry.registerBlock(epBlock.getBlock(), epBlock.getItemBlock(), epBlock.getBlockName(), epBlock.getItemConstructorsArgs());
         }
     }
 
@@ -24,7 +24,7 @@ public class BlockRegistrar{
             if(epBlock.getModelCount() == 1){
                 Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(epBlock.getBlock()), 0, new ModelResourceLocation(StaticFieldCollection.MODID + ":" + epBlock.getBlockName(), "inventory"));
             }else{
-                if(epBlock.getModelNames().length > 0){
+                if(epBlock.getModelNames() != null && epBlock.getModelNames().length > 0){
                     ModelBakery.addVariantName(Item.getItemFromBlock(epBlock.getBlock()), epBlock.getModelNames());
                     for(int i = 0; i < epBlock.getModelCount(); i++){
                         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(epBlock.getBlock()), i, new ModelResourceLocation(epBlock.getModelNames()[i], "inventory"));

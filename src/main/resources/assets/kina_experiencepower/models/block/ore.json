@@ -1,0 +1,7 @@
+{
+  "parent": "kina_experiencepower:block/blockcolored_all",
+  "textures": {
+    "all": "blocks/stone",
+    "overlayall": "kina_experiencepower:blocks/ore"
+  }
+}
