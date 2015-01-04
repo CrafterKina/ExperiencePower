@@ -99,6 +99,17 @@ public class BlockOre extends Block{
         }
     }
 
+    /**
+     Called when a user uses the creative pick block button on this block
+
+     @param target
+     The full target the player is looking at
+     @return A ItemStack to add to the player's inventory, Null if nothing should be added.
+     */
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos){
+        return new ItemStack(Item.getItemFromBlock(this), 1, ((OreType) world.getBlockState(pos).getValue(TYPE)).ordinal());
+    }
+
     public int getExpDrop(IBlockAccess world, BlockPos pos, int fortune){
         IBlockState state = world.getBlockState(pos);
         Random rand = world instanceof World ? ((World) world).rand : new Random();
