@@ -71,13 +71,13 @@ public class BlockOre extends Block{
     public int getRenderColor(IBlockState state){
         switch((OreType) state.getValue(TYPE)){
             case COPPER:
-                return 0x994C00;
+                return 0x946000;
             case TIN:
-                return 0xACDBDA;
+                return 0xD8F2F2;
             case SILVER:
-                return 0xEAE8F2;
+                return 0xACDBDA;
             case WISE:
-                return 0x7cfc00;
+                return 0x49B800;
             default:
                 return 0xffffff;
         }
@@ -85,18 +85,7 @@ public class BlockOre extends Block{
 
     @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass){
-        switch((OreType) worldIn.getBlockState(pos).getValue(TYPE)){
-            case COPPER:
-                return 0x994C00;
-            case TIN:
-                return 0xACDBDA;
-            case SILVER:
-                return 0xEAE8F2;
-            case WISE:
-                return 0x7cfc00;
-            default:
-                return 0xffffff;
-        }
+        return getRenderColor(worldIn.getBlockState(pos));
     }
 
     /**
