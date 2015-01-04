@@ -16,7 +16,7 @@ public enum EnumEPBlock{
     TrainingBarrel(new BlockTrainingBarrel()),
     ExperienceCrop(new BlockExpWheat()),
     ExperienceFurnace(new BlockExpFurnace()),
-    Ore(new BlockOre(), ItemOre.class, "kina_experiencepower:copper", "kina_experiencepower:tin", "kina_experiencepower:silver", "kina_experiencepower:wise");
+    Ore(new BlockOre(), ItemOre.class, "kina_experiencepower:ore", "kina_experiencepower:ore", "kina_experiencepower:ore", "kina_experiencepower:ore");
 
     private Class<? extends ItemBlock> itemBlock;
     private Block block;

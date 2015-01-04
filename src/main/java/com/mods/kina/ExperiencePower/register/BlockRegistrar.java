@@ -21,7 +21,7 @@ public class BlockRegistrar{
     @SideOnly(Side.CLIENT)
     public static void registerModel(){
         for(EnumEPBlock epBlock:EnumEPBlock.values()){
-            if(epBlock.getModelCount() == 1){
+            if(epBlock.getModelCount() == 1 && epBlock.getModelNames() == null){
                 Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(epBlock.getBlock()), 0, new ModelResourceLocation(StaticFieldCollection.MODID + ":" + epBlock.getBlockName(), "inventory"));
             }else{
                 if(epBlock.getModelNames() != null && epBlock.getModelNames().length > 0){

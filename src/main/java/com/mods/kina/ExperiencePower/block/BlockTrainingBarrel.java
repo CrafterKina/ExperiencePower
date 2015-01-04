@@ -5,6 +5,7 @@ import com.mods.kina.ExperiencePower.base.ISendEnergy;
 import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.BlockPos;
@@ -22,13 +23,14 @@ public class BlockTrainingBarrel extends Block implements ISendEnergy{
     }
 
     public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn){
-        EnumFacing[] connectingFacings = getConnectingFacings(worldIn, pos);
+        /*EnumFacing[] connectingFacings = getConnectingFacings(worldIn, pos);
         if(connectingFacings.length > 0){
             for(EnumFacing facing : connectingFacings){
                 BlockConduitBase.addContents(worldIn.getBlockState(pos.offset(facing)), worldIn.rand.nextInt(100));
             }
-        }else if(playerIn.getCurrentEquippedItem().getItem() instanceof ItemSword)
-            playerIn.addExperience((int) (Math.random() + 0.1));
+        }else */
+        if(playerIn.getCurrentEquippedItem().getItem() instanceof ItemSword)
+            worldIn.spawnEntityInWorld(new EntityXPOrb(worldIn, pos.getX(), pos.getY(), pos.getZ(), worldIn.rand.nextInt(20) == 0 ? 1 : 0));
     }
 
     private EnumFacing[] getConnectingFacings(World world, BlockPos pos){
