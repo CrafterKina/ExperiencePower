@@ -2,7 +2,15 @@
 
 #ITEM
 item.book_sealable.name=経験の書
+item.ingot_copper.name=銅インゴット
+item.ingot_tin.name=錫インゴット
+item.ingot_silver.name=銀インゴット
+item.ingot_wise.name=集知インゴット
 
 #BLOCK
 tile.exp_absorber.name=経験吸引機
 tile.blow_fan.name=送風機
+tile.ore_copper.name=銅鉱石
+tile.ore_tin.name=錫鉱石
+tile.ore_silver.name=銀鉱石
+tile.ore_wise.name=知染石

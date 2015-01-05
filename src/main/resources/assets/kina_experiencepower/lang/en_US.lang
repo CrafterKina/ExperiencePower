@@ -2,7 +2,15 @@
 
 #ITEM
 item.book_sealable.name=Book of Experience
+item.ingot_copper.name=Copper Ingot
+item.ingot_tin.name=Tin Ingot
+item.ingot_silver.name=Silver Ingot
+item.ingot_wise.name=Experientium Ingot
 
 #BLOCK
 tile.exp_absorber.name=Experience Absorber
 tile.blow_fan.name=Blow Fan
+tile.ore_copper.name=Copper Ore
+tile.ore_tin.name=Tin Ore
+tile.ore_silver.name=Silver Ore
+tile.ore_wise.name=Experientite

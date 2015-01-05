@@ -4,7 +4,9 @@ import com.mods.kina.ExperiencePower.collection.StaticFieldCollection;
 import com.mods.kina.ExperiencePower.event.handler.EventHandler;
 import com.mods.kina.ExperiencePower.proxy.CommonProxy;
 import com.mods.kina.ExperiencePower.register.BlockRegistrar;
+import com.mods.kina.ExperiencePower.register.CraftRecipeRegistrar;
 import com.mods.kina.ExperiencePower.register.ItemRegistrar;
+import com.mods.kina.ExperiencePower.register.SmeltRecipeRegistrar;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -40,6 +42,8 @@ public class ExperiencePowerCore{
         FMLCommonHandler.instance().bus().register(EventHandler.fml);
         BlockRegistrar.registerBlock();
         ItemRegistrar.registerItem();
+        SmeltRecipeRegistrar.registerRecipes();
+        CraftRecipeRegistrar.registerRecipes();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
     }
 
