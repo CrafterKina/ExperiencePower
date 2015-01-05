@@ -6,6 +6,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.particle.EntityDiggingFX;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -26,6 +27,15 @@ public class BlockOre extends Block{
         setUnlocalizedName("ore");
         setDefaultState(blockState.getBaseState().withProperty(TYPE, OreType.COPPER));
         setCreativeTab(EnumEPCreativeTab.BLOCK.getCreativeTab());
+    }
+
+    /**
+     StackTraceElementを使ってパーティクル生成時にメソッドが呼ばれているかチェック
+     */
+    public static boolean checkStackRoot(){
+        StackTraceElement[] es = new Exception().getStackTrace();
+        String particle = EntityDiggingFX.class.getCanonicalName()/*"net.minecraft.client.particle.EntityDiggingFX"*/;
+        return es[2].getClassName().equals(particle) || es[4].getClassName().equals(particle);
     }
 
     /**
@@ -62,13 +72,20 @@ public class BlockOre extends Block{
         }
     }
 
+    /**
+     特に変えない
+     */
     @SideOnly(Side.CLIENT)
     public int getBlockColor(){
         return 0xffffff;
     }
 
+    /**
+     BlockStateで色を変えている。 パーティクルは論外
+     */
     @SideOnly(Side.CLIENT)
     public int getRenderColor(IBlockState state){
+        if(checkStackRoot()) return 0xffffff;
         switch((OreType) state.getValue(TYPE)){
             case COPPER:
                 return 0x946000;
@@ -83,6 +100,10 @@ public class BlockOre extends Block{
         }
     }
 
+    /**
+     RenderPassを利用しないのでgetRenderColorと同じで良い
+     @see #getRenderColor
+     */
     @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass){
         return getRenderColor(worldIn.getBlockState(pos));
