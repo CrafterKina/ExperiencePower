@@ -14,7 +14,7 @@ public class SlotFiltered extends Slot{
 
     public boolean isItemValid(ItemStack stack){
         for(ItemStack filter : filterItems){
-            if(stack.isItemEqual(filter)) return true;
+            if(stack.getItem().equals(filter.getItem())) return true;
         }
         return false;
     }

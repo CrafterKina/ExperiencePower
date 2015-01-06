@@ -2,7 +2,6 @@ package com.mods.kina.ExperiencePower.gui;
 
 import com.mods.kina.ExperiencePower.base.ContainerMachineBase;
 import com.mods.kina.ExperiencePower.base.GuiMachineBase;
-import com.mods.kina.ExperiencePower.collection.StaticFieldCollection;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
@@ -10,7 +9,7 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiExpFurnace extends GuiMachineBase{
-    private static final ResourceLocation furnaceGuiTextures = new ResourceLocation(StaticFieldCollection.MODID, "textures/gui/container/furnace.png");
+    private static final ResourceLocation furnaceGuiTextures = new ResourceLocation(/*StaticFieldCollection.MODID, */"textures/gui/container/furnace.png");
     private final InventoryPlayer field_175383_v;
     private IInventory tileFurnace;
 

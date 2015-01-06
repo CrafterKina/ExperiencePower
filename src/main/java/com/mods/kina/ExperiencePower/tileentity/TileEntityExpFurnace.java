@@ -2,7 +2,6 @@ package com.mods.kina.ExperiencePower.tileentity;
 
 import com.mods.kina.ExperiencePower.base.ContainerMachineBase;
 import com.mods.kina.ExperiencePower.base.TileEntityMachineBase;
-import net.minecraft.block.BlockFurnace;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
@@ -19,8 +18,8 @@ public class TileEntityExpFurnace extends TileEntityMachineBase implements ISide
     private static final int[] slotsSides = new int[]{1};
     /** The number of ticks that the furnace will keep burning */
     private int furnaceBurnTime;
-    private int field_174906_k;
-    private int field_174905_l;
+    private int cookTime;
+    private int totalCookTime;
 
     public TileEntityExpFurnace(){
         super("exp_furnace", false, 3);
@@ -29,15 +28,15 @@ public class TileEntityExpFurnace extends TileEntityMachineBase implements ISide
     public void readFromNBT(NBTTagCompound compound){
         super.readFromNBT(compound);
         this.furnaceBurnTime = compound.getShort("BurnTime");
-        this.field_174906_k = compound.getShort("CookTime");
-        this.field_174905_l = compound.getShort("CookTimeTotal");
+        this.cookTime = compound.getShort("CookTime");
+        this.totalCookTime = compound.getShort("CookTimeTotal");
     }
 
     public void writeToNBT(NBTTagCompound compound){
         super.writeToNBT(compound);
         compound.setShort("BurnTime", (short) this.furnaceBurnTime);
-        compound.setShort("CookTime", (short) this.field_174906_k);
-        compound.setShort("CookTimeTotal", (short) this.field_174905_l);
+        compound.setShort("CookTime", (short) this.cookTime);
+        compound.setShort("CookTimeTotal", (short) this.totalCookTime);
     }
 
     /**
@@ -141,8 +140,8 @@ public class TileEntityExpFurnace extends TileEntityMachineBase implements ISide
 
         if(!this.worldObj.isRemote){
             if(!this.isBurning() && (getStackInSlot(1) == null || getStackInSlot(0) == null)){
-                if(!this.isBurning() && this.field_174906_k > 0){
-                    this.field_174906_k = MathHelper.clamp_int(this.field_174906_k - 2, 0, this.field_174905_l);
+                if(!this.isBurning() && this.cookTime > 0){
+                    this.cookTime = MathHelper.clamp_int(this.cookTime - 2, 0, this.totalCookTime);
                 }
             }else{
                 if(!this.isBurning() && this.canSmelt()){
@@ -162,22 +161,22 @@ public class TileEntityExpFurnace extends TileEntityMachineBase implements ISide
                 }
 
                 if(this.isBurning() && this.canSmelt()){
-                    ++this.field_174906_k;
+                    ++this.cookTime;
 
-                    if(this.field_174906_k == this.field_174905_l){
-                        this.field_174906_k = 0;
-                        this.field_174905_l = 200;
+                    if(this.cookTime == this.totalCookTime){
+                        this.cookTime = 0;
+                        this.totalCookTime = 200;
                         this.smeltItem();
                         flag1 = true;
                     }
                 }else{
-                    this.field_174906_k = 0;
+                    this.cookTime = 0;
                 }
             }
 
             if(flag != this.isBurning()){
                 flag1 = true;
-                BlockFurnace.func_176446_a(this.isBurning(), this.worldObj, this.pos);
+                //BlockFurnace.func_176446_a(this.isBurning(), this.worldObj, this.pos);
             }
         }
 

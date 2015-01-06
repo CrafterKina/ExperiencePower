@@ -12,7 +12,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnaceOutput;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -100,7 +99,7 @@ public class ContainerExpFurnace extends ContainerMachineBase{
                     if(!this.mergeItemStack(itemstack1, 0, 1, false)){
                         return null;
                     }
-                }else if(TileEntityFurnace.isItemFuel(itemstack1)){
+                }else if(EnumEPItem.ExperienceSealableBook.getItem().equals(itemstack1.getItem())){
                     if(!this.mergeItemStack(itemstack1, 1, 2, false)){
                         return null;
                     }
@@ -116,7 +115,7 @@ public class ContainerExpFurnace extends ContainerMachineBase{
             }
 
             if(itemstack1.stackSize == 0){
-                slot.putStack((ItemStack) null);
+                slot.putStack(null);
             }else{
                 slot.onSlotChanged();
             }
