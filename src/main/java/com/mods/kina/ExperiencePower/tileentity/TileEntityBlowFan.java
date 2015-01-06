@@ -32,9 +32,9 @@ public class TileEntityBlowFan extends TileEntity implements IUpdatePlayerListBo
                 entity.motionX += vec3i.getX() * 0.075;
                 entity.motionY += vec3i.getY() * 0.1;
                 entity.motionZ += vec3i.getZ() * 0.075;
-                //fallDistanceを変えているがうまく働いているかは不明
-                if(facing == EnumFacing.UP && entity.fallDistance < entity.posY - pos.getY()){
-                    entity.fallDistance = (float) entity.posY - pos.getY();
+                //fallDistanceを変えて痛くないように
+                if(facing == EnumFacing.UP){
+                    entity.fallDistance = 0;
                 }
             }
         }
