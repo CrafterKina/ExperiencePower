@@ -22,6 +22,8 @@ public class BlockBlowFan extends BlockEPContainerBase{
         super(Material.rock);
         setUnlocalizedName("blow_fan");
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
+        setHardness(1.5f);
+        setResistance(10);
         GameRegistry.registerTileEntity(TileEntityBlowFan.class, "TileEntityBlowFan");
     }
 

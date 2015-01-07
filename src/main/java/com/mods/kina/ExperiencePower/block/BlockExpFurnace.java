@@ -1,7 +1,6 @@
 package com.mods.kina.ExperiencePower.block;
 
 import com.mods.kina.ExperiencePower.base.BlockMachineBase;
-import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
 import com.mods.kina.ExperiencePower.tileentity.TileEntityExpFurnace;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -34,7 +33,9 @@ public class BlockExpFurnace extends BlockMachineBase{
     public BlockExpFurnace(){
         super(Material.rock);
         setUnlocalizedName("exp_furnace");
-        setCreativeTab(EnumEPCreativeTab.BLOCK.getCreativeTab());
+        setHardness(1.5f);
+        setResistance(10);
+        //setCreativeTab(EnumEPCreativeTab.BLOCK.getCreativeTab());
         GameRegistry.registerTileEntity(TileEntityExpFurnace.class, "TileEntityExpFurnace");
     }
 

@@ -27,6 +27,7 @@ public class BlockOre extends Block{
         setUnlocalizedName("ore");
         setDefaultState(blockState.getBaseState().withProperty(TYPE, OreType.COPPER));
         setCreativeTab(EnumEPCreativeTab.BLOCK.getCreativeTab());
+        setResistance(5);
     }
 
     /**
@@ -156,6 +157,10 @@ public class BlockOre extends Block{
         for(int i = 0; i < OreType.values().length; i++){
             list.add(new ItemStack(itemIn, 1, i));
         }
+    }
+
+    public float getBlockHardness(World worldIn, BlockPos pos){
+        return 3;
     }
 
     protected BlockState createBlockState(){

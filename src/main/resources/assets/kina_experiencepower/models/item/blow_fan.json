@@ -1,5 +1,5 @@
 {
-  "parent": "kina_ExperiencePower:block/blow_fan",
+  "parent": "block/piston_inventory_normal",
   "display": {
     "thirdperson": {
       "rotation": [

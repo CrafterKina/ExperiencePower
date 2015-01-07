@@ -29,7 +29,7 @@ public class TileEntityExpDischarger extends TileEntityMachineBase implements IU
 
      */
     private boolean canPrepareExperience(){
-        return getStackInSlot(0).getItem().equals(EnumEPItem.ExperienceSealableBook.getItem()) && getStackInSlot(0).getItemDamage() > 0;
+        return getStackInSlot(0) != null && getStackInSlot(0).getItem().equals(EnumEPItem.ExperienceSealableBook.getItem()) && getStackInSlot(0).getItemDamage() > 0;
     }
 
     @SuppressWarnings("unchecked")

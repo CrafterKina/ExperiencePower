@@ -21,6 +21,8 @@ public class BlockExpDischarger extends BlockMachineBase implements IReceiveEner
     public BlockExpDischarger(){
         super(Material.rock);
         setUnlocalizedName("exp_discharger");
+        setHardness(1.5f);
+        setResistance(10);
         GameRegistry.registerTileEntity(TileEntityExpDischarger.class, "TileEntityExpDischarger");
     }
 

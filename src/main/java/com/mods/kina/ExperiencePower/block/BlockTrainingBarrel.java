@@ -20,6 +20,7 @@ public class BlockTrainingBarrel extends Block implements ISendEnergy{
         setCreativeTab(EnumEPCreativeTab.BLOCK.getCreativeTab());
         setUnlocalizedName("training_barrel");
         setHardness(1.5f);
+        setResistance(10);
     }
 
     public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn){

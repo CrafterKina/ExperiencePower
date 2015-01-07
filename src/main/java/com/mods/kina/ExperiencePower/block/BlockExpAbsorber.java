@@ -21,6 +21,8 @@ public class BlockExpAbsorber extends BlockMachineBase implements ISendEnergy{
     public BlockExpAbsorber(){
         super(Material.rock);
         setUnlocalizedName("exp_absorber");
+        setHardness(1.5f);
+        setResistance(10);
         GameRegistry.registerTileEntity(TileEntityExpAbsorber.class, "TileEntityExpAbsorber");
     }
 

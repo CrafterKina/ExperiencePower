@@ -19,7 +19,7 @@ public class TileEntityExpAbsorber extends TileEntityMachineBase implements IUpd
      */
     public void update(){
         EntityPlayer player = getOnPlayer();
-        if(player != null && player.isSneaking() && getStackInSlot(0).getItemDamage() < getStackInSlot(0).getMaxDamage()){
+        if(player != null && player.isSneaking() && getStackInSlot(0) != null && getStackInSlot(0).getItemDamage() < getStackInSlot(0).getMaxDamage()){
             player.removeExperienceLevel(1);
             getStackInSlot(0).setItemDamage(getStackInSlot(0).getItemDamage() + 1);
         }
