@@ -20,6 +20,7 @@ public class ItemIngot extends Item{
         setNoRepair();
     }
 
+    //鉱石から色を取得。
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int renderPass){
         Block block = EnumEPBlock.Ore.getBlock();

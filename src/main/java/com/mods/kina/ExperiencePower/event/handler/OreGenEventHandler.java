@@ -22,6 +22,7 @@ public class OreGenEventHandler{
     private static final WorldGenerator silverGen = new WorldGenMinable(EnumEPBlock.Ore.getBlock().getStateFromMeta(BlockOre.OreType.SILVER.ordinal()), 9);
     private static final WorldGenerator wiseGen = new WorldGenMinable(EnumEPBlock.Ore.getBlock().getStateFromMeta(BlockOre.OreType.WISE.ordinal()), 1);
 
+    //鉱石を生成する
     @SubscribeEvent
     public void generateOrePre(OreGenEvent.Pre event){
         if(TerrainGen.generateOre(event.world, event.rand, copperGen, event.pos, OreGenEvent.GenerateMinable.EventType.CUSTOM))

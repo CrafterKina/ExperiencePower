@@ -16,11 +16,17 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  Normalと言うよりTerrainGenでないEvent。
  */
 public class NormalEventHandler{
+    /**
+     実績解除時に経験値を獲得。
+     */
     @SubscribeEvent
     public void onAchievementGet(AchievementEvent event){
         event.entityPlayer.addExperience(2);
     }
 
+    /**
+     葉っぱと作物から経験値が出る。
+     */
     @SubscribeEvent
     public void getBlocksDrop(BlockEvent.HarvestDropsEvent event){
         IBlockState iBlockState = event.world.getBlockState(event.pos);

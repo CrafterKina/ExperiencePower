@@ -1,6 +1,5 @@
 package com.mods.kina.ExperiencePower.base;
 
-import com.mods.kina.ExperiencePower.collection.StaticFieldCollection;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
@@ -11,7 +10,8 @@ public class GuiMachineBase extends GuiContainer{
 
     public GuiMachineBase(ContainerMachineBase machineBase){
         super(machineBase);
-        guiTex = new ResourceLocation(StaticFieldCollection.MODID, "textures/gui/container/" + machineBase.machineBase.getWorld().getBlockState(machineBase.machineBase.getPos()).getBlock().getUnlocalizedName().substring(5) + ".png");
+        //guiTex = new ResourceLocation(StaticFieldCollection.MODID, "textures/gui/container/" + machineBase.machineBase.getWorld().getBlockState(machineBase.machineBase.getPos()).getBlock().getUnlocalizedName().substring(5) + ".png");
+        guiTex = new ResourceLocation("textures/gui/container/dispenser.png");
     }
 
     protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int mX, int mY){

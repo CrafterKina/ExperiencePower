@@ -23,6 +23,9 @@ public class BlockTrainingBarrel extends Block implements ISendEnergy{
         setResistance(10);
     }
 
+    /**
+     左クリック時に経験値を出す。
+     */
     public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn){
         /*EnumFacing[] connectingFacings = getConnectingFacings(worldIn, pos);
         if(connectingFacings.length > 0){

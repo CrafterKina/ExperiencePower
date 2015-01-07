@@ -26,6 +26,9 @@ public class BlockExpAbsorber extends BlockMachineBase implements ISendEnergy{
         GameRegistry.registerTileEntity(TileEntityExpAbsorber.class, "TileEntityExpAbsorber");
     }
 
+    /**
+     右クリックでGUIを開く。
+     */
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ){
         if(!worldIn.isRemote)
             playerIn.openGui(ExperiencePowerCore.core, EnumEPGui.ExperienceAbsorber.ordinal(), worldIn, pos.getX(), pos.getY(), pos.getZ());

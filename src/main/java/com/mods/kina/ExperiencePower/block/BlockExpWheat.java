@@ -15,6 +15,7 @@ public class BlockExpWheat extends BlockCrops{
         setUnlocalizedName("exp_crop");
     }
 
+    //壊した時に種を出す
     protected Item getSeed(){
         return EnumEPItem.ExperienceCropSeed.getItem();
     }
