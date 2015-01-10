@@ -42,6 +42,7 @@ public class ExperiencePowerCore{
         OreDictionaryRegister.registerOres();
         SmeltRecipeRegistrar.registerRecipes();
         CraftRecipeRegistrar.registerRecipes();
+        AchievementRegistrar.registerAchievement();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
     }
 
