@@ -1,6 +1,5 @@
 package com.mods.kina.ExperiencePower.base;
 
-import com.mods.kina.KinaCore.toExtends.IInventoryImpl;
 import net.minecraft.util.IChatComponent;
 
 public abstract class TileEntityEPBase extends IInventoryImpl{
