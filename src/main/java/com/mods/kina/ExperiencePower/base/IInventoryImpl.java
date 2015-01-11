@@ -3,6 +3,8 @@ package com.mods.kina.ExperiencePower.base;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
@@ -206,4 +208,50 @@ public abstract class IInventoryImpl extends TileEntity implements IInventory{
             this.inventoryContents[i] = null;
         }
     }
+
+    /*TileEntity NBT*/
+    public void readFromNBT(NBTTagCompound compound){
+        super.readFromNBT(compound);
+        NBTTagList nbttaglist = compound.getTagList("Items", 10);
+        this.inventoryContents = new ItemStack[this.getSizeInventory()];
+
+        if(compound.hasKey("CustomName", 8)){
+            setCustomName(compound.getString("CustomName"));
+        }
+
+        for(int i = 0; i < nbttaglist.tagCount(); ++i){
+            NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
+            int j = nbttagcompound1.getByte("Slot") & 255;
+
+            if(j >= 0 && j < this.inventoryContents.length){
+                this.inventoryContents[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+            }
+        }
+        readFromNBTExtended(compound);
+    }
+
+    protected void readFromNBTExtended(NBTTagCompound compound){}
+
+    public void writeToNBT(NBTTagCompound compound){
+        super.writeToNBT(compound);
+        NBTTagList nbttaglist = new NBTTagList();
+
+        for(int i = 0; i < this.inventoryContents.length; ++i){
+            if(this.inventoryContents[i] != null){
+                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+                nbttagcompound1.setByte("Slot", (byte) i);
+                this.inventoryContents[i].writeToNBT(nbttagcompound1);
+                nbttaglist.appendTag(nbttagcompound1);
+            }
+        }
+
+        compound.setTag("Items", nbttaglist);
+
+        if(this.hasCustomName()){
+            compound.setString("CustomName", this.getName());
+        }
+        writeToNBTExtended(compound);
+    }
+
+    protected void writeToNBTExtended(NBTTagCompound compound){}
 }

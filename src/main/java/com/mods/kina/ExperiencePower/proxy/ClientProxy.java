@@ -1,3 +1,11 @@
 package com.mods.kina.ExperiencePower.proxy;
 
-public class ClientProxy extends CommonProxy{}
+import com.mods.kina.ExperiencePower.render.tileentity.TESRSimpleExpInjector;
+import com.mods.kina.ExperiencePower.tileentity.TileEntitySimpleExpInjector;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+
+public class ClientProxy extends CommonProxy{
+    public void registerRender(){
+        ClientRegistry.registerTileEntity(TileEntitySimpleExpInjector.class, "TileEntitySimpleExpInjector", TESRSimpleExpInjector.render);
+    }
+}
