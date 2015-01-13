@@ -53,6 +53,7 @@ public class BlockOre extends Block{
      the level of the Fortune enchantment on the player's tool
      */
     public Item getItemDropped(IBlockState state, Random rand, int fortune){
+        if(state.getValue(TYPE) == OreType.WISE) return null;
         return Item.getItemFromBlock(this);
     }
 
@@ -128,7 +129,7 @@ public class BlockOre extends Block{
             int j;
 
             if(world.getBlockState(pos).getValue(TYPE) == OreType.WISE){
-                j = MathHelper.getRandomIntegerInRange(rand, 5, 10);
+                j = MathHelper.getRandomIntegerInRange(rand, 10, 20);
             }else{
                 j = MathHelper.getRandomIntegerInRange(rand, 0, 2);
             }
