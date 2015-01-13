@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 
 public class ItemOre extends ItemColored{
     public ItemOre(Block p_i45332_1_){
-        super(p_i45332_1_, false);
+        super(p_i45332_1_, true);
     }
 
     /**
