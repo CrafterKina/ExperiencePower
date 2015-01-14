@@ -51,7 +51,7 @@ public class BlockSimpleExpInjector extends BlockMachineBase{
 
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand){
-        for(int i = 0; i < 10; i++){
+        if(((TileEntitySimpleExpInjector) worldIn.getTileEntity(pos)).progressTime > 0) for(int i = 0; i < 10; i++){
             Blocks.enchanting_table.randomDisplayTick(worldIn, pos, state, rand);
         }
     }
