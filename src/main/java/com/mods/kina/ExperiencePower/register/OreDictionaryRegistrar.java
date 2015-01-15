@@ -6,7 +6,7 @@ import com.mods.kina.ExperiencePower.collection.EnumEPItem;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class OreDictionaryRegister{
+public class OreDictionaryRegistrar{
     public static void registerOres(){
         for(int i = 0; i < BlockOre.OreType.values().length; i++){
             OreDictionary.registerOre("ore" + getCamelName(BlockOre.OreType.values()[i].getName()), new ItemStack(EnumEPBlock.Ore.getBlock(), 1, i));
