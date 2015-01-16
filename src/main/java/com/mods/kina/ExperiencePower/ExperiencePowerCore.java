@@ -39,7 +39,6 @@ public class ExperiencePowerCore{
         FMLCommonHandler.instance().bus().register(EventHandler.fml);
         BlockRegistrar.registerBlock();
         ItemRegistrar.registerItem();
-        EntityRegistrar.registerEntity();
         proxy.registerRender();
         OreDictionaryRegistrar.registerOres();
         SmeltRecipeRegistrar.registerRecipes();
@@ -53,6 +52,7 @@ public class ExperiencePowerCore{
      */
     @Mod.EventHandler
     public void init(FMLInitializationEvent e){
+        EntityRegistrar.registerEntity();
         BlockRegistrar.registerModel();
         ItemRegistrar.registerModel();
     }

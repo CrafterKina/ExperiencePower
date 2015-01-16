@@ -1,12 +1,15 @@
 package com.mods.kina.ExperiencePower.collection;
 
+import com.mods.kina.ExperiencePower.entity.core.EntityMonsterBook;
+import com.mods.kina.ExperiencePower.entity.render.RenderMonsterBook;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public enum EnumEPEntity{
-    ;
+    MonsterBook(EntityMonsterBook.class, new RenderMonsterBook(Minecraft.getMinecraft().getRenderManager()));
     private final Class<? extends Entity> entityClass;
     private final int trackingRange;
     private final int updateFrequency;
@@ -53,6 +56,10 @@ public enum EnumEPEntity{
         this.groupMax = groupMax;
         this.typeOfCreature = typeOfCreature;
         this.spawnBiomes = spawnBiomes;
+    }
+
+    EnumEPEntity(Class<? extends Entity> entityClass, Render render){
+        this(entityClass, 250, 1, false, render, true, 20, 1, 4, EnumCreatureType.MONSTER, BiomeGenBase.plains);
     }
 
     //Non-Living//
