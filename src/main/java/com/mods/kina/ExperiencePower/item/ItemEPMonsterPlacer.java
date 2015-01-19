@@ -16,7 +16,7 @@ public class ItemEPMonsterPlacer extends Item{
     }
 
     public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ){
-        worldIn.spawnEntityInWorld(new EntityMonsterBook(worldIn, pos.offsetUp()));
+        if(!worldIn.isRemote) worldIn.spawnEntityInWorld(new EntityMonsterBook(worldIn, pos.offsetUp()));
         return true;
     }
 }
