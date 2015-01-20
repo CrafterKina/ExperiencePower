@@ -1,6 +1,7 @@
 package com.mods.kina.ExperiencePower;
 
 import com.mods.kina.ExperiencePower.collection.StaticFieldCollection;
+import com.mods.kina.ExperiencePower.config.ConfigMaker;
 import com.mods.kina.ExperiencePower.event.handler.EventHandler;
 import com.mods.kina.ExperiencePower.proxy.CommonProxy;
 import com.mods.kina.ExperiencePower.register.*;
@@ -33,6 +34,7 @@ public class ExperiencePowerCore{
      */
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e){
+        ConfigMaker.createConfig(e);
         MinecraftForge.EVENT_BUS.register(EventHandler.normal);
         MinecraftForge.TERRAIN_GEN_BUS.register(EventHandler.terrainGen);
         MinecraftForge.ORE_GEN_BUS.register(EventHandler.oreGen);
