@@ -70,7 +70,7 @@ public class TileEntityBlowFan extends TileEntity implements IUpdatePlayerListBo
         //初期化
         int i = 1;
         //forで最大15回回す
-        for(; i <= worldObj.getStrongPower(pos); i++){
+        for(; i <= (worldObj.func_175687_A(pos) > worldObj.func_175687_A(pos.offsetUp()) ? worldObj.func_175687_A(pos) : worldObj.func_175687_A(pos.offsetUp())); i++){
             //Fanからの相対的位置を元に調査ブロックを徐々に遠ざける
             BlockPos blockPos = pos.add(vec3i.getX() * i, vec3i.getY() * i, vec3i.getZ() * i);
             //BlockPosの位置にあるBlock
