@@ -3,8 +3,10 @@ package com.mods.kina.ExperiencePower;
 import com.mods.kina.ExperiencePower.collection.StaticFieldCollection;
 import com.mods.kina.ExperiencePower.config.ConfigMaker;
 import com.mods.kina.ExperiencePower.event.handler.EventHandler;
+import com.mods.kina.ExperiencePower.loader.EPModelLoader;
 import com.mods.kina.ExperiencePower.proxy.CommonProxy;
 import com.mods.kina.ExperiencePower.register.*;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -42,6 +44,7 @@ public class ExperiencePowerCore{
         BlockRegistrar.registerBlock();
         ItemRegistrar.registerItem();
         proxy.registerRender();
+        ModelLoaderRegistry.registerLoader(EPModelLoader.instance);
         OreDictionaryRegistrar.registerOres();
         SmeltRecipeRegistrar.registerRecipes();
         CraftRecipeRegistrar.registerRecipes();
