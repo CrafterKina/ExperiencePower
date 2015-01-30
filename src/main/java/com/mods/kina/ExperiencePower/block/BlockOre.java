@@ -140,6 +140,24 @@ public class BlockOre extends Block{
     }
 
     /**
+     Queries the class of tool required to harvest this block, if null is returned we assume that anything can harvest
+     this block.
+     */
+    public String getHarvestTool(IBlockState state){
+        return "pickaxe";
+    }
+
+    /**
+     Queries the harvest level of this item stack for the specified tool class, Returns -1 if this tool is not of the
+     specified type
+
+     @return Harvest level, or -1 if not the specified tool type.
+     */
+    public int getHarvestLevel(IBlockState state){
+        return 1;
+    }
+
+    /**
      Convert the given metadata into a BlockState for this Block
      */
     public IBlockState getStateFromMeta(int meta){
