@@ -20,12 +20,49 @@ public class ItemArmorPump extends ItemArmor{
      */
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack){
         if(world.isRemote && ((EntityPlayerSP) player).movementInput.jump){
-            player.motionY += 0.075;
-            itemStack.damageItem(1, player);
-            player.fallDistance = 0;
+            useJetpack(player);
         }
         if(player.isSneaking() && player.isInWater()){
             itemStack.damageItem(-1, player);
         }
+    }
+
+    public boolean useJetpack(EntityPlayer player){
+        float power = 1.0F;
+
+        int worldHeight = player.worldObj.getHeight();
+        int maxFlightHeight = (int) (worldHeight / 1.28F);
+
+        double y = player.posY;
+
+        if(y > maxFlightHeight - 25){
+            if(y > maxFlightHeight) y = maxFlightHeight;
+
+            power = (float) (power * ((maxFlightHeight - y) / 25.0D));
+        }
+
+        double prevmotion = player.motionY;
+        player.motionY = Math.min(player.motionY + power * 0.2F, 0.6000000238418579D);
+        float maxHoverY = 0.0F;
+
+        if(((EntityPlayerSP) player).movementInput.jump){
+            maxHoverY = 0.1F;
+        }
+
+        if(player.isSneaking()){
+            maxHoverY = -0.1F;
+
+        }
+
+        if(player.motionY > maxHoverY){
+            player.motionY = maxHoverY;
+
+            if(prevmotion > player.motionY) player.motionY = prevmotion;
+        }
+
+        player.fallDistance = 0.0F;
+        player.distanceWalkedModified = 0.0F;
+
+        return true;
     }
 }
