@@ -1,38 +1,42 @@
 package com.mods.kina.ExperiencePower.gui;
 
+import com.mods.kina.ExperiencePower.collection.EnumEPInvention;
+import com.mods.kina.ExperiencePower.collection.EnumEPInventionPage;
+import com.mods.kina.ExperiencePower.invent.InventionElement;
+import com.mods.kina.ExperiencePower.item.ItemInventionNote;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiOptionButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.IProgressMeter;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagByte;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.play.client.C16PacketClientStatus;
-import net.minecraft.stats.Achievement;
-import net.minecraft.stats.AchievementList;
-import net.minecraft.stats.StatFileWriter;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.AchievementPage;
 import org.lwjgl.input.Mouse;
 
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class GuiInventionNote extends GuiScreen implements IProgressMeter{
-    private static final int field_146572_y = AchievementList.minDisplayColumn * 24 - 112;
-    private static final int field_146571_z = AchievementList.minDisplayRow * 24 - 112;
-    private static final int field_146559_A = AchievementList.maxDisplayColumn * 24 - 77;
-    private static final int field_146560_B = AchievementList.maxDisplayRow * 24 - 77;
+public class GuiInventionNote extends GuiScreen{
+    private static final int field_146572_y = EnumEPInvention.minDisplayColumn * 24 - 112;
+    private static final int field_146571_z = EnumEPInvention.minDisplayRow * 24 - 112;
+    private static final int field_146559_A = EnumEPInvention.maxDisplayColumn * 24 - 77;
+    private static final int field_146560_B = EnumEPInvention.maxDisplayRow * 24 - 77;
     private static final ResourceLocation field_146561_C = new ResourceLocation("textures/gui/achievement/achievement_background.png");
+    public List<List<Byte>> unlockedList = new ArrayList<List<Byte>>(EnumEPInventionPage.values().length);
     protected GuiScreen parentScreen;
     protected int field_146555_f = 256;
     protected int field_146557_g = 202;
@@ -45,51 +49,58 @@ public class GuiInventionNote extends GuiScreen implements IProgressMeter{
     protected double field_146566_v;
     protected double field_146565_w;
     protected double field_146573_x;
+    private ItemStack itemStack;
+    private ItemInventionNote item;
     private int field_146554_D;
-    private StatFileWriter statFileWriter;
     private boolean loadingAchievements = true;
 
-    private int currentPage = -1;
+    private int currentPage = 0;
     private GuiButton button;
-    private LinkedList<Achievement> minecraftAchievements = new LinkedList<Achievement>();
+    //private LinkedList<InventionElement> minecraftAchievements = new LinkedList<InventionElement>();
 
-    public GuiInventionNote(GuiScreen p_i45026_1_, StatFileWriter p_i45026_2_){
+    public GuiInventionNote(GuiScreen p_i45026_1_, ItemStack stack){
         this.parentScreen = p_i45026_1_;
-        this.statFileWriter = p_i45026_2_;
+        itemStack = stack;
+        item = (ItemInventionNote) stack.getItem();
         short short1 = 141;
         short short2 = 141;
-        this.field_146569_s = this.field_146567_u = this.field_146565_w = (double) (AchievementList.openInventory.displayColumn * 24 - short1 / 2 - 12);
-        this.field_146568_t = this.field_146566_v = this.field_146573_x = (double) (AchievementList.openInventory.displayRow * 24 - short2 / 2);
-        minecraftAchievements.clear();
-        for(Object achievement : AchievementList.achievementList){
-            if(!AchievementPage.isAchievementInPages((Achievement) achievement)){
-                minecraftAchievements.add((Achievement) achievement);
-            }
-        }
+        this.field_146569_s = this.field_146567_u = this.field_146565_w = (double) (EnumEPInvention.Sword.getInventionElement().displayColumn * 24 - short1 / 2 - 12);
+        this.field_146568_t = this.field_146566_v = this.field_146573_x = (double) (EnumEPInvention.Sword.getInventionElement().displayRow * 24 - short2 / 2);
+        onOpenGui();
     }
 
     /**
      Adds the buttons (and other controls) to the screen in question.
      */
+    @SuppressWarnings("unchecked")
     public void initGui(){
         this.mc.getNetHandler().addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.REQUEST_STATS));
         this.buttonList.clear();
         this.buttonList.add(new GuiOptionButton(1, this.width / 2 + 24, this.height / 2 + 74, 80, 20, I18n.format("gui.done")));
-        this.buttonList.add(button = new GuiButton(2, (width - field_146555_f) / 2 + 24, height / 2 + 74, 125, 20, AchievementPage.getTitle(currentPage)));
+        this.buttonList.add(button = new GuiButton(2, (width - field_146555_f) / 2 + 24, height / 2 + 74, 125, 20, EnumEPInventionPage.values()[currentPage].name()));
     }
 
     protected void actionPerformed(GuiButton button) throws IOException{
         if(!this.loadingAchievements){
             if(button.id == 1){
-                this.mc.displayGuiScreen(this.parentScreen);
+                this.mc.displayGuiScreen(null);
+                this.mc.setIngameFocus();
+                onCloseGui();
             }
 
             if(button.id == 2){
                 currentPage++;
-                if(currentPage >= AchievementPage.getAchievementPages().size()){
-                    currentPage = -1;
+                if(currentPage >= EnumEPInventionPage.values().length){
+                    currentPage = 0;
                 }
-                this.button.displayString = AchievementPage.getTitle(currentPage);
+                this.button.displayString = EnumEPInventionPage.values()[currentPage].name();
+            }
+
+            if(button.id > 2){
+                int bid = button.id;
+                int id = bid - 2;
+                if(item.canUnlockInvention(unlockedList, currentPage, id))
+                    unlockedList.get(currentPage).add(id, (byte) 1);
             }
         }
     }
@@ -102,6 +113,7 @@ public class GuiInventionNote extends GuiScreen implements IProgressMeter{
         if(keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode()){
             this.mc.displayGuiScreen(null);
             this.mc.setIngameFocus();
+            onCloseGui();
         }else{
             super.keyTyped(typedChar, keyCode);
         }
@@ -111,11 +123,7 @@ public class GuiInventionNote extends GuiScreen implements IProgressMeter{
      Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks){
-        if(this.loadingAchievements){
-            this.drawDefaultBackground();
-            this.drawCenteredString(this.fontRendererObj, I18n.format("multiplayer.downloadingStats"), this.width / 2, this.height / 2, 16777215);
-            this.drawCenteredString(this.fontRendererObj, lanSearchStates[(int) (Minecraft.getSystemTime() / 150L % (long) lanSearchStates.length)], this.width / 2, this.height / 2 + this.fontRendererObj.FONT_HEIGHT * 2, 16777215);
-        }else{
+        if(!loadingAchievements){
             int k;
 
             if(Mouse.isButtonDown(0)){
@@ -187,12 +195,6 @@ public class GuiInventionNote extends GuiScreen implements IProgressMeter{
             this.drawTitle();
             GlStateManager.enableLighting();
             GlStateManager.enableDepth();
-        }
-    }
-
-    public void doneLoading(){
-        if(this.loadingAchievements){
-            this.loadingAchievements = false;
         }
     }
 
@@ -309,18 +311,18 @@ public class GuiInventionNote extends GuiScreen implements IProgressMeter{
         int i4;
         int l4;
 
-        List<Achievement> achievementList = (currentPage == -1 ? minecraftAchievements : AchievementPage.getAchievementPage(currentPage).getAchievements());
-        for(i3 = 0; i3 < achievementList.size(); ++i3){
-            Achievement achievement1 = achievementList.get(i3);
+        List<InventionElement> inventionList = EnumEPInventionPage.values()[currentPage].getPage().getElements();
+        for(i3 = 0; i3 < inventionList.size(); ++i3){
+            InventionElement achievement1 = inventionList.get(i3);
 
-            if(achievement1.parentAchievement != null && achievementList.contains(achievement1.parentAchievement)){
+            if(achievement1.parentAchievements != null && inventionList.contains(achievement1.parentAchievements)){
                 j3 = achievement1.displayColumn * 24 - k + 11;
                 k3 = achievement1.displayRow * 24 - l + 11;
-                int k4 = achievement1.parentAchievement.displayColumn * 24 - k + 11;
-                l4 = achievement1.parentAchievement.displayRow * 24 - l + 11;
-                boolean flag5 = this.statFileWriter.hasAchievementUnlocked(achievement1);
-                boolean flag6 = this.statFileWriter.canUnlockAchievement(achievement1);
-                l3 = this.statFileWriter.func_150874_c(achievement1);
+                int k4 = achievement1.parentAchievements[0].displayColumn * 24 - k + 11;
+                l4 = achievement1.parentAchievements[0].displayRow * 24 - l + 11;
+                boolean flag5 = item.hasInventionUnlocked(unlockedList, currentPage, i3);
+                boolean flag6 = item.canUnlockInvention(unlockedList, currentPage, i3);
+                l3 = item.getDistanceFromOpened(unlockedList, currentPage, i3);
 
                 if(l3 <= 4){
                     i4 = -16777216;
@@ -347,7 +349,7 @@ public class GuiInventionNote extends GuiScreen implements IProgressMeter{
             }
         }
 
-        Achievement achievement = null;
+        InventionElement achievement = null;
         f3 = (float) (p_146552_1_ - k1) * this.field_146570_r;
         float f4 = (float) (p_146552_2_ - l1) * this.field_146570_r;
         RenderHelper.enableGUIStandardItemLighting();
@@ -357,19 +359,19 @@ public class GuiInventionNote extends GuiScreen implements IProgressMeter{
         int i5;
         int j5;
 
-        for(k3 = 0; k3 < achievementList.size(); ++k3){
-            Achievement achievement2 = achievementList.get(k3);
-            l4 = achievement2.displayColumn * 24 - k;
-            i5 = achievement2.displayRow * 24 - l;
+        for(k3 = 0; k3 < inventionList.size(); ++k3){
+            InventionElement inventionElement2 = inventionList.get(k3);
+            l4 = inventionElement2.displayColumn * 24 - k;
+            i5 = inventionElement2.displayRow * 24 - l;
 
             if(l4 >= -24 && i5 >= -24 && (float) l4 <= 224.0F * this.field_146570_r && (float) i5 <= 155.0F * this.field_146570_r){
-                j5 = this.statFileWriter.func_150874_c(achievement2);
+                j5 = item.getDistanceFromOpened(unlockedList, currentPage, k3);
                 float f5;
 
-                if(this.statFileWriter.hasAchievementUnlocked(achievement2)){
+                if(item.hasInventionUnlocked(unlockedList, currentPage, k3)){
                     f5 = 0.75F;
                     GlStateManager.color(f5, f5, f5, 1.0F);
-                }else if(this.statFileWriter.canUnlockAchievement(achievement2)){
+                }else if(item.canUnlockInvention(unlockedList, currentPage, k3)){
                     f5 = 1.0F;
                     GlStateManager.color(f5, f5, f5, 1.0F);
                 }else if(j5 < 3){
@@ -390,14 +392,14 @@ public class GuiInventionNote extends GuiScreen implements IProgressMeter{
                 this.mc.getTextureManager().bindTexture(field_146561_C);
 
                 GlStateManager.enableBlend(); // Forge: Specifically enable blend because it is needed here. And we fix Generic RenderItem's leakage of it.
-                if(achievement2.getSpecial()){
+                if(inventionElement2.getSpecial()){
                     this.drawTexturedModalRect(l4 - 2, i5 - 2, 26, 202, 26, 26);
                 }else{
                     this.drawTexturedModalRect(l4 - 2, i5 - 2, 0, 202, 26, 26);
                 }
                 GlStateManager.disableBlend(); //Forge: Cleanup states we set.
 
-                if(!this.statFileWriter.canUnlockAchievement(achievement2)){
+                if(!item.canUnlockInvention(unlockedList, currentPage, k3)){
                     f5 = 0.1F;
                     GlStateManager.color(f5, f5, f5, 1.0F);
                     this.itemRender.func_175039_a(false);
@@ -405,18 +407,18 @@ public class GuiInventionNote extends GuiScreen implements IProgressMeter{
 
                 GlStateManager.disableLighting(); //Forge: Make sure Lighting is disabled. Fixes MC-33065
                 GlStateManager.enableCull();
-                this.itemRender.func_180450_b(achievement2.theItemStack, l4 + 3, i5 + 3);
+                this.itemRender.func_180450_b(inventionElement2.theItemStack, l4 + 3, i5 + 3);
                 GlStateManager.blendFunc(770, 771);
                 GlStateManager.disableLighting();
 
-                if(!this.statFileWriter.canUnlockAchievement(achievement2)){
+                if(!item.canUnlockInvention(unlockedList, currentPage, k3)){
                     this.itemRender.func_175039_a(true);
                 }
 
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
                 if(f3 >= (float) l4 && f3 <= (float) (l4 + 22) && f4 >= (float) i5 && f4 <= (float) (i5 + 22)){
-                    achievement = achievement2;
+                    achievement = inventionElement2;
                 }
             }
         }
@@ -434,24 +436,25 @@ public class GuiInventionNote extends GuiScreen implements IProgressMeter{
         super.drawScreen(p_146552_1_, p_146552_2_, p_146552_3_);
 
         if(achievement != null){
+            int id = item.getIDFromPage(currentPage, achievement);
             String s = achievement.getStatName().getUnformattedText();
             String s1 = achievement.getDescription();
             l4 = p_146552_1_ + 12;
             i5 = p_146552_2_ - 4;
-            j5 = this.statFileWriter.func_150874_c(achievement);
+            j5 = item.getDistanceFromOpened(unlockedList, currentPage, id);
 
-            if(this.statFileWriter.canUnlockAchievement(achievement)){
+            if(item.canUnlockInvention(unlockedList, currentPage, id)){
                 l3 = Math.max(this.fontRendererObj.getStringWidth(s), 120);
                 i4 = this.fontRendererObj.splitStringWidth(s1, l3);
 
-                if(this.statFileWriter.hasAchievementUnlocked(achievement)){
+                if(item.hasInventionUnlocked(unlockedList, currentPage, id)){
                     i4 += 12;
                 }
 
                 this.drawGradientRect(l4 - 3, i5 - 3, l4 + l3 + 3, i5 + i4 + 3 + 12, -1073741824, -1073741824);
                 this.fontRendererObj.drawSplitString(s1, l4, i5 + 12, l3, -6250336);
 
-                if(this.statFileWriter.hasAchievementUnlocked(achievement)){
+                if(item.hasInventionUnlocked(unlockedList, currentPage, id)){
                     this.fontRendererObj.func_175063_a(I18n.format("achievement.taken"), (float) l4, (float) (i5 + i4 + 4), -7302913);
                 }
             }else{
@@ -461,13 +464,13 @@ public class GuiInventionNote extends GuiScreen implements IProgressMeter{
                 if(j5 == 3){
                     s = I18n.format("achievement.unknown");
                     l3 = Math.max(this.fontRendererObj.getStringWidth(s), 120);
-                    s2 = (new ChatComponentTranslation("achievement.requires", achievement.parentAchievement.getStatName())).getUnformattedText();
+                    s2 = getStatNames(achievement.parentAchievements);
                     j4 = this.fontRendererObj.splitStringWidth(s2, l3);
                     this.drawGradientRect(l4 - 3, i5 - 3, l4 + l3 + 3, i5 + j4 + 12 + 3, -1073741824, -1073741824);
                     this.fontRendererObj.drawSplitString(s2, l4, i5 + 12, l3, -9416624);
                 }else if(j5 < 3){
                     l3 = Math.max(this.fontRendererObj.getStringWidth(s), 120);
-                    s2 = (new ChatComponentTranslation("achievement.requires", achievement.parentAchievement.getStatName())).getUnformattedText();
+                    s2 = (new ChatComponentTranslation("achievement.requires", getStatNames(achievement.parentAchievements))).getUnformattedText();
                     j4 = this.fontRendererObj.splitStringWidth(s2, l3);
                     this.drawGradientRect(l4 - 3, i5 - 3, l4 + l3 + 3, i5 + j4 + 12 + 3, -1073741824, -1073741824);
                     this.fontRendererObj.drawSplitString(s2, l4, i5 + 12, l3, -9416624);
@@ -477,7 +480,7 @@ public class GuiInventionNote extends GuiScreen implements IProgressMeter{
             }
 
             if(s != null){
-                this.fontRendererObj.func_175063_a(s, (float) l4, (float) i5, this.statFileWriter.canUnlockAchievement(achievement) ? (achievement.getSpecial() ? -128 : -1) : (achievement.getSpecial() ? -8355776 : -8355712));
+                this.fontRendererObj.func_175063_a(s, (float) l4, (float) i5, item.canUnlockInvention(unlockedList, currentPage, id) ? (achievement.getSpecial() ? -128 : -1) : (achievement.getSpecial() ? -8355776 : -8355712));
             }
         }
 
@@ -486,6 +489,51 @@ public class GuiInventionNote extends GuiScreen implements IProgressMeter{
         RenderHelper.disableStandardItemLighting();
     }
 
+    public void onOpenGui(){
+        readFromNBT(item.getNBT(itemStack));
+        loadingAchievements = false;
+    }
+
+    public void readFromNBT(NBTTagCompound nbtTagCompound){
+        if(!nbtTagCompound.getTagList("page", 10).hasNoTags()){
+            for(int i = 0; i < nbtTagCompound.getTagList("page", 10).tagCount(); i++){
+                ArrayList<Byte> unlock = new ArrayList<Byte>();
+                for(int j = 0; j < ((NBTTagList) nbtTagCompound.getTagList("page", 10).get(i)).tagCount(); j++){
+                    unlock.add(((NBTTagByte) ((NBTTagList) nbtTagCompound.getTagList("page", 10).get(i)).get(j)).getByte());
+                }
+                unlockedList.add(unlock);
+            }
+        }else{
+            item.initNBT(nbtTagCompound);
+        }
+    }
+
+    public void onCloseGui(){
+        writeToNBT(item.getNBT(itemStack));
+    }
+
+    public void writeToNBT(NBTTagCompound nbtTagCompound){
+        NBTTagList pageList = new NBTTagList();
+        for(int i = 0; i < EnumEPInventionPage.values().length; i++){
+            NBTTagList inventionList = new NBTTagList();
+            for(int j = 0; j < EnumEPInventionPage.values()[i].getPage().getElements().size(); j++){
+                NBTTagByte unlocked = new NBTTagByte(unlockedList.get(i).get(j));
+                inventionList.appendTag(unlocked);
+            }
+            pageList.appendTag(inventionList);
+        }
+        nbtTagCompound.setTag("page", pageList);
+    }
+
+    private String getStatNames(InventionElement... elements){
+        String s = "";
+        for(InventionElement element : elements)
+            for(InventionElement parent : element.parentAchievements){
+                s += "\n" + (new ChatComponentTranslation("achievement.requires", parent.getStatName())).getUnformattedText();
+            }
+        return s;
+    }
+    
     private TextureAtlasSprite func_175371_a(Block p_175371_1_){
         return Minecraft.getMinecraft().getBlockRendererDispatcher().func_175023_a().func_178122_a(p_175371_1_.getDefaultState());
     }

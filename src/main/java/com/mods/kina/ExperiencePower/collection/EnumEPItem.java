@@ -11,7 +11,8 @@ public enum EnumEPItem{
     Ingot(new ItemIngot()),
     MonsterPlacer(new ItemEPMonsterPlacer()),
     Wrench(new ItemWrenchWand()),
-    ArmorPump(new ItemArmorPump());
+    ArmorPump(new ItemArmorPump()),
+    InventionNote(new ItemInventionNote());
     private Item item;
     EnumEPItem(Item item){
         this.item=item;
