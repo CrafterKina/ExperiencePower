@@ -66,6 +66,14 @@ public class GuiInventionNote extends GuiScreen{
         short short2 = 141;
         this.field_146569_s = this.field_146567_u = this.field_146565_w = (double) (EnumEPInvention.Sword.getInventionElement().displayColumn * 24 - short1 / 2 - 12);
         this.field_146568_t = this.field_146566_v = this.field_146573_x = (double) (EnumEPInvention.Sword.getInventionElement().displayRow * 24 - short2 / 2);
+        for(EnumEPInventionPage page : EnumEPInventionPage.values())
+            for(InventionElement element : page.getPage().elementList){
+                ArrayList<Byte> byteList = new ArrayList<Byte>(page.getPage().elementList.size());
+                for(int i = 0; i < page.getPage().elementList.size(); i++){
+                    byteList.add(i, (byte) 0);
+                }
+                unlockedList.add(byteList);
+            }
         onOpenGui();
     }
 
