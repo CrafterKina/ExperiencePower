@@ -6,6 +6,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
+//TODO
 public class EntityMonsterBook extends EntityCreature{
     public EntityMonsterBook(World worldIn){
         super(worldIn);

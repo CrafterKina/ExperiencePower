@@ -12,6 +12,9 @@ public class InventionRegistrar{
         }
     }
 
+    /**
+     面倒くさいのでEnumHelper利用。 ちゃんと利用できるのかはわからない。 TODO 外部からの利用をしやすくする。
+     */
     public static EnumEPInventionPage addPage(String name, InventionPage... page){
         return EnumHelper.addEnum(EnumEPInventionPage.class, name, page);
     }

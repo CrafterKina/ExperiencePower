@@ -24,62 +24,50 @@ public class ItemInventionNote extends Item{
         setUnlocalizedName("invention_note");
     }
 
+    /**
+     発見ノート(仮称)のGUIを開く。
+     */
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn){
         Minecraft.getMinecraft().displayGuiScreen(new GuiInventionNote(Minecraft.getMinecraft().currentScreen, itemStackIn));
         return itemStackIn;
     }
 
+    /**
+     "note"という特別のNBTTagCompoundを用意。
+     */
     public NBTTagCompound getNBT(ItemStack stack){
         return stack.getSubCompound("note", true);
     }
-    
-    /*public void setNBTTag(ItemStack stack,String tagName,NBTBase nbt){
-        getNBT(stack).setTag(tagName, nbt);
-    }
 
-    public NBTBase getNBTTagBasic(String tagName,NBTTagCompound compound, NBTBase nbt){
-        if(compound.hasKey(tagName))return compound.getTag(tagName);
-        else {
-            compound.setTag(tagName,nbt);
-            return nbt;
-        }
-    }
-    
-    public NBTBase getNBTTag(ItemStack stack,String tagName,NBTBase nbt){
-        return getNBTTagBasic(tagName,getNBT(stack),nbt);
-    }*/
-
+    /**
+     ページの要素を取り出す。 リストでの取得は今のところない。
+     */
     public InventionElement getElementFromPage(int page, int invent){
         return EnumEPInventionPage.values()[page].getPage().getElements().get(invent);
     }
 
+    /**
+     ページの中での要素のIDを取得。
+     もう少しスマートにしたい。
+     */
     public int getIDFromPage(int page, InventionElement element){
         for(int i = 0; i < EnumEPInventionPage.values()[page].getPage().getElements().size(); i++){
             if(getElementFromPage(page, i).equals(element)) return i;
         }
         return -1;
     }
-
-    /*private NBTTagList getPageList(ItemStack stack){
-        return (NBTTagList)getNBTTag(stack,"page",new NBTTagList());
-    }
     
-    public NBTTagCompound getPage(ItemStack stack,int page){
-        if(getPageList(stack).tagCount()>page)return (NBTTagCompound)getPageList(stack).get(page);
-        else {
-            NBTTagCompound nbt=new NBTTagCompound();
-            getPageList(stack).set(page,nbt);
-            return nbt;
-        }
-    }
-    
-    private NBTTagCompound getInvention(ItemStack stack,int page,int invent){
-        return (NBTTagCompound)((NBTTagList)getNBTTagBasic("invention",getPage(stack, page),new NBTTagList())).get(invent);
-    }*/
+    /**
+     この要素は確認済みなのかどうか。
+     未発見・発見・発明の三段階に分けたほうがいいかも。
+     */
     public boolean hasInventionUnlocked(List<List<Byte>> list, int page, int invent){
         return list.get(page).get(invent) == 1;
     }
 
+    /**
+     この要素を解除できるのか。
+     */
     public boolean canUnlockInvention(List<List<Byte>> list, int page, int invent){
         return getElementFromPage(page, invent).parentAchievements == null || hasInventionUnlocked(list, page, invent);
     }
@@ -101,6 +89,9 @@ public class ItemInventionNote extends Item{
         //initNBT(stack);
     }
 
+    /**
+     NBTの初期化。
+     */
     public void initNBT(NBTTagCompound tagCompound){
         NBTTagList pageList = new NBTTagList();
         for(int i = 0; i < EnumEPInventionPage.values().length; i++){
@@ -112,9 +103,11 @@ public class ItemInventionNote extends Item{
             pageList.appendTag(inventionList);
         }
         tagCompound.setTag("page", pageList);
-        //return stack;
     }
 
+    /**
+     親の一つでも解除後のものがあるか。
+     */
     public int hasInventionUnlockedAnyone(List<List<Byte>> list, int page, InventionElement... elements){
         for(int i = 0; i < elements.length; i++){
             if(hasInventionUnlocked(list, page, getIDFromPage(page, elements[i]))) return i;
@@ -122,6 +115,9 @@ public class ItemInventionNote extends Item{
         return -1;
     }
 
+    /**
+     解除済みのものからの要素の距離。
+     */
     @SideOnly(Side.CLIENT)
     public int getDistanceFromOpened(List<List<Byte>> list, int page, int invent){
         if(hasInventionUnlocked(list, page, invent)){
