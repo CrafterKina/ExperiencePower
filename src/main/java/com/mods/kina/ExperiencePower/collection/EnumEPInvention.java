@@ -4,7 +4,7 @@ import com.mods.kina.ExperiencePower.invent.InventionElement;
 import net.minecraft.init.Items;
 
 public enum EnumEPInvention{
-    Sword(new InventionElement("achievement.openInventory", "openInventory", 0, 0, Items.book));
+    Sword(new InventionElement("achievement.openInventory", "openInventory", 0, 0, Items.book).setPage(EnumEPInventionPage.Life));
     /** Is the smallest column used to display a achievement on the GUI. */
     public static int minDisplayColumn;
     /** Is the smallest row used to display a achievement on the GUI. */

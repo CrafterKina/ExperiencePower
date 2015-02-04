@@ -49,6 +49,7 @@ public class ExperiencePowerCore{
         SmeltRecipeRegistrar.registerRecipes();
         CraftRecipeRegistrar.registerRecipes();
         AchievementRegistrar.registerAchievement();
+        InventionRegistrar.registerInvention();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
     }
 

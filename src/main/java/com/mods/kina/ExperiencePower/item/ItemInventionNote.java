@@ -77,7 +77,8 @@ public class ItemInventionNote extends Item{
         return (NBTTagCompound)((NBTTagList)getNBTTagBasic("invention",getPage(stack, page),new NBTTagList())).get(invent);
     }*/
     public boolean hasInventionUnlocked(List<List<Byte>> list, int page, int invent){
-        return list.get(page).get(invent) == 1;
+        //return list.get(page).get(invent) == 1;
+        return false;
     }
 
     public boolean canUnlockInvention(List<List<Byte>> list, int page, int invent){

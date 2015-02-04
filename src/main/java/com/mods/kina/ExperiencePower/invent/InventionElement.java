@@ -27,6 +27,7 @@ public class InventionElement{
     /** Holds the description of the achievement, ready to be formatted and/or displayed. */
     private final String achievementDescription;
     public boolean isIndependent;
+    public EnumEPInventionPage parentPage;
     /**
      Holds a string formatter for the achievement, some of then needs extra dynamic info - like the key used to open the
      inventory.
@@ -121,7 +122,12 @@ public class InventionElement{
         return isSpecial;
     }
 
+    public EnumEPInventionPage getPage(){
+        return parentPage;
+    }
+    
     public InventionElement setPage(EnumEPInventionPage page){
+        parentPage = page;
         return this;
     }
 }
