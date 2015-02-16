@@ -7,7 +7,7 @@ import com.mods.kina.ExperiencePower.gui.GuiExpFurnace;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.inventory.Container;
 
-public enum EnumEPGui{
+public enum EnumEPGuiContainer{
     ExperienceAbsorber,
     ExperienceDischarger,
     ExperienceFurnace(ContainerExpFurnace.class, GuiExpFurnace.class),;
@@ -15,17 +15,17 @@ public enum EnumEPGui{
     private Class<? extends Container> container;
     private Class<? extends Gui> gui;
 
-    EnumEPGui(Class<? extends Container> container, Class<? extends Gui> gui){
+    EnumEPGuiContainer(Class<? extends Container> container, Class<? extends Gui> gui){
         this.container = container;
         this.gui = gui;
     }
 
-    EnumEPGui(){
+    EnumEPGuiContainer(){
         this(ContainerMachineBase.class, GuiMachineBase.class);
     }
 
-    public static EnumEPGui getGuiContainer(int id){
-        EnumEPGui[] epGui = EnumEPGui.values();
+    public static EnumEPGuiContainer getGuiContainer(int id){
+        EnumEPGuiContainer[] epGui = EnumEPGuiContainer.values();
         if(epGui.length < id) return null;
         else return epGui[id];
     }

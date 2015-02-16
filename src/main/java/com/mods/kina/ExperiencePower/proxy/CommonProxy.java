@@ -1,11 +1,7 @@
 package com.mods.kina.ExperiencePower.proxy;
 
-import com.mods.kina.ExperiencePower.base.ContainerMachineBase;
-import com.mods.kina.ExperiencePower.base.TileEntityMachineBase;
-import com.mods.kina.ExperiencePower.collection.EnumEPGui;
+import com.mods.kina.ExperiencePower.collection.EnumEPGuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
@@ -14,7 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 public class CommonProxy implements IGuiHandler{
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z){
         try{
-            return EnumEPGui.getGuiContainer(ID).getContainer().getConstructor(IInventory.class, TileEntityMachineBase.class).newInstance(player.inventory, world.getTileEntity(new BlockPos(x, y, z)));
+            return EnumEPGuiContainer.getGuiContainer(ID).getContainer().getConstructor(player.getClass(), world.getClass(), int.class, int.class, int.class).newInstance(player, world, x, y, z);
         } catch(NoSuchMethodException e){
             e.printStackTrace();
         } catch(InvocationTargetException e){
@@ -29,7 +25,7 @@ public class CommonProxy implements IGuiHandler{
 
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z){
         try{
-            return EnumEPGui.getGuiContainer(ID).getGui().getConstructor(ContainerMachineBase.class).newInstance(getServerGuiElement(ID, player, world, x, y, z));
+            return EnumEPGuiContainer.getGuiContainer(ID).getGui().getConstructor(player.getClass(), world.getClass(), int.class, int.class, int.class).newInstance(player, world, x, y, z);
         } catch(NoSuchMethodException e){
             e.printStackTrace();
         } catch(InvocationTargetException e){

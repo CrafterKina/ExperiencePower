@@ -4,24 +4,26 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
 
 public class ContainerMachineBase extends Container{
     public TileEntityMachineBase machineBase;
     public IInventory playerInventory;
 
-    public ContainerMachineBase(IInventory inventory, TileEntityMachineBase machineBase){
-        this.machineBase = machineBase;
-        this.playerInventory = inventory;
+    public ContainerMachineBase(EntityPlayer player, World world, int x, int y, int z){
+        this.machineBase = (TileEntityMachineBase) world.getTileEntity(new BlockPos(x, y, z));
+        this.playerInventory = player.inventory;
         this.machineBase.initContainer(this);
         int i;
         int j;
         for(i = 0; i < 3; ++i){
             for(j = 0; j < 9; ++j){
-                addSlotToContainer(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+                addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
             }
         }
         for(i = 0; i < 9; ++i){
-            addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 142));
+            addSlotToContainer(new Slot(player.inventory, i, 8 + i * 18, 142));
         }
     }
 

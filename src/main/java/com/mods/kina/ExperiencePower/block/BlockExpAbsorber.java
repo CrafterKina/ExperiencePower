@@ -3,7 +3,7 @@ package com.mods.kina.ExperiencePower.block;
 import com.mods.kina.ExperiencePower.ExperiencePowerCore;
 import com.mods.kina.ExperiencePower.base.BlockMachineBase;
 import com.mods.kina.ExperiencePower.base.ISendEnergy;
-import com.mods.kina.ExperiencePower.collection.EnumEPGui;
+import com.mods.kina.ExperiencePower.collection.EnumEPGuiContainer;
 import com.mods.kina.ExperiencePower.tileentity.TileEntityExpAbsorber;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -31,7 +31,7 @@ public class BlockExpAbsorber extends BlockMachineBase implements ISendEnergy{
      */
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ){
         if(!worldIn.isRemote)
-            playerIn.openGui(ExperiencePowerCore.core, EnumEPGui.ExperienceAbsorber.ordinal(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+            playerIn.openGui(ExperiencePowerCore.core, EnumEPGuiContainer.ExperienceAbsorber.ordinal(), worldIn, pos.getX(), pos.getY(), pos.getZ());
         return true;
     }
 
