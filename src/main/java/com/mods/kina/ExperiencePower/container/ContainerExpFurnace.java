@@ -1,17 +1,15 @@
 package com.mods.kina.ExperiencePower.container;
 
 import com.mods.kina.ExperiencePower.base.ContainerMachineBase;
-import com.mods.kina.ExperiencePower.base.TileEntityMachineBase;
 import com.mods.kina.ExperiencePower.collection.EnumEPItem;
 import com.mods.kina.ExperiencePower.slot.SlotFiltered;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ICrafting;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnaceOutput;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -21,11 +19,11 @@ public class ContainerExpFurnace extends ContainerMachineBase{
     private int field_178154_h;
     private int field_178155_i;
 
-    public ContainerExpFurnace(IInventory inventory, TileEntityMachineBase machineBase){
-        super(inventory, machineBase);
+    public ContainerExpFurnace(EntityPlayer player, World world, int x, int y, int z){
+        super(player, world, x, y, z);
         addSlotToContainer(new Slot(machineBase, 0, 56, 17));
         addSlotToContainer(new SlotFiltered(machineBase, 1, 56, 53, new ItemStack(EnumEPItem.ExperienceSealableBook.getItem())));
-        addSlotToContainer(new SlotFurnaceOutput(((InventoryPlayer) inventory).player, machineBase, 2, 116, 35));
+        addSlotToContainer(new SlotFurnaceOutput(player, machineBase, 2, 116, 35));
     }
 
     /**
