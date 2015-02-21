@@ -1,0 +1,6 @@
+{
+  "parent": "kina_experiencepower:block/pipe_base",
+  "textures": {
+    "base": "blocks/hopper_outside"
+  }
+}
