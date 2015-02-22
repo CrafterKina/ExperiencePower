@@ -20,7 +20,7 @@ public class TileEntityBlowFan extends TileEntity implements IUpdatePlayerListBo
      */
     public void update(){
         //レッドストーン動力が働いている時のみ
-        if(worldObj.isBlockPowered(pos) || worldObj.isBlockPowered(pos.offsetUp())){
+        if(worldObj.isBlockPowered(pos) || worldObj.isBlockPowered(pos.up())){
             //ブロックの向き
             EnumFacing facing = (EnumFacing) worldObj.getBlockState(pos).getProperties().get(BlockBlowFan.FACING);
             //相対的位置
@@ -59,7 +59,7 @@ public class TileEntityBlowFan extends TileEntity implements IUpdatePlayerListBo
             aabb = new AxisAlignedBB(pos.getX() + vec3i.getX() * getAvailableDistance(), pos.getY() + vec3i.getY() * getAvailableDistance(), pos.getZ() + vec3i.getZ() * getAvailableDistance(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1);
         }
         //Entity取得
-        return worldObj.func_175647_a(Entity.class, aabb, IEntitySelector.selectAnything);
+        return worldObj.getEntitiesWithinAABB(Entity.class, aabb, IEntitySelector.selectAnything);
     }
 
     public int getAvailableDistance(){
@@ -70,7 +70,7 @@ public class TileEntityBlowFan extends TileEntity implements IUpdatePlayerListBo
         //初期化
         int i = 1;
         //forで最大15回回す
-        for(; i <= (worldObj.func_175687_A(pos) > worldObj.func_175687_A(pos.offsetUp()) ? worldObj.func_175687_A(pos) : worldObj.func_175687_A(pos.offsetUp())); i++){
+        for(; i <= (worldObj.getStrongPower(pos) > worldObj.getStrongPower(pos.up()) ? worldObj.getStrongPower(pos) : worldObj.getStrongPower(pos.up())); i++){
             //Fanからの相対的位置を元に調査ブロックを徐々に遠ざける
             BlockPos blockPos = pos.add(vec3i.getX() * i, vec3i.getY() * i, vec3i.getZ() * i);
             //BlockPosの位置にあるBlock

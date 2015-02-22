@@ -57,8 +57,13 @@ public class BlockBasicPipe extends Block implements IWrenchable{
             if(isNone(state, out) || getFace(state, out) != side) setFace(state, out, convertToOptional(side));
             else setFace(state, out, optionalFacing.NONE);
         }*/
-        worldIn.setBlockState(pos, worldIn.getBlockState(pos).withProperty(in, optionalFacing.NONE).withProperty(out, optionalFacing.WEST));
-        playerIn.addChatComponentMessage(new ChatComponentText(worldIn.getBlockState(pos).getValue(in).toString() + worldIn.getBlockState(pos).getValue(out).toString()));
+        if(worldIn.isRemote) return false;
+        IBlockState s = worldIn.getBlockState(pos).withProperty(in, optionalFacing.NONE).withProperty(out, optionalFacing.EAST);
+        worldIn.setBlockState(pos, s);
+        IBlockState t = worldIn.getBlockState(pos);
+        String format = "\n%s:\n(%s, %s) #%s";
+        playerIn.addChatComponentMessage(new ChatComponentText(String.format(format, "Expected", s.getValue(in), s.getValue(out), Block.BLOCK_STATE_IDS.get(s))));
+        playerIn.addChatComponentMessage(new ChatComponentText(String.format(format, "Result", t.getValue(in), t.getValue(out), Block.BLOCK_STATE_IDS.get(t))));
         return true;
     }
 

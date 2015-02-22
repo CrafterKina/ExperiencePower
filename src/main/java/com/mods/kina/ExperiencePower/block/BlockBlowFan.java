@@ -31,14 +31,14 @@ public class BlockBlowFan extends BlockEPContainerBase{
      置き方で向きを変える。
      */
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack){
-        worldIn.setBlockState(pos, state.withProperty(FACING, BlockPistonBase.func_180695_a(worldIn, pos, placer)), 2);
+        worldIn.setBlockState(pos, state.withProperty(FACING, BlockPistonBase.getFacingFromEntity(worldIn, pos, placer)), 2);
     }
 
     /**
      置き方で向きを変える。
      */
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer){
-        return blockState.getBaseState().withProperty(FACING, BlockPistonBase.func_180695_a(worldIn, pos, placer));
+        return blockState.getBaseState().withProperty(FACING, BlockPistonBase.getFacingFromEntity(worldIn, pos, placer));
     }
 
     /**
@@ -46,7 +46,7 @@ public class BlockBlowFan extends BlockEPContainerBase{
      */
     public IBlockState getStateFromMeta(int meta)
     {
-        return this.getDefaultState().withProperty(FACING, BlockPistonBase.func_176317_b(meta));
+        return this.getDefaultState().withProperty(FACING, BlockPistonBase.getFacing(meta));
     }
 
     /**

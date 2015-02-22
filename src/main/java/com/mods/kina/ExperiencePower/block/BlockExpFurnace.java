@@ -1,32 +1,7 @@
 package com.mods.kina.ExperiencePower.block;
 
-import com.mods.kina.ExperiencePower.base.BlockMachineBase;
-import com.mods.kina.ExperiencePower.tileentity.TileEntityExpFurnace;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockState;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Random;
-
-public class BlockExpFurnace extends BlockMachineBase{
-    public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+public class BlockExpFurnace/* extends BlockMachineBase*/{
+    /*public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
     private static boolean field_149934_M;
     private boolean isBurning;
 
@@ -66,12 +41,12 @@ public class BlockExpFurnace extends BlockMachineBase{
         }
     }
 
-    /**
+    *//**
      Get the Item that this Block should drop when harvested.
 
      @param fortune
      the level of the Fortune enchantment on the player's tool
-     */
+     *//*
     public Item getItemDropped(IBlockState state, Random rand, int fortune){
         return Item.getItemFromBlock(Blocks.furnace);
     }
@@ -82,10 +57,10 @@ public class BlockExpFurnace extends BlockMachineBase{
 
     private void func_176445_e(World worldIn, BlockPos p_176445_2_, IBlockState p_176445_3_){
         if(!worldIn.isRemote){
-            Block block = worldIn.getBlockState(p_176445_2_.offsetNorth()).getBlock();
-            Block block1 = worldIn.getBlockState(p_176445_2_.offsetSouth()).getBlock();
-            Block block2 = worldIn.getBlockState(p_176445_2_.offsetWest()).getBlock();
-            Block block3 = worldIn.getBlockState(p_176445_2_.offsetEast()).getBlock();
+            Block block = worldIn.getBlockState(p_176445_2_.north()).getBlock();
+            Block block1 = worldIn.getBlockState(p_176445_2_.south()).getBlock();
+            Block block2 = worldIn.getBlockState(p_176445_2_.west()).getBlock();
+            Block block3 = worldIn.getBlockState(p_176445_2_.east()).getBlock();
             EnumFacing enumfacing = (EnumFacing) p_176445_3_.getValue(FACING);
 
             if(enumfacing == EnumFacing.NORTH && block.isFullBlock() && !block1.isFullBlock()){
@@ -146,9 +121,9 @@ public class BlockExpFurnace extends BlockMachineBase{
         }
     }
 
-    /**
+    *//**
      Returns a new instance of a block's tile entity class. Called on placing the block.
-     */
+     *//*
     public TileEntity createNewTileEntity(World worldIn, int meta){
         return new TileEntityExpFurnace();
     }
@@ -187,24 +162,24 @@ public class BlockExpFurnace extends BlockMachineBase{
         return Item.getItemFromBlock(Blocks.furnace);
     }
 
-    /**
+    *//**
      The type of render function that is called for this block
-     */
+     *//*
     public int getRenderType(){
         return 3;
     }
 
-    /**
+    *//**
      Possibly modify the given BlockState before rendering it on an Entity (Minecarts, Endermen, ...)
-     */
+     *//*
     @SideOnly(Side.CLIENT)
     public IBlockState getStateForEntityRender(IBlockState state){
         return this.getDefaultState().withProperty(FACING, EnumFacing.SOUTH);
     }
 
-    /**
+    *//**
      Convert the given metadata into a BlockState for this Block
-     */
+     *//*
     public IBlockState getStateFromMeta(int meta){
         EnumFacing enumfacing = EnumFacing.getFront(meta);
 
@@ -215,9 +190,9 @@ public class BlockExpFurnace extends BlockMachineBase{
         return this.getDefaultState().withProperty(FACING, enumfacing);
     }
 
-    /**
+    *//**
      Convert the BlockState into the correct metadata value
-     */
+     *//*
     public int getMetaFromState(IBlockState state){
         return ((EnumFacing) state.getValue(FACING)).getIndex();
     }
@@ -253,5 +228,5 @@ public class BlockExpFurnace extends BlockMachineBase{
             } catch(NoSuchFieldError var1){
             }
         }
-    }
+    }*/
 }

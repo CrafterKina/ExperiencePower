@@ -1,15 +1,7 @@
 package com.mods.kina.ExperiencePower.gui;
 
-import com.mods.kina.ExperiencePower.base.ContainerMachineBase;
-import com.mods.kina.ExperiencePower.base.GuiMachineBase;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraft.util.ResourceLocation;
-
-public class GuiExpFurnace extends GuiMachineBase{
-    private static final ResourceLocation furnaceGuiTextures = new ResourceLocation(/*StaticFieldCollection.MODID, */"textures/gui/container/furnace.png");
+public class GuiExpFurnace/* extends GuiMachineBase*/{
+    /*private static final ResourceLocation furnaceGuiTextures = new ResourceLocation(*//*StaticFieldCollection.MODID, *//*"textures/gui/container/furnace.png");
     private final InventoryPlayer field_175383_v;
     private IInventory tileFurnace;
 
@@ -19,18 +11,18 @@ public class GuiExpFurnace extends GuiMachineBase{
         this.tileFurnace = machineBase.machineBase;
     }
 
-    /**
+    *//**
      Draw the foreground layer for the GuiContainer (everything in front of the items). Args : mouseX, mouseY
-     */
+     *//*
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
         String s = this.tileFurnace.getDisplayName().getUnformattedText();
         this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
         this.fontRendererObj.drawString(this.field_175383_v.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
     }
 
-    /**
+    *//**
      Args : renderPartialTicks, mouseX, mouseY
-     */
+     *//*
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(furnaceGuiTextures);
@@ -62,5 +54,5 @@ public class GuiExpFurnace extends GuiMachineBase{
         }
 
         return this.tileFurnace.getField(0) * p_175382_1_ / j;
-    }
+    }*/
 }

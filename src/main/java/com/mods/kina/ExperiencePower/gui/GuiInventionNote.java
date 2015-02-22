@@ -261,7 +261,7 @@ public class GuiInventionNote extends GuiScreen{
         GlStateManager.pushMatrix();
         GlStateManager.translate((float) k1, (float) l1, -200.0F);
         GlStateManager.scale(1.0F / this.field_146570_r, 1.0F / this.field_146570_r, 0.0F);
-        GlStateManager.func_179098_w();
+        GlStateManager.enableTexture2D();
         GlStateManager.disableLighting();
         GlStateManager.enableRescaleNormal();
         GlStateManager.enableColorMaterial();
@@ -308,7 +308,7 @@ public class GuiInventionNote extends GuiScreen{
                 }
 
                 this.mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
-                this.func_175175_a(j3 * 16 - k2, i3 * 16 - l2, textureatlassprite, 16, 16);
+                this.drawTexturedModalRect(j3 * 16 - k2, i3 * 16 - l2, textureatlassprite, 16, 16);
             }
         }
 
@@ -415,7 +415,7 @@ public class GuiInventionNote extends GuiScreen{
 
                 GlStateManager.disableLighting(); //Forge: Make sure Lighting is disabled. Fixes MC-33065
                 GlStateManager.enableCull();
-                this.itemRender.func_180450_b(inventionElement2.theItemStack, l4 + 3, i5 + 3);
+                this.itemRender.renderItemAndEffectIntoGUI(inventionElement2.theItemStack, l4 + 3, i5 + 3);
                 GlStateManager.blendFunc(770, 771);
                 GlStateManager.disableLighting();
 
@@ -440,7 +440,7 @@ public class GuiInventionNote extends GuiScreen{
         this.zLevel = 0.0F;
         GlStateManager.depthFunc(515);
         GlStateManager.disableDepth();
-        GlStateManager.func_179098_w();
+        GlStateManager.enableTexture2D();
         super.drawScreen(p_146552_1_, p_146552_2_, p_146552_3_);
 
         if(achievement != null){
@@ -463,7 +463,7 @@ public class GuiInventionNote extends GuiScreen{
                 this.fontRendererObj.drawSplitString(s1, l4, i5 + 12, l3, -6250336);
 
                 if(item.hasInventionUnlocked(unlockedList, currentPage, id)){
-                    this.fontRendererObj.func_175063_a(I18n.format("achievement.taken"), (float) l4, (float) (i5 + i4 + 4), -7302913);
+                    this.fontRendererObj.drawStringWithShadow(I18n.format("achievement.taken"), (float) l4, (float) (i5 + i4 + 4), -7302913);
                 }
             }else{
                 int j4;
@@ -488,7 +488,7 @@ public class GuiInventionNote extends GuiScreen{
             }
 
             if(s != null){
-                this.fontRendererObj.func_175063_a(s, (float) l4, (float) i5, item.canUnlockInvention(unlockedList, currentPage, id) ? (achievement.getSpecial() ? -128 : -1) : (achievement.getSpecial() ? -8355776 : -8355712));
+                this.fontRendererObj.drawStringWithShadow(s, (float) l4, (float) i5, item.canUnlockInvention(unlockedList, currentPage, id) ? (achievement.getSpecial() ? -128 : -1) : (achievement.getSpecial() ? -8355776 : -8355712));
             }
         }
 
@@ -543,7 +543,7 @@ public class GuiInventionNote extends GuiScreen{
     }
     
     private TextureAtlasSprite func_175371_a(Block p_175371_1_){
-        return Minecraft.getMinecraft().getBlockRendererDispatcher().func_175023_a().func_178122_a(p_175371_1_.getDefaultState());
+        return Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(p_175371_1_.getDefaultState());
     }
 
     /**
