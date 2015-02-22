@@ -1,6 +1,7 @@
 package com.mods.kina.ExperiencePower.collection;
 
 import com.mods.kina.ExperiencePower.block.*;
+import com.mods.kina.ExperiencePower.item.ItemBasicPipe;
 import com.mods.kina.ExperiencePower.item.ItemOre;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -18,7 +19,7 @@ public enum EnumEPBlock{
     //ExperienceFurnace(new BlockExpFurnace()),
     Ore(new BlockOre(), ItemOre.class, "kina_experiencepower:ore", "kina_experiencepower:ore", "kina_experiencepower:ore", "kina_experiencepower:ore"),
     SimpleExperienceInjector(new BlockSimpleExpInjector()),
-    ItemPipe(new BlockBasicPipe()),;
+    ItemPipe(new BlockBasicPipe(), ItemBasicPipe.class),;
 
     private Class<? extends ItemBlock> itemBlock;
     private Block block;

@@ -66,7 +66,7 @@ public class BlockBasicPipe extends Block implements IWrenchable{
      Convert the given metadata into a BlockState for this Block
      */
     public IBlockState getStateFromMeta(int meta){
-        return getDefaultState().withProperty(in, optionalFacing.NONE).withProperty(out, optionalFacing.NONE);
+        return getDefaultState().withProperty(in, optionalFacing.EAST).withProperty(out, optionalFacing.WEST);
     }
 
     /**
