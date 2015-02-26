@@ -1,8 +1,9 @@
 package com.mods.kina.ExperiencePower.block;
 
+import com.mods.kina.ExperiencePower.base.BlockEPContainerBase;
 import com.mods.kina.ExperiencePower.base.IWrenchable;
 import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
-import net.minecraft.block.Block;
+import com.mods.kina.ExperiencePower.tileentity.TileEntityBasicPipe;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -10,13 +11,15 @@ import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockBasicPipe extends Block implements IWrenchable{
+public class BlockBasicPipe extends BlockEPContainerBase implements IWrenchable{
     public static final PropertyEnum in = PropertyEnum.create("in", optionalFacing.class);
     public static final PropertyEnum out = PropertyEnum.create("out", optionalFacing.class);
 
@@ -25,6 +28,7 @@ public class BlockBasicPipe extends Block implements IWrenchable{
         setUnlocalizedName("item_pipe");
         setCreativeTab(EnumEPCreativeTab.BLOCK.getCreativeTab());
         setDefaultState(blockState.getBaseState().withProperty(in, optionalFacing.NONE).withProperty(out, optionalFacing.NONE));
+        GameRegistry.registerTileEntity(TileEntityBasicPipe.class, "basic_pipe");
     }
 
     public static boolean isNone(IBlockState state, IProperty property){
@@ -57,21 +61,20 @@ public class BlockBasicPipe extends Block implements IWrenchable{
             if(isNone(state, out) || getFace(state, out) != side) setFace(state, out, convertToOptional(side));
             else setFace(state, out, optionalFacing.NONE);
         }*/
-        if(worldIn.isRemote) return false;
-        IBlockState s = worldIn.getBlockState(pos).withProperty(in, optionalFacing.NONE).withProperty(out, optionalFacing.EAST);
-        worldIn.setBlockState(pos, s);
-        IBlockState t = worldIn.getBlockState(pos);
-        String format = "\n%s:\n(%s, %s) #%s";
-        playerIn.addChatComponentMessage(new ChatComponentText(String.format(format, "Expected", s.getValue(in), s.getValue(out), Block.BLOCK_STATE_IDS.get(s))));
-        playerIn.addChatComponentMessage(new ChatComponentText(String.format(format, "Result", t.getValue(in), t.getValue(out), Block.BLOCK_STATE_IDS.get(t))));
-        return true;
+        return ((TileEntityBasicPipe) worldIn.getTileEntity(pos)).wrench(stack, playerIn, worldIn, pos, side, hitX, hitY, hitZ);
     }
 
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos){
+        if(!(worldIn.getTileEntity(pos) instanceof TileEntityBasicPipe)) return getDefaultState();
+        TileEntityBasicPipe pipe = (TileEntityBasicPipe) worldIn.getTileEntity(pos);
+        return getDefaultState().withProperty(in, pipe.in).withProperty(out, pipe.out);
+    }
+    
     /**
      Convert the given metadata into a BlockState for this Block
      */
     public IBlockState getStateFromMeta(int meta){
-        return getDefaultState().withProperty(in, optionalFacing.EAST).withProperty(out, optionalFacing.WEST);
+        return getDefaultState();
     }
 
     /**
@@ -83,6 +86,18 @@ public class BlockBasicPipe extends Block implements IWrenchable{
 
     protected BlockState createBlockState(){
         return new BlockState(this, in, out);
+    }
+
+    /**
+     Returns a new instance of a block's tile entity class. Called on placing the block.
+
+     @param world
+     Worldのインスタンス
+     @param meta
+     設置されるBlockのメタデータ値。
+     */
+    public TileEntity createNewTileEntity(World world, int meta){
+        return new TileEntityBasicPipe();
     }
 
     public enum optionalFacing implements IStringSerializable{
