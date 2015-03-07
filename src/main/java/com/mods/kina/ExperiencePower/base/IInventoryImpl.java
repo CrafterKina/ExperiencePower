@@ -160,8 +160,8 @@ public abstract class IInventoryImpl extends TileEntity implements IInventory{
     }
 
     /**
-     Returns the maximum stack size for a inventory slot. Seems to always be 64, possibly will be extended. *Isn't this
-     more of a set than a get?*
+     Returns the maximum stack size for a inventory slot. Seems to always be 64, possibly will be extended. Isn't this
+     more of a set than a get?
      */
     public int getInventoryStackLimit(){
         return 64;
@@ -227,7 +227,8 @@ public abstract class IInventoryImpl extends TileEntity implements IInventory{
                 this.inventoryContents[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
             }
         }
-        readFromNBTExtended(compound);
+
+        readFromNBTExtended(compound.getCompoundTag("Extended"));
     }
 
     protected void readFromNBTExtended(NBTTagCompound compound){}
@@ -250,7 +251,10 @@ public abstract class IInventoryImpl extends TileEntity implements IInventory{
         if(this.hasCustomName()){
             compound.setString("CustomName", this.getName());
         }
-        writeToNBTExtended(compound);
+
+        NBTTagCompound extendedCompound = new NBTTagCompound();
+        writeToNBTExtended(extendedCompound);
+        compound.setTag("Extended", extendedCompound);
     }
 
     protected void writeToNBTExtended(NBTTagCompound compound){}

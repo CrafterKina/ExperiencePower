@@ -2,11 +2,15 @@ package com.mods.kina.ExperiencePower.tileentity;
 
 import com.mods.kina.ExperiencePower.base.TileEntityEPBase;
 import com.mods.kina.ExperiencePower.block.BlockBasicPipe;
+import com.mods.kina.ExperiencePower.util.UtilTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.IHopper;
 import net.minecraft.tileentity.TileEntityHopper;
@@ -31,6 +35,7 @@ public class TileEntityBasicPipe extends TileEntityEPBase implements IUpdatePlay
         in = values()[compound.getByte("in")];
         out = values()[compound.getByte("out")];
         cooldownTime = compound.getInteger("cooldownTime");
+        UtilTileEntity.instance.syncTileEntity(this);
         if(hasWorldObj())
             worldObj.markAndNotifyBlock(pos, worldObj.getChunkFromBlockCoords(pos), worldObj.getBlockState(pos), worldObj.getBlockState(pos), 3);
     }
@@ -47,6 +52,22 @@ public class TileEntityBasicPipe extends TileEntityEPBase implements IUpdatePlay
         if(isOnCooldown()) return;
         cooldownTime = 0;
         updatePipe();
+    }
+
+    public Packet getDescriptionPacket(){
+        return UtilTileEntity.instance.getSimpleDescriptionPacket(this);
+    }
+
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt){
+        UtilTileEntity.instance.onSimpleDataPacket(this, net, pkt);
+    }
+
+    /**
+     Returns the maximum stack size for a inventory slot. Seems to always be 64, possibly will be extended. Isn't this
+     more of a set than a get?
+     */
+    public int getInventoryStackLimit(){
+        return 1;
     }
 
     private void updatePipe(){
@@ -85,6 +106,7 @@ public class TileEntityBasicPipe extends TileEntityEPBase implements IUpdatePlay
     }
 
     private IInventory getInventoryConnectingWithOutput(){
+        if(out == NONE) return null;
         EnumFacing facing = BlockBasicPipe.convertToNormal(out);
         return TileEntityHopper.func_145893_b(worldObj, getXPos() + facing.getDirectionVec().getX(), getYPos() + facing.getDirectionVec().getY(), getZPos() + facing.getDirectionVec().getZ());
     }
@@ -123,7 +145,7 @@ public class TileEntityBasicPipe extends TileEntityEPBase implements IUpdatePlay
             if(in == NONE || BlockBasicPipe.convertToNormal(in) != side) in = BlockBasicPipe.convertToOptional(side);
             else in = NONE;
         }else{
-            if(out != NONE && BlockBasicPipe.convertToNormal(out) == side) return false;
+            if(in != NONE && BlockBasicPipe.convertToNormal(in) == side) return false;
             if(out == NONE || BlockBasicPipe.convertToNormal(out) != side) out = BlockBasicPipe.convertToOptional(side);
             else out = NONE;
         }
