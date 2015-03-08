@@ -1,5 +1,6 @@
 package com.mods.kina.ExperiencePower.item;
 
+import com.mods.kina.ExperiencePower.base.IWrench;
 import com.mods.kina.ExperiencePower.base.IWrenchable;
 import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,7 +10,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class ItemWrenchWand extends Item{
+public class ItemWrenchWand extends Item implements IWrench{
     public ItemWrenchWand(){
         setUnlocalizedName("wrench_wand");
         setCreativeTab(EnumEPCreativeTab.ITEM.getCreativeTab());
