@@ -1,5 +1,6 @@
 package com.mods.kina.ExperiencePower.util;
 
+import com.mods.kina.ExperiencePower.collection.StaticFieldCollection;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -7,11 +8,16 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.List;
 
 public class UtilTileEntity{
     public static final UtilTileEntity instance = new UtilTileEntity();
+
+    public void registerTileEntity(Class<? extends TileEntity> te, String id){
+        GameRegistry.registerTileEntity(te, StaticFieldCollection.MODID + "." + id);
+    }
 
     /**
      TileEntityを同期する。 getDescriptionPacketとonDataPacketの実装が必要。
