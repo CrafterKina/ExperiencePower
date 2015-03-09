@@ -5,6 +5,7 @@ import com.mods.kina.ExperiencePower.base.BlockMachineBase;
 import com.mods.kina.ExperiencePower.base.ISendEnergy;
 import com.mods.kina.ExperiencePower.collection.EnumEPGuiContainer;
 import com.mods.kina.ExperiencePower.tileentity.TileEntityExpAbsorber;
+import com.mods.kina.ExperiencePower.util.UtilTileEntity;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,7 +13,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  経験を吸いとる怖いやつ
@@ -23,7 +23,7 @@ public class BlockExpAbsorber extends BlockMachineBase implements ISendEnergy{
         setUnlocalizedName("exp_absorber");
         setHardness(1.5f);
         setResistance(10);
-        GameRegistry.registerTileEntity(TileEntityExpAbsorber.class, "TileEntityExpAbsorber");
+        UtilTileEntity.instance.registerTileEntity(TileEntityExpAbsorber.class, "exp_absorber");
     }
 
     /**

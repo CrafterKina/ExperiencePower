@@ -2,6 +2,7 @@ package com.mods.kina.ExperiencePower.block;
 
 import com.mods.kina.ExperiencePower.base.BlockEPContainerBase;
 import com.mods.kina.ExperiencePower.tileentity.TileEntityBlowFan;
+import com.mods.kina.ExperiencePower.util.UtilTileEntity;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -13,7 +14,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockBlowFan extends BlockEPContainerBase{
     public static final PropertyDirection FACING = PropertyDirection.create("facing");
@@ -24,7 +24,7 @@ public class BlockBlowFan extends BlockEPContainerBase{
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         setHardness(1.5f);
         setResistance(10);
-        GameRegistry.registerTileEntity(TileEntityBlowFan.class, "TileEntityBlowFan");
+        UtilTileEntity.instance.registerTileEntity(TileEntityBlowFan.class, "blow_Fan");
     }
 
     /**

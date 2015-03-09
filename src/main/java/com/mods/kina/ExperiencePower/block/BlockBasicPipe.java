@@ -5,6 +5,7 @@ import com.mods.kina.ExperiencePower.base.IWrenchable;
 import com.mods.kina.ExperiencePower.base.IWrenchingInfo;
 import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
 import com.mods.kina.ExperiencePower.tileentity.TileEntityBasicPipe;
+import com.mods.kina.ExperiencePower.util.UtilTileEntity;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -21,7 +22,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
@@ -37,7 +37,7 @@ public class BlockBasicPipe extends BlockEPContainerBase implements IWrenchable,
         setUnlocalizedName("item_pipe");
         setCreativeTab(EnumEPCreativeTab.BLOCK.getCreativeTab());
         setDefaultState(blockState.getBaseState().withProperty(in, optionalFacing.NONE).withProperty(out, optionalFacing.NONE));
-        GameRegistry.registerTileEntity(TileEntityBasicPipe.class, "basic_pipe");
+        UtilTileEntity.instance.registerTileEntity(TileEntityBasicPipe.class, "basic_pipe");
     }
 
     public static boolean isNone(IBlockState state, IProperty property){
