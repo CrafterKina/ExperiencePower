@@ -1,6 +1,7 @@
 package com.mods.kina.ExperiencePower.block;
 
 import com.mods.kina.ExperiencePower.base.BlockEPContainerBase;
+import com.mods.kina.ExperiencePower.base.IWrenchingInfo;
 import com.mods.kina.ExperiencePower.tileentity.TileEntityBlowFan;
 import com.mods.kina.ExperiencePower.util.UtilTileEntity;
 import net.minecraft.block.BlockPistonBase;
@@ -8,14 +9,18 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.RenderGlobal;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 
-public class BlockBlowFan extends BlockEPContainerBase{
+import java.awt.*;
+
+public class BlockBlowFan extends BlockEPContainerBase implements IWrenchingInfo{
     public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
     public BlockBlowFan(){
@@ -71,5 +76,29 @@ public class BlockBlowFan extends BlockEPContainerBase{
 
     protected BlockState createBlockState(){
         return new BlockState(this,FACING);
+    }
+
+    public void renderInfo(World world, BlockPos pos, double d0, double d1, double d2){
+        TileEntityBlowFan blowFan = (TileEntityBlowFan) world.getTileEntity(pos);
+        //向きを取得
+        EnumFacing facing = (EnumFacing) world.getBlockState(pos).getProperties().get(BlockBlowFan.FACING);
+        //向いてるとこの相対的位置を取得
+        Vec3i vec3i = facing.getDirectionVec();
+        //初期化
+        AxisAlignedBB aabb;
+        //相対的位置が+方向か-方向かで場合分け
+        //範囲指定
+        if(facing.getAxisDirection() == EnumFacing.AxisDirection.POSITIVE){
+            aabb = new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1 + vec3i.getX() * blowFan.getAvailableDistance(), pos.getY() + 1 + vec3i.getY() * blowFan.getAvailableDistance(), pos.getZ() + 1 + vec3i.getZ() * blowFan.getAvailableDistance());
+        }else{
+            aabb = new AxisAlignedBB(pos.getX() + vec3i.getX() * blowFan.getAvailableDistance(), pos.getY() + vec3i.getY() * blowFan.getAvailableDistance(), pos.getZ() + vec3i.getZ() * blowFan.getAvailableDistance(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1);
+        }
+        float f1 = 0.002F;
+        aabb = aabb.expand(f1, f1, f1).offset(-d0, -d1, -d2);
+        RenderGlobal.drawOutlinedBoundingBox(aabb, Color.green.getRGB());
+    }
+
+    public EnumDyeColor getWrenchColor(ItemStack stack, World worldIn, Entity entityIn, MovingObjectPosition position, boolean isUsing){
+        return EnumDyeColor.WHITE;
     }
 }

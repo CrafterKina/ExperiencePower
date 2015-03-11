@@ -6,31 +6,33 @@ import com.mods.kina.ExperiencePower.base.IWrenchingInfo;
 import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
 import com.mods.kina.ExperiencePower.tileentity.TileEntityBasicPipe;
 import com.mods.kina.ExperiencePower.util.UtilTileEntity;
+import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.*;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
 import java.util.List;
 
 public class BlockBasicPipe extends BlockEPContainerBase implements IWrenchable, IWrenchingInfo{
     public static final PropertyEnum in = PropertyEnum.create("in", optionalFacing.class);
     public static final PropertyEnum out = PropertyEnum.create("out", optionalFacing.class);
+    EnumFacing placeFace;
 
     public BlockBasicPipe(){
         super(Material.rock);
@@ -72,6 +74,18 @@ public class BlockBasicPipe extends BlockEPContainerBase implements IWrenchable,
         return ((TileEntityBasicPipe) worldIn.getTileEntity(pos)).wrench(stack, playerIn, worldIn, pos, side, hitX, hitY, hitZ);
     }
 
+    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer){
+        placeFace = facing;
+        return getDefaultState();
+    }
+
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack){
+        TileEntityBasicPipe pipe = (TileEntityBasicPipe) worldIn.getTileEntity(pos);
+        pipe.in = convertToOptional(placeFace.getOpposite());
+        pipe.out = convertToOptional(BlockPistonBase.getFacingFromEntity(worldIn, pos, placer));
+        UtilTileEntity.instance.syncTileEntity(pipe);
+    }
+
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos){
         if(!(worldIn.getTileEntity(pos) instanceof TileEntityBasicPipe)) return worldIn.getBlockState(pos);
         TileEntityBasicPipe pipe = (TileEntityBasicPipe) worldIn.getTileEntity(pos);
@@ -111,67 +125,52 @@ public class BlockBasicPipe extends BlockEPContainerBase implements IWrenchable,
         return true;
     }
 
+    public boolean hasComparatorInputOverride(){
+        return true;
+    }
+
+    public int getComparatorInputOverride(World worldIn, BlockPos pos){
+        return Container.calcRedstone(worldIn.getTileEntity(pos));
+    }
+
     public void renderInfo(World world, BlockPos pos, double d0, double d1, double d2){
         IBlockState state = world.getBlockState(pos).getBlock().getActualState(world.getBlockState(pos), world, pos);
         for(EnumFacing d : EnumFacing.values()){
             if(!isNone(state, in) && convertToNormal((optionalFacing) state.getValue(in)) == d){
-                GL11.glColor4f(0.0F, 1.0F, 0.0F, 0.7F);
-                this.drawBox(pos, d0, d1, d2, d);
+                RenderGlobal.drawOutlinedBoundingBox(getToDrawBox(pos, d0, d1, d2, d), Color.GREEN.getRGB());
             }
         }
-
-        GL11.glColor4f(0.0F, 0.0F, 0.0F, 0.4F);
 
         for(EnumFacing d : EnumFacing.values()){
             if(!isNone(state, out) && convertToNormal((optionalFacing) state.getValue(out)) == d){
-                GL11.glColor4f(1.0F, 0.0F, 0.0F, 0.8F);
-                this.drawBox(pos, d0, d1, d2, d);
+                RenderGlobal.drawOutlinedBoundingBox(getToDrawBox(pos, d0, d1, d2, d), Color.RED.getRGB());
             }
         }
-
-        GL11.glColor4f(0.0F, 0.0F, 0.0F, 0.4F);
     }
 
-    private void drawBox(BlockPos pos, double d0, double d1, double d2, EnumFacing d){
+    public EnumDyeColor getWrenchColor(ItemStack stack, World worldIn, Entity entityIn, MovingObjectPosition position, boolean isUsing){
+        IBlockState pipe = worldIn.getBlockState(position.getBlockPos());
+        if(!entityIn.isSneaking()){
+            if(isNone(pipe, in) || !isNone(pipe, out)) return EnumDyeColor.CYAN;
+            else if(!isNone(pipe, in) || isNone(pipe, out)) return EnumDyeColor.RED;
+        }else{
+            if(isNone(pipe, in) || !isNone(pipe, out)) return EnumDyeColor.RED;
+            if(!isNone(pipe, in) || isNone(pipe, out)) return EnumDyeColor.CYAN;
+        }
+        return EnumDyeColor.WHITE;
+    }
+
+    private AxisAlignedBB getToDrawBox(BlockPos pos, double d0, double d1, double d2, EnumFacing d){
         float f1 = 0.002F;
         float f2 = 0.0625f;
-        double x2 = pos.getX();
-        double y2 = pos.getY();
-        double z2 = pos.getZ();
+        double x = pos.getX();
+        double y = pos.getY();
+        double z = pos.getZ();
         AxisAlignedBB base = new AxisAlignedBB(f2 * 4, f2 * 4, f2 * 4, f2 * 12, f2 * 12, f2 * 12);
         double[] grid = new double[]{f2 * 2 + d.getFrontOffsetX() * 6 * f2, f2 * 2 + d.getFrontOffsetY() * 6 * f2, f2 * 2 + d.getFrontOffsetZ() * 6 * f2, f2 * -2 + d.getFrontOffsetX() * 6 * f2, f2 * -2 + d.getFrontOffsetY() * 6 * f2, f2 * -2 + d.getFrontOffsetZ() * 6 * f2};
-        AxisAlignedBB axisAlignedBB2 = new AxisAlignedBB(x2 + base.minX + grid[0], y2 + base.minY + grid[1], z2 + base.minZ + grid[2], x2 + base.maxX + grid[3], y2 + base.maxY + grid[4], z2 + base.maxZ + grid[5]);
-        axisAlignedBB2 = axisAlignedBB2.expand(f1, f1, f1).offset(-d0, -d1, -d2);
-        this.drawOutlinedBoundingBox(axisAlignedBB2);
-        GL11.glColor4f(0.0F, 0.0F, 0.0F, 0.4F);
-    }
-
-    private void drawOutlinedBoundingBox(AxisAlignedBB aabb){
-        Tessellator tessellator = Tessellator.getInstance();
-        tessellator.getWorldRenderer().startDrawing(3);
-        tessellator.getWorldRenderer().addVertex(aabb.minX, aabb.minY, aabb.minZ);
-        tessellator.getWorldRenderer().addVertex(aabb.maxX, aabb.minY, aabb.minZ);
-        tessellator.getWorldRenderer().addVertex(aabb.maxX, aabb.minY, aabb.maxZ);
-        tessellator.getWorldRenderer().addVertex(aabb.minX, aabb.minY, aabb.maxZ);
-        tessellator.getWorldRenderer().addVertex(aabb.minX, aabb.minY, aabb.minZ);
-        tessellator.draw();
-        tessellator.getWorldRenderer().startDrawing(3);
-        tessellator.getWorldRenderer().addVertex(aabb.minX, aabb.maxY, aabb.minZ);
-        tessellator.getWorldRenderer().addVertex(aabb.maxX, aabb.maxY, aabb.minZ);
-        tessellator.getWorldRenderer().addVertex(aabb.maxX, aabb.maxY, aabb.maxZ);
-        tessellator.getWorldRenderer().addVertex(aabb.minX, aabb.maxY, aabb.maxZ);
-        tessellator.getWorldRenderer().addVertex(aabb.minX, aabb.maxY, aabb.minZ);
-        tessellator.draw();
-        tessellator.getWorldRenderer().startDrawing(1);
-        tessellator.getWorldRenderer().addVertex(aabb.minX, aabb.minY, aabb.minZ);
-        tessellator.getWorldRenderer().addVertex(aabb.minX, aabb.maxY, aabb.minZ);
-        tessellator.getWorldRenderer().addVertex(aabb.maxX, aabb.minY, aabb.minZ);
-        tessellator.getWorldRenderer().addVertex(aabb.maxX, aabb.maxY, aabb.minZ);
-        tessellator.getWorldRenderer().addVertex(aabb.maxX, aabb.minY, aabb.maxZ);
-        tessellator.getWorldRenderer().addVertex(aabb.maxX, aabb.maxY, aabb.maxZ);
-        tessellator.getWorldRenderer().addVertex(aabb.minX, aabb.minY, aabb.maxZ);
-        tessellator.getWorldRenderer().addVertex(aabb.minX, aabb.maxY, aabb.maxZ);
-        tessellator.draw();
+        AxisAlignedBB box = new AxisAlignedBB(x + base.minX + grid[0], y + base.minY + grid[1], z + base.minZ + grid[2], x + base.maxX + grid[3], y + base.maxY + grid[4], z + base.maxZ + grid[5]);
+        box = box.expand(f1, f1, f1).offset(-d0, -d1, -d2);
+        return box;
     }
 
     public enum optionalFacing implements IStringSerializable{

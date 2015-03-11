@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -74,11 +75,12 @@ public class NormalEventHandler{
         if(target.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) return;
         if(!(player.worldObj.getBlockState(target.getBlockPos()).getBlock() instanceof IWrenchingInfo)) return;
 
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.color(0.0F, 0.0F, 0.0F, 0.4F);
         GL11.glLineWidth(2.0F);
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-        GL11.glDepthMask(false);
+        GlStateManager.disableTexture2D();
+        GlStateManager.depthMask(false);
 
         double d0 = player.lastTickPosX + (player.posX - player.lastTickPosX) * event.partialTicks;
         double d1 = player.lastTickPosY + (player.posY - player.lastTickPosY) * event.partialTicks;
@@ -86,8 +88,8 @@ public class NormalEventHandler{
 
         ((IWrenchingInfo) player.worldObj.getBlockState(target.getBlockPos()).getBlock()).renderInfo(player.worldObj, target.getBlockPos(), d0, d1, d2);
 
-        GL11.glDepthMask(true);
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glDisable(GL11.GL_BLEND);
+        GlStateManager.depthMask(true);
+        GlStateManager.enableTexture2D();
+        GlStateManager.disableBlend();
     }
 }

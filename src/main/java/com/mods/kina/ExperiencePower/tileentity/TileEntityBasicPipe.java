@@ -63,6 +63,15 @@ public class TileEntityBasicPipe extends TileEntityEPBase implements IUpdatePlay
     }
 
     /**
+     For tile entities, ensures the chunk containing the tile entity is saved to disk later - the game won't think it
+     hasn't changed and skip it.
+     */
+    public void markDirty(){
+        super.markDirty();
+        cooldownTime = 8;
+    }
+
+    /**
      Returns the maximum stack size for a inventory slot. Seems to always be 64, possibly will be extended. Isn't this
      more of a set than a get?
      */
