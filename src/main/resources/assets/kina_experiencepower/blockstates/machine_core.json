@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "normal": {"model": "kina_ExperiencePower:machine_core"}
+  }
+}

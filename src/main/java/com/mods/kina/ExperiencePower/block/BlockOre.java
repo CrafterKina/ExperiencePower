@@ -7,12 +7,14 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.EntityDiggingFX;
+import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -28,6 +30,7 @@ public class BlockOre extends Block{
         setDefaultState(blockState.getBaseState().withProperty(TYPE, OreType.COPPER));
         setCreativeTab(EnumEPCreativeTab.BLOCK.getCreativeTab());
         setResistance(5);
+        ModelLoader.setCustomStateMapper(this, (new StateMap.Builder()).addPropertiesToIgnore(TYPE).build());
     }
 
     /**

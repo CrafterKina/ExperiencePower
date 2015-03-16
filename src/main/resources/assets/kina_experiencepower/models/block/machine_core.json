@@ -1,0 +1,7 @@
+{
+  "parent": "kina_experiencepower:block/blockcolored_all",
+  "textures": {
+    "all": "kina_experiencepower:blocks/machine_core",
+    "overlayall": "kina_experiencepower:blocks/machine_core_overlay"
+  }
+}

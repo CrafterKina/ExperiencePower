@@ -1,8 +1,5 @@
 {
   "variants": {
-    "type=copper": {"model": "kina_ExperiencePower:ore"},
-    "type=tin": {"model": "kina_ExperiencePower:ore"},
-    "type=silver": {"model": "kina_ExperiencePower:ore"},
-    "type=wise": {"model": "kina_ExperiencePower:ore"}
+    "normal": {"model": "kina_ExperiencePower:ore"}
   }
 }

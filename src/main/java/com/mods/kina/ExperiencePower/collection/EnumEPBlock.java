@@ -18,7 +18,8 @@ public enum EnumEPBlock{
     //ExperienceFurnace(new BlockExpFurnace()),
     Ore(new BlockOre(), ItemOre.class, "kina_experiencepower:ore", "kina_experiencepower:ore", "kina_experiencepower:ore", "kina_experiencepower:ore"),
     //SimpleExperienceInjector(new BlockSimpleExpInjector()),
-    ItemPipe(new BlockBasicPipe()),;
+    ItemPipe(new BlockBasicPipe()),
+    MachineCore(new BlockMachineCore()),;
 
     private Class<? extends ItemBlock> itemBlock;
     private Block block;
