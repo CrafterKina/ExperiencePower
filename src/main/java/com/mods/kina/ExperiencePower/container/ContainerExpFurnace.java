@@ -1,20 +1,7 @@
 package com.mods.kina.ExperiencePower.container;
 
-import com.mods.kina.ExperiencePower.base.ContainerMachineBase;
-import com.mods.kina.ExperiencePower.collection.EnumEPItem;
-import com.mods.kina.ExperiencePower.slot.SlotFiltered;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ICrafting;
-import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotFurnaceOutput;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-public class ContainerExpFurnace extends ContainerMachineBase{
-    private int field_178152_f;
+public class ContainerExpFurnace /*extends ContainerMachineBase*/{
+    /*private int field_178152_f;
     private int field_178153_g;
     private int field_178154_h;
     private int field_178155_i;
@@ -26,17 +13,17 @@ public class ContainerExpFurnace extends ContainerMachineBase{
         addSlotToContainer(new SlotFurnaceOutput(player, machineBase, 2, 116, 35));
     }
 
-    /**
+    *//**
      Add the given Listener to the list of Listeners. Method name is for legacy.
-     */
+     *//*
     public void addCraftingToCrafters(ICrafting listener){
         super.addCraftingToCrafters(listener);
         listener.func_175173_a(this, machineBase);
     }
 
-    /**
+    *//**
      Looks for changes made in the container, sends them to every listener.
-     */
+     *//*
     public void detectAndSendChanges(){
         super.detectAndSendChanges();
 
@@ -75,9 +62,9 @@ public class ContainerExpFurnace extends ContainerMachineBase{
         return machineBase.isUseableByPlayer(playerIn);
     }
 
-    /**
+    *//**
      Take a stack from the specified inventory slot.
-     */
+     *//*
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index){
         ItemStack itemstack = null;
         Slot slot = (Slot) this.inventorySlots.get(index);
@@ -126,5 +113,5 @@ public class ContainerExpFurnace extends ContainerMachineBase{
         }
 
         return itemstack;
-    }
+    }*/
 }

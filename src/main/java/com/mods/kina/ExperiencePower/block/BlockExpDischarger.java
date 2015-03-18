@@ -1,6 +1,5 @@
 package com.mods.kina.ExperiencePower.block;
 
-import com.mods.kina.ExperiencePower.ExperiencePowerCore;
 import com.mods.kina.ExperiencePower.base.BlockMachineBase;
 import com.mods.kina.ExperiencePower.base.IReceiveEnergy;
 import com.mods.kina.ExperiencePower.collection.EnumEPGuiContainer;
@@ -31,7 +30,7 @@ public class BlockExpDischarger extends BlockMachineBase implements IReceiveEner
      */
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ){
         if(!worldIn.isRemote)
-            playerIn.openGui(ExperiencePowerCore.core, EnumEPGuiContainer.ExperienceDischarger.ordinal(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+            EnumEPGuiContainer.openGui(worldIn, pos, playerIn, EnumEPGuiContainer.ExperienceDischarger);
         return true;
     }
 

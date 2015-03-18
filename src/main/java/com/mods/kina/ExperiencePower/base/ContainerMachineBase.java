@@ -11,8 +11,8 @@ public class ContainerMachineBase extends Container{
     public TileEntityMachineBase machineBase;
     public IInventory playerInventory;
 
-    public ContainerMachineBase(EntityPlayer player, World world, int x, int y, int z){
-        this.machineBase = (TileEntityMachineBase) world.getTileEntity(new BlockPos(x, y, z));
+    public ContainerMachineBase(World world, EntityPlayer player, BlockPos pos){
+        this.machineBase = (TileEntityMachineBase) world.getTileEntity(pos);
         this.playerInventory = player.inventory;
         this.machineBase.initContainer(this);
         int i;

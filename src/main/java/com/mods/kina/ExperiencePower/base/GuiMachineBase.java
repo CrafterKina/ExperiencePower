@@ -2,14 +2,17 @@ package com.mods.kina.ExperiencePower.base;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 public class GuiMachineBase extends GuiContainer{
     protected ResourceLocation guiTex;
 
-    public GuiMachineBase(ContainerMachineBase machineBase){
-        super(machineBase);
+    public GuiMachineBase(World world, EntityPlayer player, BlockPos pos){
+        super(new ContainerMachineBase(world, player, pos));
         //guiTex = new ResourceLocation(StaticFieldCollection.MODID, "textures/gui/container/" + machineBase.machineBase.getWorld().getBlockState(machineBase.machineBase.getPos()).getBlock().getUnlocalizedName().substring(5) + ".png");
         guiTex = new ResourceLocation("textures/gui/container/dispenser.png");
     }
