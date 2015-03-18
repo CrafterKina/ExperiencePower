@@ -1,5 +1,6 @@
 package com.mods.kina.ExperiencePower.item;
 
+import com.mods.kina.ExperiencePower.annotation.EPProp;
 import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
 import com.mods.kina.ExperiencePower.collection.EnumEPInventionPage;
 import com.mods.kina.ExperiencePower.gui.GuiInventionNote;
@@ -19,6 +20,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 
 public class ItemInventionNote extends Item{
+    @EPProp(key = "enableInventionSystem", defaultValve = "true")
+    public static String rawEnable;
     public ItemInventionNote(){
         setCreativeTab(EnumEPCreativeTab.ITEM.getCreativeTab());
         setUnlocalizedName("invention_note");
@@ -28,7 +31,8 @@ public class ItemInventionNote extends Item{
      発見ノート(仮称)のGUIを開く。
      */
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn){
-        Minecraft.getMinecraft().displayGuiScreen(new GuiInventionNote(Minecraft.getMinecraft().currentScreen, itemStackIn));
+        if(Boolean.parseBoolean(rawEnable))
+            Minecraft.getMinecraft().displayGuiScreen(new GuiInventionNote(Minecraft.getMinecraft().currentScreen, itemStackIn));
         return itemStackIn;
     }
 
