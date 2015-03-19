@@ -20,8 +20,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 
 public class ItemInventionNote extends Item{
-    @EPProp(key = "enableInventionSystem", defaultValve = "true")
-    public static String rawEnable;
+    @EPProp
+    public static boolean enableInventionSystem = true;
     public ItemInventionNote(){
         setCreativeTab(EnumEPCreativeTab.ITEM.getCreativeTab());
         setUnlocalizedName("invention_note");
@@ -31,7 +31,7 @@ public class ItemInventionNote extends Item{
      発見ノート(仮称)のGUIを開く。
      */
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn){
-        if(Boolean.parseBoolean(rawEnable))
+        if(enableInventionSystem)
             Minecraft.getMinecraft().displayGuiScreen(new GuiInventionNote(Minecraft.getMinecraft().currentScreen, itemStackIn));
         return itemStackIn;
     }

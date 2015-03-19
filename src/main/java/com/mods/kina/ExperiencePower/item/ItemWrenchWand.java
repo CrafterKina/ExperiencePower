@@ -9,7 +9,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -17,6 +16,8 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import static com.mods.kina.ExperiencePower.collection.ConfigurableFieldCollection.defaultDyeColor;
 
 public class ItemWrenchWand extends Item implements IWrench{
     public ItemWrenchWand(){
@@ -64,7 +65,7 @@ public class ItemWrenchWand extends Item implements IWrench{
 
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int renderPass){
-        return renderPass > 0 ? 0xffffff : ItemDye.dyeColors[stack.getMetadata()];
+        return renderPass > 0 ? 0xffffff : defaultDyeColor[stack.getMetadata()];
     }
 
     /**

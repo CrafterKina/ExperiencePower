@@ -7,7 +7,8 @@ import java.lang.reflect.Field;
 import java.util.Set;
 
 public enum EnumConfigCategory{
-    GENERAL,;
+    GENERAL,
+    COLOR,;
     Set<PropContainer> propSet;
 
     EnumConfigCategory(){
@@ -20,12 +21,12 @@ public enum EnumConfigCategory{
 
     public static class PropContainer{
         public final String key;
-        public final String defaultValue;
+        public final Object defaultValue;
         public final String comment;
         public final Property.Type type;
         public Field insertTo;
 
-        public PropContainer(Field insertTo, String key, String defaultValue, String comment, Property.Type type){
+        public PropContainer(Field insertTo, String key, Object defaultValue, String comment, Property.Type type){
             this.insertTo = insertTo;
             this.key = key;
             this.defaultValue = defaultValue;

@@ -18,6 +18,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import static com.mods.kina.ExperiencePower.collection.ConfigurableFieldCollection.defaultDyeColor;
+
 public class BlockMachineCore extends BlockMachineBase{
     public BlockMachineCore(){
         super(Material.rock);
@@ -37,7 +39,7 @@ public class BlockMachineCore extends BlockMachineBase{
     @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass){
         TileEntityMachineCore machineCore = (TileEntityMachineCore) worldIn.getTileEntity(pos);
-        return machineCore != null ? ItemDye.dyeColors[machineCore.colors[renderPass].getDyeDamage()] : 0xFFFFFF;
+        return machineCore != null ? defaultDyeColor[machineCore.colors[renderPass].getDyeDamage()] : 0xFFFFFF;
     }
 
     @SideOnly(Side.CLIENT)

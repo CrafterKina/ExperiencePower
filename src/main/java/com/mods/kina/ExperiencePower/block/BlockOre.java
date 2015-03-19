@@ -21,6 +21,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.Random;
 
+import static com.mods.kina.ExperiencePower.collection.ConfigurableFieldCollection.*;
+
 public class BlockOre extends Block{
     public static final PropertyEnum TYPE = PropertyEnum.create("type", OreType.class);
 
@@ -93,13 +95,13 @@ public class BlockOre extends Block{
         if(checkStackRoot()) return 0xffffff;
         switch((OreType) state.getValue(TYPE)){
             case COPPER:
-                return 0x946000;
+                return copperOreColor;
             case TIN:
-                return 0xD8F2F2;
+                return tinOreColor;
             case SILVER:
-                return 0xACDBDA;
+                return silverOreColor;
             case WISE:
-                return 0x49B800;
+                return wiseOreColor;
             default:
                 return 0xffffff;
         }

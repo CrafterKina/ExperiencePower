@@ -26,8 +26,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.awt.*;
 import java.util.List;
+
+import static com.mods.kina.ExperiencePower.collection.ConfigurableFieldCollection.inputColor;
+import static com.mods.kina.ExperiencePower.collection.ConfigurableFieldCollection.outputColor;
 
 public class BlockBasicPipe extends BlockEPContainerBase implements IWrenchable, IWrenchingInfo{
     public static final PropertyEnum in = PropertyEnum.create("in", optionalFacing.class);
@@ -137,13 +139,13 @@ public class BlockBasicPipe extends BlockEPContainerBase implements IWrenchable,
         IBlockState state = world.getBlockState(pos).getBlock().getActualState(world.getBlockState(pos), world, pos);
         for(EnumFacing d : EnumFacing.values()){
             if(!isNone(state, in) && convertToNormal((optionalFacing) state.getValue(in)) == d){
-                RenderGlobal.drawOutlinedBoundingBox(getToDrawBox(pos, d0, d1, d2, d), Color.GREEN.getRGB());
+                RenderGlobal.drawOutlinedBoundingBox(getToDrawBox(pos, d0, d1, d2, d), inputColor);
             }
         }
 
         for(EnumFacing d : EnumFacing.values()){
             if(!isNone(state, out) && convertToNormal((optionalFacing) state.getValue(out)) == d){
-                RenderGlobal.drawOutlinedBoundingBox(getToDrawBox(pos, d0, d1, d2, d), Color.RED.getRGB());
+                RenderGlobal.drawOutlinedBoundingBox(getToDrawBox(pos, d0, d1, d2, d), outputColor);
             }
         }
     }
