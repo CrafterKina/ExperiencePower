@@ -15,7 +15,6 @@ public class ConfigMaker{
         Configuration config = new Configuration(new File(event.getModConfigurationDirectory() + "/" + StaticFieldCollection.MODID.split("_")[0], StaticFieldCollection.MODID.split("_")[1] + ".cfg"));
         try{
             config.load();
-
             for(EnumConfigCategory cc : EnumConfigCategory.values())
                 for(EnumConfigCategory.PropContainer pc : cc.propSet){
                     pc.insertTo.setAccessible(true);
@@ -32,6 +31,7 @@ public class ConfigMaker{
         }
     }
 
+    //第一引数から得られるTypeはすべてStringっぽいので、オリジナルのTypeも渡す。
     private static Object getInsertObject(Property property, Property.Type type){
         switch(type){
             case INTEGER:
@@ -45,6 +45,7 @@ public class ConfigMaker{
         }
     }
 
+    //Forgeの処理を切り出しただけ。
     private static String[] arrayToString(Object obj){
         String[] values = new String[Array.getLength(obj)];
         for(int i = 0; i < Array.getLength(obj); i++){
@@ -53,6 +54,7 @@ public class ConfigMaker{
         return values;
     }
 
+    //Guavaは神
     private static String primitiveToString(Object obj){
         if(Primitives.wrap(obj.getClass()) == Integer.class){
             return Integer.toString((Integer) obj);

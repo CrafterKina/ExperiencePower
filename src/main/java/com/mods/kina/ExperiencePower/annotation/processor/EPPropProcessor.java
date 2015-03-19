@@ -14,14 +14,17 @@ public class EPPropProcessor{
 
     public void process(){
         try{
+            //パッケージ化のクラスを走査
             List<Class<?>> classList = ClassFinder.instance.findClasses("com.mods.kina.ExperiencePower");
             for(Class<?> clazz : classList){
                 for(Field field : clazz.getFields()){
                     EPProp epProp = field.getAnnotation(EPProp.class);
                     if(epProp == null) continue;
+                    //値が規定値と同じ場合、変数から得られる情報を代入
                     String key = epProp.key().isEmpty() ? field.getName() : epProp.key();
                     Property.Type type = getType(field);
                     Object defaultValve = epProp.defaultValve().isEmpty() ? field.get(null) : epProp.defaultValve();
+                    //指定のカテゴリーの集合に放り込む。
                     epProp.category().getPropSet().add(new EnumConfigCategory.PropContainer(field, key, defaultValve, epProp.comment(), type));
                 }
             }
@@ -30,6 +33,7 @@ public class EPPropProcessor{
         }
     }
 
+    //Guavaは神
     private Property.Type getType(Field field) throws IllegalAccessException{
         if(Primitives.wrap(field.getType()) == Integer.class){
             return Property.Type.INTEGER;
