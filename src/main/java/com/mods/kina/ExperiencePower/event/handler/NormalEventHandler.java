@@ -16,6 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
+import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.event.entity.player.AchievementEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -91,5 +92,18 @@ public class NormalEventHandler{
         GlStateManager.depthMask(true);
         GlStateManager.enableTexture2D();
         GlStateManager.disableBlend();
+    }
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public void onModelBake(ModelBakeEvent event){
+        /*Map<ModelResourceLocation, IModel> stateModels = ObfuscationReflectionHelper.getPrivateValue(ModelLoader.class, event.modelLoader, "stateModels");
+        for(Map.Entry<ModelResourceLocation, IModel> e:stateModels.entrySet()){
+            //if(e.getKey().getResourceDomain().equals(StaticFieldCollection.MODID)
+                FMLLog.info("呼ばれた");
+                Map<ModelResourceLocation,ModelBlockDefinition> definition = ObfuscationReflectionHelper.getPrivateValue(ModelBakery.class,event.modelLoader,"blockDefinitions");
+                e.setValue(new CombinationModel(definition.get(e.getKey()).getVariants(e.getKey().getVariant()),event.modelLoader));
+            //}
+        }*/
     }
 }
