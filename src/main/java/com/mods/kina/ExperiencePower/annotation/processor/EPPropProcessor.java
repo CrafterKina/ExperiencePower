@@ -18,14 +18,14 @@ public class EPPropProcessor{
             List<Class<?>> classList = ClassFinder.instance.findClasses("com.mods.kina.ExperiencePower");
             for(Class<?> clazz : classList){
                 for(Field field : clazz.getFields()){
-                    EPProp epProp = field.getAnnotation(EPProp.class);
-                    if(epProp == null) continue;
+                    EPProp EPProp = field.getAnnotation(EPProp.class);
+                    if(EPProp == null) continue;
                     //値が規定値と同じ場合、変数から得られる情報を代入
-                    String key = epProp.key().isEmpty() ? field.getName() : epProp.key();
+                    String key = EPProp.key().isEmpty() ? field.getName() : EPProp.key();
                     Property.Type type = getType(field);
-                    Object defaultValve = epProp.defaultValve().isEmpty() ? field.get(null) : epProp.defaultValve();
+                    Object defaultValve = EPProp.defaultValve().isEmpty() ? field.get(null) : EPProp.defaultValve();
                     //指定のカテゴリーの集合に放り込む。
-                    epProp.category().getPropSet().add(new EnumConfigCategory.PropContainer(field, key, defaultValve, epProp.comment(), type));
+                    EPProp.category().getPropSet().add(new EnumConfigCategory.PropContainer(field, key, defaultValve, EPProp.comment(), type));
                 }
             }
         } catch(Exception e){

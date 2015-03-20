@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 public class BlockEPWorkbench extends Block{
     public BlockEPWorkbench(){
         super(Material.rock);
+        setUnlocalizedName("work_bench");
         setCreativeTab(EnumEPCreativeTab.BLOCK.getCreativeTab());
     }
 

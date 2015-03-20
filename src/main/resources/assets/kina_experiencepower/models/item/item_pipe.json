@@ -1,5 +1,5 @@
 {
-  "parent": "kina_experiencepower:block/tier1_pipe_base",
+  "parent": "kina_experiencepower:block/tier1_pipe_ns",
   "display": {
     "thirdperson": {
       "rotation": [
