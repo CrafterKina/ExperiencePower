@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "normal": [
-      { "model": "wheat_stage0" },
-      { "model": "kina_ExperiencePower:tier1_pipe_base" }
-    ]
-  }
-}
