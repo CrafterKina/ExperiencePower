@@ -1,7 +1,7 @@
 #ENGLISH
 
 #ITEM
-kina.item.book_sealable.name=Book of Experience
+kina.item.book_sealable.name=Book of Experience[WIP]
 kina.item.ingot_copper.name=Copper Ingot
 kina.item.ingot_tin.name=Tin Ingot
 kina.item.ingot_silver.name=Silver Ingot
@@ -9,8 +9,8 @@ kina.item.ingot_wise.name=Experientium Ingot
 kina.item.wrench_wand.name=Wandish Wrench
 
 #BLOCK
-kina.tile.exp_absorber.name=Experience Absorber
-kina.tile.exp_discharger.name=Experience Discharger
+kina.tile.exp_absorber.name=Experience Absorber[WIP]
+kina.tile.exp_discharger.name=Experience Discharger[WIP]
 kina.tile.blow_fan.name=Blow Fan
 kina.tile.training_barrel.name=Training Barrel
 kina.tile.ore_copper.name=Copper Ore

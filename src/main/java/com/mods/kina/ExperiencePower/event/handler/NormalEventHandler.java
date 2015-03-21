@@ -1,5 +1,6 @@
 package com.mods.kina.ExperiencePower.event.handler;
 
+import com.mods.kina.ExperiencePower.annotation.EPProp;
 import com.mods.kina.ExperiencePower.base.IWrench;
 import com.mods.kina.ExperiencePower.base.IWrenchingInfo;
 import com.mods.kina.ExperiencePower.collection.EnumEPAchievement;
@@ -30,12 +31,18 @@ import org.lwjgl.opengl.GL11;
  Normalと言うよりTerrainGenでないEvent。
  */
 public class NormalEventHandler{
+    @EPProp
+    public static final boolean enableGetExpOnAchievementGet = true;
+    @EPProp
+    public static final boolean enableDropStickFromLeaves = true;
+    @EPProp
+    public static final boolean enableDropExpFromCrops = true;
     /**
      実績解除時に経験値を獲得。
      */
     @SubscribeEvent
     public void onAchievementGet(AchievementEvent event){
-        event.entityPlayer.addExperience(2);
+        if(enableGetExpOnAchievementGet) event.entityPlayer.addExperience(2);
     }
 
     /**
@@ -45,9 +52,13 @@ public class NormalEventHandler{
     public void getBlocksDrop(BlockEvent.HarvestDropsEvent event){
         IBlockState iBlockState = event.world.getBlockState(event.pos);
         if(iBlockState.getBlock() instanceof BlockLeaves && event.world.rand.nextInt(4) == 0){
-            Block.spawnAsEntity(event.world, event.pos, new ItemStack(Items.stick));
+            if(enableDropStickFromLeaves){
+                Block.spawnAsEntity(event.world, event.pos, new ItemStack(Items.stick));
+            }
         }else if(iBlockState.getBlock() instanceof BlockCrops && (Integer) iBlockState.getValue(BlockCrops.AGE) == 7){
-            event.world.spawnEntityInWorld(new EntityXPOrb(event.world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), event.world.rand.nextInt(6) + 1));
+            if(enableDropExpFromCrops){
+                event.world.spawnEntityInWorld(new EntityXPOrb(event.world, event.pos.getX(), event.pos.getY(), event.pos.getZ(), event.world.rand.nextInt(6) + 1));
+            }
         }
     }
 
