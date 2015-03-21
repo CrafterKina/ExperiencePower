@@ -65,7 +65,7 @@ public enum EnumEPBlock{
     }
 
     public String getBlockName(){
-        return block.getUnlocalizedName().substring(5);
+        return block.getUnlocalizedName().replaceFirst("tile\\.", "").replaceFirst("kina\\.", "");
     }
 
     public String[] getModelNames(){

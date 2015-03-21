@@ -16,6 +16,6 @@ public class ItemOre extends ItemColored{
      */
     public String getUnlocalizedName(ItemStack stack){
         int i = stack.getMetadata();
-        return "tile.ore_" + BlockOre.OreType.values()[i].getName();
+        return "kina.tile.ore_" + BlockOre.OreType.values()[i].getName();
     }
 }

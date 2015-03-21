@@ -1,18 +1,22 @@
 #ENGLISH
 
 #ITEM
-item.book_sealable.name=Book of Experience
-item.ingot_copper.name=Copper Ingot
-item.ingot_tin.name=Tin Ingot
-item.ingot_silver.name=Silver Ingot
-item.ingot_wise.name=Experientium Ingot
+kina.item.book_sealable.name=Book of Experience
+kina.item.ingot_copper.name=Copper Ingot
+kina.item.ingot_tin.name=Tin Ingot
+kina.item.ingot_silver.name=Silver Ingot
+kina.item.ingot_wise.name=Experientium Ingot
+kina.item.wrench_wand.name=Wandish Wrench
 
 #BLOCK
-tile.exp_absorber.name=Experience Absorber
-tile.exp_discharger.name=Experience Discharger
-tile.blow_fan.name=Blow Fan
-tile.training_barrel.name=Training Barrel
-tile.ore_copper.name=Copper Ore
-tile.ore_tin.name=Tin Ore
-tile.ore_silver.name=Silver Ore
-tile.ore_wise.name=Experientite
+kina.tile.exp_absorber.name=Experience Absorber
+kina.tile.exp_discharger.name=Experience Discharger
+kina.tile.blow_fan.name=Blow Fan
+kina.tile.training_barrel.name=Training Barrel
+kina.tile.ore_copper.name=Copper Ore
+kina.tile.ore_tin.name=Tin Ore
+kina.tile.ore_silver.name=Silver Ore
+kina.tile.ore_wise.name=Experientite
+kina.tile.item_pipe.name=Iron Item Pipe
+kina.tile.work_bench.name=Xp Workbench
+kina.tile.machine_core.name=Machine Core

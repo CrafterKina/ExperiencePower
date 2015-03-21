@@ -1,8 +1,7 @@
 package com.mods.kina.ExperiencePower.block;
 
+import com.mods.kina.ExperiencePower.base.BlockEPBase;
 import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
@@ -23,11 +22,10 @@ import java.util.Random;
 
 import static com.mods.kina.ExperiencePower.collection.ConfigurableFieldCollection.*;
 
-public class BlockOre extends Block{
+public class BlockOre extends BlockEPBase{
     public static final PropertyEnum TYPE = PropertyEnum.create("type", OreType.class);
 
     public BlockOre(){
-        super(Material.rock);
         setUnlocalizedName("ore");
         setDefaultState(blockState.getBaseState().withProperty(TYPE, OreType.COPPER));
         setCreativeTab(EnumEPCreativeTab.BLOCK.getCreativeTab());

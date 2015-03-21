@@ -6,4 +6,8 @@ public abstract class BlockMachineBase extends BlockEPContainerBase{
     public BlockMachineBase(Material material){
         super(material);
     }
+
+    public BlockMachineBase(){
+        super();
+    }
 }

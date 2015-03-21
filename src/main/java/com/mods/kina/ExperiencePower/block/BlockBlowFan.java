@@ -5,7 +5,6 @@ import com.mods.kina.ExperiencePower.base.IWrenchingInfo;
 import com.mods.kina.ExperiencePower.tileentity.TileEntityBlowFan;
 import com.mods.kina.ExperiencePower.util.UtilTileEntity;
 import net.minecraft.block.BlockPistonBase;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
@@ -24,7 +23,6 @@ public class BlockBlowFan extends BlockEPContainerBase implements IWrenchingInfo
     public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
     public BlockBlowFan(){
-        super(Material.rock);
         setUnlocalizedName("blow_fan");
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         setHardness(1.5f);

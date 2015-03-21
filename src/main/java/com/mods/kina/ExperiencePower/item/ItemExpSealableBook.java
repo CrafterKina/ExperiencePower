@@ -1,16 +1,16 @@
 package com.mods.kina.ExperiencePower.item;
 
+import com.mods.kina.ExperiencePower.base.ItemEPBase;
 import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemExpSealableBook extends Item{
+public class ItemExpSealableBook extends ItemEPBase{
     public ItemExpSealableBook(){
         setUnlocalizedName("book_sealable");
         setCreativeTab(EnumEPCreativeTab.ITEM.getCreativeTab());

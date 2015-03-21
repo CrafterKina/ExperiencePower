@@ -1,6 +1,5 @@
 package com.mods.kina.ExperiencePower.item;
 
-import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
 import com.mods.kina.ExperiencePower.entity.core.EntityMonsterBook;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -12,7 +11,7 @@ import net.minecraft.world.World;
 public class ItemEPMonsterPlacer extends Item{
     public ItemEPMonsterPlacer(){
         setUnlocalizedName("monster_placer");
-        setCreativeTab(EnumEPCreativeTab.ITEM.getCreativeTab());
+        //setCreativeTab(EnumEPCreativeTab.ITEM.getCreativeTab());
     }
 
     public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ){

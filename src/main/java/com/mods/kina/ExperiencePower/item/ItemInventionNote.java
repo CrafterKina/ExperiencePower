@@ -1,6 +1,7 @@
 package com.mods.kina.ExperiencePower.item;
 
 import com.mods.kina.ExperiencePower.annotation.EPProp;
+import com.mods.kina.ExperiencePower.base.ItemEPBase;
 import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
 import com.mods.kina.ExperiencePower.collection.EnumEPInventionPage;
 import com.mods.kina.ExperiencePower.gui.GuiInventionNote;
@@ -19,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemInventionNote extends Item{
+public class ItemInventionNote extends ItemEPBase{
     @EPProp
     public static boolean enableInventionSystem = true;
     public ItemInventionNote(){

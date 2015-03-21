@@ -41,6 +41,8 @@ public class BlockBasicPipe extends BlockEPContainerBase implements IWrenchable,
         setUnlocalizedName("item_pipe");
         setCreativeTab(EnumEPCreativeTab.BLOCK.getCreativeTab());
         setDefaultState(blockState.getBaseState().withProperty(in, optionalFacing.NONE).withProperty(out, optionalFacing.NONE));
+        setHardness(3.0F);
+        setResistance(8.0F);
         UtilTileEntity.instance.registerTileEntity(TileEntityBasicPipe.class, "basic_pipe");
     }
 

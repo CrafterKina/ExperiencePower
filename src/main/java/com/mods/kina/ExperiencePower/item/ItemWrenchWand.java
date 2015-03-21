@@ -3,12 +3,12 @@ package com.mods.kina.ExperiencePower.item;
 import com.mods.kina.ExperiencePower.base.IWrench;
 import com.mods.kina.ExperiencePower.base.IWrenchable;
 import com.mods.kina.ExperiencePower.base.IWrenchingInfo;
+import com.mods.kina.ExperiencePower.base.ItemEPBase;
 import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import static com.mods.kina.ExperiencePower.collection.ConfigurableFieldCollection.defaultDyeColor;
 
-public class ItemWrenchWand extends Item implements IWrench{
+public class ItemWrenchWand extends ItemEPBase implements IWrench{
     public ItemWrenchWand(){
         setUnlocalizedName("wrench_wand");
         setCreativeTab(EnumEPCreativeTab.ITEM.getCreativeTab());

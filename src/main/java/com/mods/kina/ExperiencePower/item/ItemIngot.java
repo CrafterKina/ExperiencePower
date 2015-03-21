@@ -1,5 +1,6 @@
 package com.mods.kina.ExperiencePower.item;
 
+import com.mods.kina.ExperiencePower.base.ItemEPBase;
 import com.mods.kina.ExperiencePower.block.BlockOre;
 import com.mods.kina.ExperiencePower.collection.EnumEPBlock;
 import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
@@ -12,12 +13,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemIngot extends Item{
+public class ItemIngot extends ItemEPBase{
     public ItemIngot(){
         setCreativeTab(EnumEPCreativeTab.ITEM.getCreativeTab());
         setHasSubtypes(true);
         setMaxDamage(BlockOre.OreType.values().length - 1);
         setNoRepair();
+        setUnlocalizedName("ingot");
     }
 
     //鉱石から色を取得。
@@ -36,14 +38,7 @@ public class ItemIngot extends Item{
     }
 
     public String getUnlocalizedName(ItemStack stack){
-        return "item.ingot_" + BlockOre.OreType.values()[stack.getItemDamage()].getName();
-    }
-
-    /**
-     Returns the unlocalized name of this item.
-     */
-    public String getUnlocalizedName(){
-        return "item.ingot";
+        return super.getUnlocalizedName() + "_" + BlockOre.OreType.values()[stack.getItemDamage()].getName();
     }
 
     @SuppressWarnings("unchecked")

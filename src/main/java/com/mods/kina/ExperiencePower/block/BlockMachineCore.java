@@ -1,14 +1,15 @@
 package com.mods.kina.ExperiencePower.block;
 
 import com.mods.kina.ExperiencePower.base.BlockMachineBase;
+import com.mods.kina.ExperiencePower.base.IWrenchable;
 import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
 import com.mods.kina.ExperiencePower.tileentity.TileEntityMachineCore;
 import com.mods.kina.ExperiencePower.util.UtilTileEntity;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemDye;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -20,11 +21,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import static com.mods.kina.ExperiencePower.collection.ConfigurableFieldCollection.defaultDyeColor;
 
-public class BlockMachineCore extends BlockMachineBase{
+public class BlockMachineCore extends BlockMachineBase implements IWrenchable{
     public BlockMachineCore(){
-        super(Material.rock);
         setCreativeTab(EnumEPCreativeTab.BLOCK.getCreativeTab());
         setUnlocalizedName("machine_core");
+        setHardness(1.5f);
+        setResistance(10.0F);
         UtilTileEntity.instance.registerTileEntity(TileEntityMachineCore.class, "machine_core");
     }
 
@@ -49,5 +51,9 @@ public class BlockMachineCore extends BlockMachineBase{
 
     public TileEntity createNewTileEntity(World world, int meta){
         return new TileEntityMachineCore();
+    }
+
+    public boolean wrench(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ){
+        return !worldIn.isRemote && worldIn.destroyBlock(pos, true);
     }
 }

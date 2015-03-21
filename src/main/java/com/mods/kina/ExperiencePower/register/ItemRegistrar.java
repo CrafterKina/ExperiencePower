@@ -11,14 +11,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemRegistrar{
     public static void registerItem(){
         for(EnumEPItem epItem: EnumEPItem.values()){
-            GameRegistry.registerItem(epItem.getItem(), epItem.getItem().getUnlocalizedName().substring(5));
+            GameRegistry.registerItem(epItem.getItem(), epItem.getItem().getUnlocalizedName().replaceFirst("item\\.", "").replaceFirst("kina\\.", ""));
         }
     }
 
     @SideOnly(Side.CLIENT)
     public static void registerModel(){
         for(EnumEPItem epItem:EnumEPItem.values()){
-            Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(epItem.getItem(), 0, new ModelResourceLocation(StaticFieldCollection.MODID + ":" + epItem.getItem().getUnlocalizedName().substring(5), "inventory"));
+            Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(epItem.getItem(), 0, new ModelResourceLocation(StaticFieldCollection.MODID + ":" + epItem.getItem().getUnlocalizedName().substring(5).replaceFirst("item\\.", "").replaceFirst("kina\\.", ""), "inventory"));
         }
     }
 }
