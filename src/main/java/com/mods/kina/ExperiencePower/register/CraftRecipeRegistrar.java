@@ -35,6 +35,9 @@ public class CraftRecipeRegistrar{
         GameRegistry.addRecipe(new ShapedOreRecipe(BlowFan.getBlock(), "WIW", "CRC", "CCC", 'W', "plankWood", 'I', Items.iron_ingot, 'C', "cobblestone", 'R', Items.redstone));
         GameRegistry.addShapedRecipe(new ItemStack(MachineCore.getBlock()), "IWI", "WCW", "IWI", 'I', Items.iron_ingot, 'W', new ItemStack(Blocks.wool, 1, OreDictionary.WILDCARD_VALUE), 'C', Blocks.chest);
         UtilRecipe.instance.addShapedRecipeToWorkbench(new ItemStack(Wrench.getItem()), 1, 0, "  I", " S ", "S  ", 'I', Items.iron_ingot, 'S', Items.stick);
+        GameRegistry.addShapedRecipe(ItemMold.setNBT(new ItemStack(EnumEPItem.Mold.getItem()), ItemMold.Type.Ingot.name(), "empty", false), "CCC", "C C", "CCC", 'C', Items.clay_ball);
+        GameRegistry.addShapedRecipe(ItemMold.setNBT(new ItemStack(EnumEPItem.Mold.getItem()), ItemMold.Type.Wire.name(), "empty", false), "CCC", "   ", "CCC", 'C', Items.clay_ball);
+        GameRegistry.addShapedRecipe(ItemMold.setNBT(new ItemStack(EnumEPItem.Mold.getItem()), ItemMold.Type.Plate.name(), "empty", false), "C C", " C ", "C C", 'C', Items.clay_ball);
     }
 
     /**
