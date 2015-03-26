@@ -1,5 +1,6 @@
 package com.mods.kina.ExperiencePower.block;
 
+import com.google.common.collect.Lists;
 import com.mods.kina.ExperiencePower.base.BlockEPBase;
 import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
 import net.minecraft.block.properties.PropertyEnum;
@@ -10,7 +11,10 @@ import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -18,7 +22,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
-import java.util.Random;
 
 import static com.mods.kina.ExperiencePower.collection.ConfigurableFieldCollection.*;
 
@@ -43,38 +46,16 @@ public class BlockOre extends BlockEPBase{
     }
 
     /**
-     Gets the localized name of this block. Used for the statistics page.
+     * This returns a complete list of items dropped from this block.
+     *
+     * @param world The current world
+     * @param pos Block position in world
+     * @param state Current state
+     * @param fortune Breakers fortune level
+     * @return A ArrayList containing all items this block drops
      */
-    public String getLocalizedName(){
-        return StatCollector.translateToLocal(this.getUnlocalizedName() + ".name");
-    }
-
-    /**
-     Get the Item that this Block should drop when harvested.
-
-     @param fortune
-     the level of the Fortune enchantment on the player's tool
-     */
-    public Item getItemDropped(IBlockState state, Random rand, int fortune){
-        if(state.getValue(TYPE) == OreType.WISE) return null;
-        return Item.getItemFromBlock(this);
-    }
-
-    /**
-     Get the quantity dropped based on the given fortune level
-     */
-    public int quantityDroppedWithBonus(int fortune, Random random){
-        if(fortune > 0 && Item.getItemFromBlock(this) != this.getItemDropped((IBlockState) this.getBlockState().getValidStates().iterator().next(), random, fortune)){
-            int j = random.nextInt(fortune + 2) - 1;
-
-            if(j < 0){
-                j = 0;
-            }
-
-            return this.quantityDropped(random) * (j + 1);
-        }else{
-            return this.quantityDropped(random);
-        }
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
+        return Lists.newArrayList(new ItemStack(state.getBlock(), 1, ((OreType) state.getValue(TYPE)).ordinal()));
     }
 
     /**
@@ -123,23 +104,6 @@ public class BlockOre extends BlockEPBase{
      */
     public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos){
         return new ItemStack(Item.getItemFromBlock(this), 1, ((OreType) world.getBlockState(pos).getValue(TYPE)).ordinal());
-    }
-
-    public int getExpDrop(IBlockAccess world, BlockPos pos, int fortune){
-        IBlockState state = world.getBlockState(pos);
-        Random rand = world instanceof World ? ((World) world).rand : new Random();
-        if(this.getItemDropped(state, rand, fortune) != Item.getItemFromBlock(this)){
-            int j;
-
-            if(world.getBlockState(pos).getValue(TYPE) == OreType.WISE){
-                j = MathHelper.getRandomIntegerInRange(rand, 10, 20);
-            }else{
-                j = MathHelper.getRandomIntegerInRange(rand, 0, 2);
-            }
-
-            return j;
-        }
-        return 0;
     }
 
     /**

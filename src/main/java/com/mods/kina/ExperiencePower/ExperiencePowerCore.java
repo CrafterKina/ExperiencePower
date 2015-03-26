@@ -5,6 +5,7 @@ import com.mods.kina.ExperiencePower.collection.StaticFieldCollection;
 import com.mods.kina.ExperiencePower.config.ConfigMaker;
 import com.mods.kina.ExperiencePower.event.handler.EventHandler;
 import com.mods.kina.ExperiencePower.loader.EPModelLoader;
+import com.mods.kina.ExperiencePower.plugin.PluginLoader;
 import com.mods.kina.ExperiencePower.proxy.CommonProxy;
 import com.mods.kina.ExperiencePower.register.*;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
@@ -20,7 +21,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 /**
  根幹クラス。大したことはしないはず。
  */
-@Mod(modid = StaticFieldCollection.MODID,useMetadata = true)
+@Mod(modid = StaticFieldCollection.MODID, dependencies = "required-after:kina_core", useMetadata = true)
 public class ExperiencePowerCore{
 
     @Mod.Instance(StaticFieldCollection.MODID)
@@ -45,11 +46,11 @@ public class ExperiencePowerCore{
         FMLCommonHandler.instance().bus().register(EventHandler.fml);
         BlockRegistrar.registerBlock();
         ItemRegistrar.registerItem();
+        BlockRegistrar.registerModel();
+        ItemRegistrar.registerModel();
         proxy.registerRender();
         ModelLoaderRegistry.registerLoader(EPModelLoader.instance);
         OreDictionaryRegistrar.registerOres();
-        SmeltRecipeRegistrar.registerRecipes();
-        CraftRecipeRegistrar.registerRecipes();
         AchievementRegistrar.registerAchievement();
         InventionRegistrar.registerInvention();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
@@ -61,8 +62,6 @@ public class ExperiencePowerCore{
     @Mod.EventHandler
     public void init(FMLInitializationEvent e){
         EntityRegistrar.registerEntity();
-        BlockRegistrar.registerModel();
-        ItemRegistrar.registerModel();
     }
 
     /**
@@ -70,6 +69,9 @@ public class ExperiencePowerCore{
      */
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent e){
+        SmeltRecipeRegistrar.registerRecipes();
+        CraftRecipeRegistrar.registerRecipes();
+        PluginLoader.load();
     }
 
 }

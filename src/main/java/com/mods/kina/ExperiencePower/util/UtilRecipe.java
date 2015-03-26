@@ -7,8 +7,9 @@ import com.mods.kina.ExperiencePower.recipe.IRecipeWithExp;
 import com.mods.kina.ExperiencePower.recipe.ShapedRecipesWithExp;
 import com.mods.kina.ExperiencePower.recipe.ShapelessRecipesWithExp;
 import net.minecraft.block.Block;
-import net.minecraft.init.Items;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -22,8 +23,76 @@ public class UtilRecipe{
     //////////Workbench//////////
     private Set<IRecipeWithExp> epWorkbenchRecipes = Sets.newHashSet();
 
-    private UtilRecipe(){
-        addShapelessRecipeToWorkbench(new ItemStack(Items.stick), 5, 0, Items.apple);
+    //////////General//////////
+    public boolean mergeItemStack(Container container, ItemStack stack, int startIndex, int endIndex, boolean useEndIndex){
+        boolean flag1 = false;
+        int k = startIndex;
+
+        if(useEndIndex){
+            k = endIndex - 1;
+        }
+
+        Slot slot;
+        ItemStack itemstack1;
+
+        if(stack.isStackable()){
+            while(stack.stackSize > 0 && (!useEndIndex && k < endIndex || useEndIndex && k >= startIndex)){
+                slot = (Slot) container.inventorySlots.get(k);
+                itemstack1 = slot.getStack();
+
+                if(itemstack1 != null && itemstack1.getItem() == stack.getItem() && (!stack.getHasSubtypes() || stack.getMetadata() == itemstack1.getMetadata()) && ItemStack.areItemStackTagsEqual(stack, itemstack1)){
+                    int l = itemstack1.stackSize + stack.stackSize;
+
+                    if(l <= stack.getMaxStackSize()){
+                        stack.stackSize = 0;
+                        itemstack1.stackSize = l;
+                        slot.onSlotChanged();
+                        flag1 = true;
+                    }else if(itemstack1.stackSize < stack.getMaxStackSize()){
+                        stack.stackSize -= stack.getMaxStackSize() - itemstack1.stackSize;
+                        itemstack1.stackSize = stack.getMaxStackSize();
+                        slot.onSlotChanged();
+                        flag1 = true;
+                    }
+                }
+
+                if(useEndIndex){
+                    --k;
+                }else{
+                    ++k;
+                }
+            }
+        }
+
+        if(stack.stackSize > 0){
+            if(useEndIndex){
+                k = endIndex - 1;
+            }else{
+                k = startIndex;
+            }
+
+            while(!useEndIndex && k < endIndex || useEndIndex && k >= startIndex){
+                slot = (Slot) container.inventorySlots.get(k);
+                itemstack1 = slot.getStack();
+
+                if(itemstack1 == null && slot.isItemValid(stack)) // Forge: Make sure to respect isItemValid in the slot.
+                {
+                    slot.putStack(stack.copy());
+                    slot.onSlotChanged();
+                    stack.stackSize = 0;
+                    flag1 = true;
+                    break;
+                }
+
+                if(useEndIndex){
+                    --k;
+                }else{
+                    ++k;
+                }
+            }
+        }
+
+        return flag1;
     }
 
     public ShapedRecipes addShapedRecipeToWorkbench(ItemStack stack, int maxLevel, int minLevel, Object... recipeComponents){

@@ -1,5 +1,10 @@
 package com.mods.kina.ExperiencePower.register;
 
+import com.google.common.collect.Lists;
+import com.mods.kina.ExperiencePower.collection.EnumEPItem;
+import com.mods.kina.ExperiencePower.collection.EnumMetal;
+import com.mods.kina.ExperiencePower.item.ItemMold;
+import com.mods.kina.ExperiencePower.recipe.NBTShapelessRecipes;
 import com.mods.kina.ExperiencePower.util.UtilRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -9,7 +14,6 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import static com.mods.kina.ExperiencePower.collection.EnumEPBlock.*;
-import static com.mods.kina.ExperiencePower.collection.EnumEPItem.Ingot;
 import static com.mods.kina.ExperiencePower.collection.EnumEPItem.Wrench;
 
 public class CraftRecipeRegistrar{
@@ -38,6 +42,11 @@ public class CraftRecipeRegistrar{
      */
     private static void registerShapelessRecipes(){
         UtilRecipe.instance.addShapelessRecipeToWorkbench(new ItemStack(TrainingBarrel.getBlock()), 5, 0, Blocks.hay_block);
-        UtilRecipe.instance.addShapelessRecipeToWorkbench(new ItemStack(Ingot.getItem(), 1, 3), 10, 0, Items.iron_ingot);
+        //UtilRecipe.instance.addShapelessRecipeToWorkbench(new ItemStack(Ingot.getItem(), 1, 3), 10, 0, Items.iron_ingot);
+        for(ItemMold.Type type : ItemMold.Type.values())
+            for(EnumMetal metal : EnumMetal.values())
+                for(ItemStack result : OreDictionary.getOres(type.name().toLowerCase() + metal.name())){
+                    GameRegistry.addRecipe(new NBTShapelessRecipes(result, Lists.newArrayList(ItemMold.setNBT(new ItemStack(EnumEPItem.Mold.getItem()), type.name(), metal.name(), true))));
+                }
     }
 }

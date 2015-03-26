@@ -24,9 +24,7 @@ public class ItemWrenchWand extends ItemEPBase implements IWrench{
         setUnlocalizedName("wrench_wand");
         setCreativeTab(EnumEPCreativeTab.ITEM.getCreativeTab());
         setMaxStackSize(1);
-        setMaxDamage(16);
         setHasSubtypes(true);
-        setNoRepair();
         setFull3D();
     }
 
@@ -66,17 +64,5 @@ public class ItemWrenchWand extends ItemEPBase implements IWrench{
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int renderPass){
         return renderPass > 0 ? 0xffffff : defaultDyeColor[stack.getMetadata()];
-    }
-
-    /**
-     Determines if the durability bar should be rendered for this item. Defaults to vanilla stack.isDamaged behavior. But
-     modders can use this for any data they wish.
-
-     @param stack
-     The current Item Stack
-     @return True if it should render the 'durability' bar.
-     */
-    public boolean showDurabilityBar(ItemStack stack){
-        return false;
     }
 }

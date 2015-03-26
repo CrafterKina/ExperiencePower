@@ -1,30 +1,24 @@
 package com.mods.kina.ExperiencePower.event.handler;
 
 import com.mods.kina.ExperiencePower.annotation.EPProp;
-import com.mods.kina.ExperiencePower.base.IWrench;
-import com.mods.kina.ExperiencePower.base.IWrenchingInfo;
 import com.mods.kina.ExperiencePower.collection.EnumEPAchievement;
 import com.mods.kina.ExperiencePower.collection.EnumEPBlock;
+import com.mods.kina.ExperiencePower.collection.EnumEPItem;
+import com.mods.kina.KinaCore.event.furnace.ItemSmeltEvent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraftforge.client.event.DrawBlockHighlightEvent;
-import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.event.entity.player.AchievementEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
 
 /**
  MinecraftForge.EVENT_BUSのEvent。
@@ -42,7 +36,9 @@ public class NormalEventHandler{
      */
     @SubscribeEvent
     public void onAchievementGet(AchievementEvent event){
-        if(enableGetExpOnAchievementGet) event.entityPlayer.addExperience(2);
+        if(enableGetExpOnAchievementGet)
+            if(!((EntityPlayerMP) event.entityPlayer).getStatFile().hasAchievementUnlocked(event.achievement))
+                event.entityPlayer.addExperience(2);
     }
 
     /**
@@ -75,46 +71,23 @@ public class NormalEventHandler{
         }
     }
 
+
     @SubscribeEvent
-    @SideOnly(Side.CLIENT)
-    public void onDrawBlockHighlight(DrawBlockHighlightEvent event){
-        EntityPlayer player = event.player;
-        ItemStack itemstack = event.currentItem;
-        MovingObjectPosition target = event.target;
-
-        if(player == null) return;
-        if(itemstack == null || !(itemstack.getItem() instanceof IWrench)) return;
-        if(target.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) return;
-        if(!(player.worldObj.getBlockState(target.getBlockPos()).getBlock() instanceof IWrenchingInfo)) return;
-
-        GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-        GlStateManager.color(0.0F, 0.0F, 0.0F, 0.4F);
-        GL11.glLineWidth(2.0F);
-        GlStateManager.disableTexture2D();
-        GlStateManager.depthMask(false);
-
-        double d0 = player.lastTickPosX + (player.posX - player.lastTickPosX) * event.partialTicks;
-        double d1 = player.lastTickPosY + (player.posY - player.lastTickPosY) * event.partialTicks;
-        double d2 = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * event.partialTicks;
-
-        ((IWrenchingInfo) player.worldObj.getBlockState(target.getBlockPos()).getBlock()).renderInfo(player.worldObj, target.getBlockPos(), d0, d1, d2);
-
-        GlStateManager.depthMask(true);
-        GlStateManager.enableTexture2D();
-        GlStateManager.disableBlend();
+    public void onItemSmelt(ItemSmeltEvent.Pre e){
+        if(e.getCookTime() != e.getTotalCookTime()) return;
+        ItemStack result = FurnaceRecipes.instance().getSmeltingResult(e.getItem(0));
+        if(!result.getItem().equals(EnumEPItem.Mold.getItem())) return;
+        if(e.getItem(1) != null && EnumEPItem.Mold.getItem().equals(e.getItem(1).getItem())) return;
+        e.setCookTime(e.getCookTime() - 1);
     }
 
     @SubscribeEvent
-    @SideOnly(Side.CLIENT)
-    public void onModelBake(ModelBakeEvent event){
-        /*Map<ModelResourceLocation, IModel> stateModels = ObfuscationReflectionHelper.getPrivateValue(ModelLoader.class, event.modelLoader, "stateModels");
-        for(Map.Entry<ModelResourceLocation, IModel> e:stateModels.entrySet()){
-            //if(e.getKey().getResourceDomain().equals(StaticFieldCollection.MODID)
-                FMLLog.info("呼ばれた");
-                Map<ModelResourceLocation,ModelBlockDefinition> definition = ObfuscationReflectionHelper.getPrivateValue(ModelBakery.class,event.modelLoader,"blockDefinitions");
-                e.setValue(new CombinationModel(definition.get(e.getKey()).getVariants(e.getKey().getVariant()),event.modelLoader));
-            //}
-        }*/
+    public void onItemSmelted(ItemSmeltEvent.Post e){
+        if(e.getItem(1) != null && e.getItem(1).getItem().equals(EnumEPItem.Mold.getItem()) && e.getItem(2).getItem().equals(EnumEPItem.Mold.getItem())){
+            if(e.getItem(2).getSubCompound("cast", false).getString("content").equalsIgnoreCase("empty")) return;
+            e.getItem(2).getSubCompound("cast", false).setString("type", e.getItem(1).getSubCompound("cast", false).getString("type"));
+            e.getItem(2).getSubCompound("cast", false).setBoolean("smelted", true);
+            e.setItem(1, null);
+        }
     }
 }
