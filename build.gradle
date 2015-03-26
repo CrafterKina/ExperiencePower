@@ -3,8 +3,12 @@ sourceSets.main {
     java.srcDirs project.projectDir.name
     resources.srcDirs project.projectDir.name
 }
-
-version = "1.0.0"
+dependencies {
+    compile fileTree(dir: '../lib', include: '*.jar')
+    compile "codechicken:CodeChickenLib:1.8-1.1.2.132:dev"
+    compile project(':KinaCore')
+}
+version = "��1.1"
 minecraft {
     // replacing stuff in the source
     replace '@VERSION@', project.version
