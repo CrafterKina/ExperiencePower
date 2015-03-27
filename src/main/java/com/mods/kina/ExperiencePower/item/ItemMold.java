@@ -2,6 +2,7 @@ package com.mods.kina.ExperiencePower.item;
 
 import com.mods.kina.ExperiencePower.base.ItemEPBase;
 import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
+import com.mods.kina.ExperiencePower.collection.EnumEPItem;
 import com.mods.kina.ExperiencePower.collection.EnumMetal;
 import com.mods.kina.ExperiencePower.collection.StaticFieldCollection;
 import net.minecraft.client.renderer.ItemMeshDefinition;
@@ -65,6 +66,11 @@ public class ItemMold extends ItemEPBase{
             list.add(setNBT(new ItemStack(itemIn), type.name(), "empty", false));
             list.add(setNBT(new ItemStack(itemIn), type.name(), "empty", true));
         }
+    }
+
+    public String getItemStackDisplayName(ItemStack stack)
+    {
+        return EnumEPItem.Cast.getItem().getItemStackDisplayName(stack)+g11nItem("mold");
     }
 
     public String getUnlocalizedName(ItemStack stack){

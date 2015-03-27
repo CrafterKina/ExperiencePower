@@ -53,6 +53,11 @@ public class ItemCast extends ItemEPBase{
         }
     }
 
+    public String getItemStackDisplayName(ItemStack stack)
+    {
+        return (g11n(getNBT(stack).getString("content").toLowerCase())+g11nItem(getNBT(stack).getString("type").toLowerCase())).trim();
+    }
+
     public String getUnlocalizedName(ItemStack stack){
         if(getNBT(stack) == null) return super.getUnlocalizedName(stack);
         return super.getUnlocalizedName().replaceFirst("cast", getNBT(stack).getString("type").toLowerCase()) + "_" + getNBT(stack).getString("content").toLowerCase();

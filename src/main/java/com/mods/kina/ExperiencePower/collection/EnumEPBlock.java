@@ -35,7 +35,7 @@ public enum EnumEPBlock{
     }
 
     EnumEPBlock(Block block, Class<? extends ItemBlock> itemBlock){
-        this(block, itemBlock, 1, new Object[0]);
+        this(block, itemBlock,new Object[0]);
     }
 
     EnumEPBlock(Block block, Class<? extends ItemBlock> itemBlock, Object... itemCtorArgs){
