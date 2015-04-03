@@ -2,12 +2,13 @@ package com.mods.kina.ExperiencePower.event.handler;
 
 import com.mods.kina.ExperiencePower.base.IWrench;
 import com.mods.kina.ExperiencePower.base.IWrenchingInfo;
+import com.mods.kina.ExperiencePower.propsys.ItemStackProperties;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
-import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -45,14 +46,12 @@ public class ClientEventHandler{
     }
 
     @SubscribeEvent
-    public void onModelBake(ModelBakeEvent event){
-        /*Map<ModelResourceLocation, IModel> stateModels = ObfuscationReflectionHelper.getPrivateValue(ModelLoader.class, event.modelLoader, "stateModels");
-        for(Map.Entry<ModelResourceLocation, IModel> e:stateModels.entrySet()){
-            //if(e.getKey().getResourceDomain().equals(StaticFieldCollection.MODID)
-                FMLLog.info("呼ばれた");
-                Map<ModelResourceLocation,ModelBlockDefinition> definition = ObfuscationReflectionHelper.getPrivateValue(ModelBakery.class,event.modelLoader,"blockDefinitions");
-                e.setValue(new CombinationModel(definition.get(e.getKey()).getVariants(e.getKey().getVariant()),event.modelLoader));
-            //}
-        }*/
+    public void onGetTooltip(ItemTooltipEvent e){
+        ItemStackProperties.PropertyContainer prop = ItemStackProperties.instance.getPropertyContainer(e.itemStack);
+        if(prop == null) return;
+        e.toolTip.add("Weight:" + prop.getWeight());
+        e.toolTip.add("Size:" + prop.getSize());
+        e.toolTip.add("Hardness:" + prop.getHardness());
+        e.toolTip.add("Brittleness:" + prop.getBrittleness());
     }
 }

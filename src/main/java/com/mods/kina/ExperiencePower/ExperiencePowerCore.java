@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 /**
  根幹クラス。大したことはしないはず。
  */
-@Mod(modid = StaticFieldCollection.MODID, dependencies = "required-after:kina_core", useMetadata = true)
+@Mod(modid = StaticFieldCollection.MODID, dependencies = "required-after:kina_core")
 public class ExperiencePowerCore{
 
     @Mod.Instance(StaticFieldCollection.MODID)
@@ -41,6 +41,7 @@ public class ExperiencePowerCore{
         EPPropProcessor.instance.process();
         ConfigMaker.createConfig(e);
         MinecraftForge.EVENT_BUS.register(EventHandler.normal);
+        MinecraftForge.EVENT_BUS.register(EventHandler.client);
         MinecraftForge.TERRAIN_GEN_BUS.register(EventHandler.terrainGen);
         MinecraftForge.ORE_GEN_BUS.register(EventHandler.oreGen);
         FMLCommonHandler.instance().bus().register(EventHandler.fml);

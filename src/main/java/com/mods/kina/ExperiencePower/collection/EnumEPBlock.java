@@ -24,7 +24,8 @@ public enum EnumEPBlock{
     //SimpleExperienceInjector(new BlockSimpleExpInjector()),
     ItemPipe(new BlockBasicPipe()),
     MachineCore(new BlockMachineCore()),
-    Workbench(new BlockEPWorkbench()),;
+    Workbench(new BlockEPWorkbench()),
+    ;
 
     private Class<? extends ItemBlock> itemBlock;
     private Block block;
