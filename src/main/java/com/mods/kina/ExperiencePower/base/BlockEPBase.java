@@ -28,4 +28,8 @@ public class BlockEPBase extends Block{
             }
         };
     }
+
+    public void postRegister(){
+
+    }
 }

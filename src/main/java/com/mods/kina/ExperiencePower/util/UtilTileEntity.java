@@ -16,7 +16,10 @@ public class UtilTileEntity{
     public static final UtilTileEntity instance = new UtilTileEntity();
 
     public void registerTileEntity(Class<? extends TileEntity> te, String id){
-        GameRegistry.registerTileEntity(te, StaticFieldCollection.MODID + "." + id);
+        try{
+            GameRegistry.registerTileEntity(te, StaticFieldCollection.MODID + "." + id);
+        }catch(IllegalArgumentException ignored){
+        }
     }
 
     /**

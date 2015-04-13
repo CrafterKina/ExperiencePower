@@ -12,6 +12,7 @@ public class BlockRegistrar{
     public static void registerBlock(){
         for(EnumEPBlock epBlock:EnumEPBlock.values()){
             GameRegistry.registerBlock(epBlock.getBlock(), epBlock.getItemBlock(), epBlock.getBlockName(), epBlock.getItemConstructorsArgs());
+            epBlock.postRegister();
         }
     }
 

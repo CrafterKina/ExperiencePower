@@ -43,7 +43,8 @@ public class BlockBasicPipe extends BlockEPContainerBase implements IWrenchable,
         setDefaultState(blockState.getBaseState().withProperty(in, optionalFacing.NONE).withProperty(out, optionalFacing.NONE));
         setHardness(3.0F);
         setResistance(8.0F);
-        UtilTileEntity.instance.registerTileEntity(TileEntityBasicPipe.class, "basic_pipe");
+//        if(FMLCommonHandler.instance().getSide().isServer()){
+//        }
     }
 
     public static boolean isNone(IBlockState state, IProperty property){
@@ -61,6 +62,10 @@ public class BlockBasicPipe extends BlockEPContainerBase implements IWrenchable,
     public static EnumFacing getFace(IBlockState state, IProperty property){
         if(isNone(state, property)) return null;
         return EnumFacing.values()[((optionalFacing) state.getValue(property)).ordinal() - 1];
+    }
+
+    public void postRegister(){
+        UtilTileEntity.instance.registerTileEntity(TileEntityBasicPipe.class, "basic_pipe");
     }
 
     public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos){

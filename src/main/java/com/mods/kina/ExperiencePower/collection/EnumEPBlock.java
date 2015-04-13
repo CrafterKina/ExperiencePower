@@ -25,6 +25,7 @@ public enum EnumEPBlock{
     ItemPipe(new BlockBasicPipe()),
     MachineCore(new BlockMachineCore()),
     Workbench(new BlockEPWorkbench()),
+    //ItemSuctionPipe(new BlockSuctionPipe()),
     ;
 
     private Class<? extends ItemBlock> itemBlock;
@@ -71,5 +72,11 @@ public enum EnumEPBlock{
                 return new ModelResourceLocation(StaticFieldCollection.MODID + ":" + getBlockName(), "inventory");
             }
         };
+    }
+    
+    public void postRegister(){
+        if(block instanceof BlockEPBase){
+            ((BlockEPBase) block).postRegister();
+        }
     }
 }
