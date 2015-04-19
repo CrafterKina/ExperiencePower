@@ -3,9 +3,11 @@ package com.mods.kina.ExperiencePower.block;
 import com.mods.kina.ExperiencePower.base.BlockEPContainerBase;
 import com.mods.kina.ExperiencePower.base.IWrenchable;
 import com.mods.kina.ExperiencePower.base.IWrenchingInfo;
+import com.mods.kina.ExperiencePower.collection.ConfigurableFieldCollection;
 import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
 import com.mods.kina.ExperiencePower.tileentity.TileEntityBasicPipe;
 import com.mods.kina.ExperiencePower.util.UtilTileEntity;
+import com.mods.kina.KinaCore.misclib.BlockFieldHelper;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -34,7 +36,6 @@ import static com.mods.kina.ExperiencePower.collection.ConfigurableFieldCollecti
 public class BlockBasicPipe extends BlockEPContainerBase implements IWrenchable, IWrenchingInfo{
     public static final PropertyEnum in = PropertyEnum.create("in", optionalFacing.class);
     public static final PropertyEnum out = PropertyEnum.create("out", optionalFacing.class);
-    EnumFacing placeFace;
 
     public BlockBasicPipe(){
         super(Material.rock);
@@ -84,13 +85,13 @@ public class BlockBasicPipe extends BlockEPContainerBase implements IWrenchable,
     }
 
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer){
-        placeFace = facing;
+        BlockFieldHelper.instance.putField(pos,"placeFace",facing);
         return getDefaultState();
     }
 
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack){
         TileEntityBasicPipe pipe = (TileEntityBasicPipe) worldIn.getTileEntity(pos);
-        pipe.in = convertToOptional(placeFace.getOpposite());
+        pipe.in = convertToOptional(((EnumFacing) BlockFieldHelper.instance.getField(pos, "placeFace")).getOpposite());
         pipe.out = convertToOptional(BlockPistonBase.getFacingFromEntity(worldIn, pos, placer));
         UtilTileEntity.instance.syncTileEntity(pipe);
     }
@@ -167,6 +168,10 @@ public class BlockBasicPipe extends BlockEPContainerBase implements IWrenchable,
             if(!isNone(pipe, in) || isNone(pipe, out)) return EnumDyeColor.CYAN;
         }
         return EnumDyeColor.WHITE;
+    }
+
+    public int getWrenchColor(World worldIn, ItemStack stack, Entity entityIn, MovingObjectPosition position, boolean isUsing){
+        return ConfigurableFieldCollection.defaultDyeColor[getWrenchColor(stack, worldIn, entityIn, position, isUsing).getDyeDamage()];
     }
 
     private AxisAlignedBB getToDrawBox(BlockPos pos, double d0, double d1, double d2, EnumFacing d){

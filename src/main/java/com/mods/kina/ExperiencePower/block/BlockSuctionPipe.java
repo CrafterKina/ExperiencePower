@@ -3,6 +3,7 @@ package com.mods.kina.ExperiencePower.block;
 import com.mods.kina.ExperiencePower.base.BlockEPContainerBase;
 import com.mods.kina.ExperiencePower.base.IWrenchable;
 import com.mods.kina.ExperiencePower.base.IWrenchingInfo;
+import com.mods.kina.ExperiencePower.collection.ConfigurableFieldCollection;
 import com.mods.kina.ExperiencePower.collection.EnumEPBlock;
 import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
 import com.mods.kina.ExperiencePower.collection.StaticFieldCollection;
@@ -156,6 +157,10 @@ public class BlockSuctionPipe extends BlockEPContainerBase implements IWrenchabl
             if(!isNone(pipe, in) || isNone(pipe, out)) return EnumDyeColor.CYAN;
         }
         return EnumDyeColor.WHITE;
+    }
+
+    public int getWrenchColor(World worldIn, ItemStack stack, Entity entityIn, MovingObjectPosition position, boolean isUsing){
+        return ConfigurableFieldCollection.defaultDyeColor[getWrenchColor(stack, worldIn, entityIn, position, isUsing).getDyeDamage()];
     }
 
     private AxisAlignedBB getToDrawBox(BlockPos pos, double d0, double d1, double d2, EnumFacing d){

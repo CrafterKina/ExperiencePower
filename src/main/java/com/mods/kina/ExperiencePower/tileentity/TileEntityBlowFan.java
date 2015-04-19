@@ -1,7 +1,8 @@
 package com.mods.kina.ExperiencePower.tileentity;
 
+import com.google.common.collect.Lists;
 import com.mods.kina.ExperiencePower.block.BlockBlowFan;
-import net.minecraft.block.Block;
+import com.mods.kina.KinaCore.misclib.KinaLib;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
@@ -9,8 +10,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.Vec3i;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class TileEntityBlowFan extends TileEntity implements IUpdatePlayerListBox{
@@ -18,20 +20,19 @@ public class TileEntityBlowFan extends TileEntity implements IUpdatePlayerListBo
     /**
      Updates the JList with a new model.
      */
+    @SuppressWarnings("unchecked")
     public void update(){
         //レッドストーン動力が働いている時のみ
-        if(worldObj.isBlockPowered(pos) || worldObj.isBlockPowered(pos.up())){
+        if(worldObj.isBlockIndirectlyGettingPowered(pos) > 0){
             //ブロックの向き
             EnumFacing facing = (EnumFacing) worldObj.getBlockState(pos).getProperties().get(BlockBlowFan.FACING);
-            //相対的位置
-            Vec3i vec3i = facing.getDirectionVec();
             //Entity取得
-            List<Entity> entities = getEntityWithinRange();
+            List<Entity> entities = getAvailableRange() == null ? Lists.newArrayList() : worldObj.getEntitiesWithinAABB(Entity.class, getAvailableRange(), IEntitySelector.selectAnything);
             for(Entity entity : entities){
                 //motionXYZに加算して動かす
-                entity.motionX += vec3i.getX() * 0.075;
-                entity.motionY += vec3i.getY() * 0.1;
-                entity.motionZ += vec3i.getZ() * 0.075;
+                entity.motionX += facing.getFrontOffsetX() * 0.075;
+                entity.motionY += facing.getFrontOffsetY() * 0.1;
+                entity.motionZ += facing.getFrontOffsetZ() * 0.075;
                 //fallDistanceを変えて痛くないように
                 if(facing == EnumFacing.UP){
                     entity.fallDistance = 0;
@@ -40,47 +41,21 @@ public class TileEntityBlowFan extends TileEntity implements IUpdatePlayerListBo
         }
     }
 
-    /**
-     正面にいるEntityどもを取得。
-     */
     @SuppressWarnings("unchecked")
-    public List<Entity> getEntityWithinRange(){
+    public AxisAlignedBB getAvailableRange(){
         //向きを取得
         EnumFacing facing = (EnumFacing) worldObj.getBlockState(pos).getProperties().get(BlockBlowFan.FACING);
-        //向いてるとこの相対的位置を取得
-        Vec3i vec3i = facing.getDirectionVec();
-        //初期化
-        AxisAlignedBB aabb;
-        //相対的位置が+方向か-方向かで場合分け
         //範囲指定
-        if(facing.getAxisDirection() == EnumFacing.AxisDirection.POSITIVE){
-            aabb = new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1 + vec3i.getX() * getAvailableDistance(), pos.getY() + 1 + vec3i.getY() * getAvailableDistance(), pos.getZ() + 1 + vec3i.getZ() * getAvailableDistance());
-        }else{
-            aabb = new AxisAlignedBB(pos.getX() + vec3i.getX() * getAvailableDistance(), pos.getY() + vec3i.getY() * getAvailableDistance(), pos.getZ() + vec3i.getZ() * getAvailableDistance(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1);
+        BlockPos facingPos = KinaLib.lib.getFrontPos(facing, pos);
+        //BlockPosの方は順番が気に喰わないので独自のを用意。
+        Iterator<BlockPos> maxPoses = KinaLib.lib.getAllInBox(facingPos, KinaLib.lib.getFrontPosWithDistance(facing, pos, worldObj.isBlockIndirectlyGettingPowered(pos))).iterator();
+        ArrayList<BlockPos> result = Lists.newArrayList();
+        while(maxPoses.hasNext()){
+            BlockPos scanning = maxPoses.next();
+            if(worldObj.getBlockState(scanning).getBlock().getMaterial().isSolid()) break;
+            result.add(scanning);
         }
-        //Entity取得
-        return worldObj.getEntitiesWithinAABB(Entity.class, aabb, IEntitySelector.selectAnything);
-    }
-
-    public int getAvailableDistance(){
-        //向きを取得
-        EnumFacing facing = (EnumFacing) worldObj.getBlockState(pos).getProperties().get(BlockBlowFan.FACING);
-        //向いてるとこの相対的位置を取得
-        Vec3i vec3i = facing.getDirectionVec();
-        //初期化
-        int i = 1;
-        //forで最大15回回す
-        for(; i <= (worldObj.getStrongPower(pos) > worldObj.getStrongPower(pos.up()) ? worldObj.getStrongPower(pos) : worldObj.getStrongPower(pos.up())); i++){
-            //Fanからの相対的位置を元に調査ブロックを徐々に遠ざける
-            BlockPos blockPos = pos.add(vec3i.getX() * i, vec3i.getY() * i, vec3i.getZ() * i);
-            //BlockPosの位置にあるBlock
-            Block block = worldObj.getBlockState(blockPos).getBlock();
-            //空気とかじゃなければ
-            if(block.getMaterial().isSolid()){
-                return i - 1;
-            }
-        }
-        //全部空気とかならめでたく最大値
-        return i;
+        if(result.isEmpty()) return null;
+        return KinaLib.lib.getBlocklizedAABB(KinaLib.lib.getFixedAABB(result.get(0), result.get(result.size() - 1)), facing);
     }
 }

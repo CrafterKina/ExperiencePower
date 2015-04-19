@@ -6,9 +6,10 @@ import com.mods.kina.ExperiencePower.base.IWrenchingInfo;
 import com.mods.kina.ExperiencePower.base.ItemEPBase;
 import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
 import net.minecraft.client.Minecraft;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -17,7 +18,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.mods.kina.ExperiencePower.collection.ConfigurableFieldCollection.defaultDyeColor;
+import java.util.List;
 
 public class ItemWrenchWand extends ItemEPBase implements IWrench{
     public ItemWrenchWand(){
@@ -52,17 +53,31 @@ public class ItemWrenchWand extends ItemEPBase implements IWrench{
     }
 
     private void changeWrenchColor(World world, ItemStack stack, Entity entity, boolean isSelected, boolean isUsing){
-        stack.setItemDamage(EnumDyeColor.WHITE.getDyeDamage());
+        if(stack.getItemDamage()>0)stack.setItemDamage(0);
+        setColor(stack,0xffffff);
         if(!isSelected) return;
         MovingObjectPosition rayTrace = entity.rayTrace((double) Minecraft.getMinecraft().playerController.getBlockReachDistance(), 1);
         if(rayTrace == null || rayTrace.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) return;
         if(!(world.getBlockState(rayTrace.getBlockPos()).getBlock() instanceof IWrenchingInfo)) return;
         IWrenchingInfo block = (IWrenchingInfo) world.getBlockState(rayTrace.getBlockPos()).getBlock();
-        stack.setItemDamage(block.getWrenchColor(stack, world, entity, rayTrace, isUsing).getDyeDamage());
+        setColor(stack, block.getWrenchColor(world, stack, entity, rayTrace, isUsing));
     }
 
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int renderPass){
-        return renderPass > 0 ? 0xffffff : defaultDyeColor[stack.getMetadata()];
+        return renderPass > 0 ? 0xffffff : getColor(stack);
+    }
+
+    public int getColor(ItemStack stack){
+        return stack.getSubCompound("wrench", false) == null ? 0xffffff : stack.getSubCompound("wrench", false).getInteger("color");
+    }
+
+    public ItemStack setColor(ItemStack stack, int color){
+        stack.getSubCompound("wrench",true).setInteger("color",color);
+        return stack;
+    }
+
+    public void getSubItems(Item itemIn, CreativeTabs tab, List list){
+        list.add(setColor(new ItemStack(itemIn), 0xffffff));
     }
 }

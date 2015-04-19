@@ -139,7 +139,7 @@ public abstract class IInventoryImpl extends TileEntity implements IInventory{
     /**
      Gets the name of this command sender (usually username, but possibly "Rcon")
      */
-    public String getName(){
+    public String getCommandSenderName(){
         return this.inventoryTitle;
     }
 
@@ -156,7 +156,7 @@ public abstract class IInventoryImpl extends TileEntity implements IInventory{
     }
 
     public IChatComponent getDisplayName(){
-        return this.hasCustomName() ? new ChatComponentText(this.getName()) : new ChatComponentTranslation(this.getName());
+        return this.hasCustomName() ? new ChatComponentText(this.getCommandSenderName()) : new ChatComponentTranslation(this.getCommandSenderName());
     }
 
     /**
@@ -249,7 +249,7 @@ public abstract class IInventoryImpl extends TileEntity implements IInventory{
         compound.setTag("Items", nbttaglist);
 
         if(this.hasCustomName()){
-            compound.setString("CustomName", this.getName());
+            compound.setString("CustomName", this.getCommandSenderName());
         }
 
         NBTTagCompound extendedCompound = new NBTTagCompound();
