@@ -10,7 +10,7 @@ import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
 
 public enum EnumEPItem{
-    ExperienceSealableBook(new ItemExpSealableBook()),
+    //ExperienceSealableBook(new ItemExpSealableBook()),
     ExperienceCropSeed(new ItemSeeds(EnumEPBlock.ExperienceCrop.getBlock(), Blocks.farmland).setUnlocalizedName("exp_seed").setCreativeTab(EnumEPCreativeTab.ITEM.getCreativeTab())),
     //Ingot(new ItemIngot()),
     //MonsterPlacer(new ItemEPMonsterPlacer()),

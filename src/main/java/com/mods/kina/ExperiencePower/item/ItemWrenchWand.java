@@ -77,7 +77,7 @@ public class ItemWrenchWand extends ItemEPBase implements IWrench{
         return stack;
     }
 
-    public void getSubItems(Item itemIn, CreativeTabs tab, List list){
-        list.add(setColor(new ItemStack(itemIn), 0xffffff));
+    public void getCreativeItemStacks(Item item, CreativeTabs tab, List<ItemStack> list){
+        list.add(setColor(new ItemStack(item), 0xffffff));
     }
 }

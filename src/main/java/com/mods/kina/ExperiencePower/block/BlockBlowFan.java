@@ -84,7 +84,7 @@ public class BlockBlowFan extends BlockEPContainerBase implements IWrenchingInfo
         float f1 = 0.002F;
         if(world.isBlockIndirectlyGettingPowered(pos)==0)return;
         if(blowFan.getAvailableRange()==null)return;
-        RenderGlobal.drawOutlinedBoundingBox(blowFan.getAvailableRange().expand(f1, f1, f1).offset(-d0, -d1, -d2), Color.green.getRGB());
+        RenderGlobal.drawOutlinedBoundingBox(blowFan.getAvailableRange()/*.expand(f1, f1, f1)*/.offset(-d0, -d1, -d2), Color.green.getRGB());
     }
 
     public EnumDyeColor getWrenchColor(ItemStack stack, World worldIn, Entity entityIn, MovingObjectPosition position, boolean isUsing){

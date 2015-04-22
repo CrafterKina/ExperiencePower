@@ -4,7 +4,7 @@ import com.mods.kina.ExperiencePower.annotation.EPProp;
 import com.mods.kina.ExperiencePower.collection.EnumEPItem;
 import com.mods.kina.ExperiencePower.collection.EnumMetal;
 import com.mods.kina.ExperiencePower.item.ItemMold;
-import com.mods.kina.KinaCore.event.KinaCoreHooks;
+import com.mods.kina.KinaCore.event.hooks.KinaCoreHooks;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;

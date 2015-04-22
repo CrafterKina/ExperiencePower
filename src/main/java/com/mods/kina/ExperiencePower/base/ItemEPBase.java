@@ -3,9 +3,12 @@ package com.mods.kina.ExperiencePower.base;
 import com.mods.kina.ExperiencePower.collection.StaticFieldCollection;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
+
+import java.util.List;
 
 public class ItemEPBase extends Item{
     public ItemEPBase(){
@@ -45,5 +48,14 @@ public class ItemEPBase extends Item{
 
     protected final String g11nItem(String raw){
         return removeEnclosure(l10n(i18n(raw, true)));
+    }
+
+    @SuppressWarnings("unchecked")
+    public final void getSubItems(Item itemIn, CreativeTabs tab, List list){
+        getCreativeItemStacks(itemIn, tab, list);
+    }
+
+    public void getCreativeItemStacks(Item item, CreativeTabs tab, List<ItemStack> list){
+        super.getSubItems(item, tab, list);
     }
 }

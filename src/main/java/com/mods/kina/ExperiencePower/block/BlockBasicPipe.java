@@ -44,8 +44,6 @@ public class BlockBasicPipe extends BlockEPContainerBase implements IWrenchable,
         setDefaultState(blockState.getBaseState().withProperty(in, optionalFacing.NONE).withProperty(out, optionalFacing.NONE));
         setHardness(3.0F);
         setResistance(8.0F);
-//        if(FMLCommonHandler.instance().getSide().isServer()){
-//        }
     }
 
     public static boolean isNone(IBlockState state, IProperty property){

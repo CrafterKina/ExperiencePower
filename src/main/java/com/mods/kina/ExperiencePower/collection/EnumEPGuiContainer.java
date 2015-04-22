@@ -11,8 +11,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 public enum EnumEPGuiContainer{
-    ExperienceAbsorber,
-    ExperienceDischarger,
     EPWorkbench(ContainerEPWorkbench.class, GuiEPWorkbench.class);
     //ExperienceFurnace(ContainerExpFurnace.class, GuiExpFurnace.class),;
 

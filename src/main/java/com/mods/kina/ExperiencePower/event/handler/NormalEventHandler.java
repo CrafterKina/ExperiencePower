@@ -4,7 +4,7 @@ import com.mods.kina.ExperiencePower.annotation.EPProp;
 import com.mods.kina.ExperiencePower.collection.EnumEPAchievement;
 import com.mods.kina.ExperiencePower.collection.EnumEPBlock;
 import com.mods.kina.ExperiencePower.collection.EnumEPItem;
-import com.mods.kina.KinaCore.event.furnace.ItemSmeltEvent;
+import com.mods.kina.KinaCore.event.hooks.furnace.ItemSmeltEvent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockLeaves;

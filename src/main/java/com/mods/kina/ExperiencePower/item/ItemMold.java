@@ -57,8 +57,7 @@ public class ItemMold extends ItemEPBase{
         return EnumMetal.valueOf(getNBT(stack).getString("content")).getColor();
     }
 
-    @SuppressWarnings("unchecked")
-    public void getSubItems(Item itemIn, CreativeTabs tab, List list){
+    public void getCreativeItemStacks(Item itemIn, CreativeTabs tab, List<ItemStack> list){
         for(Type type : Type.values()){
             for(EnumMetal metal : EnumMetal.values()){
                 list.add(setNBT(new ItemStack(itemIn), type.name(), metal.name(), true));

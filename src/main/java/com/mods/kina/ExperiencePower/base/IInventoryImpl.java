@@ -67,41 +67,6 @@ public abstract class IInventoryImpl extends TileEntity implements IInventory{
         }
     }
 
-    public ItemStack func_174894_a(ItemStack p_174894_1_){
-        ItemStack itemstack1 = p_174894_1_.copy();
-
-        for(int i = 0; i < this.slotsCount; ++i){
-            ItemStack itemstack2 = this.getStackInSlot(i);
-
-            if(itemstack2 == null){
-                this.setInventorySlotContents(i, itemstack1);
-                this.markDirty();
-                return null;
-            }
-
-            if(ItemStack.areItemsEqual(itemstack2, itemstack1)){
-                int j = Math.min(this.getInventoryStackLimit(), itemstack2.getMaxStackSize());
-                int k = Math.min(itemstack1.stackSize, j - itemstack2.stackSize);
-
-                if(k > 0){
-                    itemstack2.stackSize += k;
-                    itemstack1.stackSize -= k;
-
-                    if(itemstack1.stackSize <= 0){
-                        this.markDirty();
-                        return null;
-                    }
-                }
-            }
-        }
-
-        if(itemstack1.stackSize != p_174894_1_.stackSize){
-            this.markDirty();
-        }
-
-        return itemstack1;
-    }
-
     /**
      When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem - like
      when you close a workbench GUI.

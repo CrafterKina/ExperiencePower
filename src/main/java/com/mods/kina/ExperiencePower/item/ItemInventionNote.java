@@ -7,9 +7,7 @@ import com.mods.kina.ExperiencePower.collection.EnumEPInventionPage;
 import com.mods.kina.ExperiencePower.gui.GuiInventionNote;
 import com.mods.kina.ExperiencePower.invent.InventionElement;
 import net.minecraft.client.Minecraft;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.nbt.NBTTagCompound;
@@ -75,16 +73,6 @@ public class ItemInventionNote extends ItemEPBase{
      */
     public boolean canUnlockInvention(List<List<Byte>> list, int page, int invent){
         return getElementFromPage(page, invent).parentAchievements == null || hasInventionUnlocked(list, page, invent);
-    }
-
-    /**
-     returns a list of items with the same ID, but different meta (eg: dye returns 16 items) The List of sub-items. This
-     is a List of ItemStacks.
-     */
-    @SuppressWarnings("unchecked")
-    public void getSubItems(Item itemIn, CreativeTabs tab, List subItems){
-        super.getSubItems(itemIn, tab, subItems);
-        //subItems.add(initNBT(new ItemStack(itemIn)));
     }
 
     /**
