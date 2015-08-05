@@ -9,15 +9,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import java.util.Map;
 
 public class ItemStackProperties{
-    public static final ItemStackProperties instance=new ItemStackProperties();
+    public static final ItemStackProperties instance = new ItemStackProperties();
     private final Map<NBTTagCompound,PropertyContainer> propMap;
 
     private ItemStackProperties(){
         propMap = Maps.newHashMap();
-//Todo        addItemProperty(Items.nether_star,new PropertyContainer("Light","Holdable","Hand","Non-Blastable"));
+        //Todo        addItemProperty(Items.nether_star,new PropertyContainer("Light","Holdable","Hand","Non-Blastable"));
     }
 
-    public void addItemProperty(Item item,PropertyContainer prop){
+    public void addItemProperty(Item item, PropertyContainer prop){
         if(item.getHasSubtypes()){
             for(int i = 0; i < item.getMaxDamage(); i++){
                 addItemStackProperty(new ItemStack(item, 1, i), prop);
@@ -27,28 +27,28 @@ public class ItemStackProperties{
         addItemStackProperty(new ItemStack(item), prop);
     }
 
-    public void addBlockProperty(Block block,PropertyContainer prop){
+    public void addBlockProperty(Block block, PropertyContainer prop){
         for(int i = 0; i < 16; i++){
-            addItemStackProperty(new ItemStack(block,1,i),prop);
+            addItemStackProperty(new ItemStack(block, 1, i), prop);
         }
     }
 
-    public void addItemStackProperty(ItemStack stack,PropertyContainer prop){
-        ItemStack copy=stack.copy().splitStack(1);
+    public void addItemStackProperty(ItemStack stack, PropertyContainer prop){
+        ItemStack copy = stack.copy().splitStack(1);
         propMap.put(copy.writeToNBT(copy.getTagCompound() == null ? new NBTTagCompound() : copy.getTagCompound()), prop);
     }
 
     public PropertyContainer getPropertyContainer(ItemStack stack){
         return null;//todo
-//todo        ItemStack copy=stack.copy().splitStack(1);
-//todo        copy.writeToNBT(copy.getTagCompound()==null?new NBTTagCompound():copy.getTagCompound());
-//todo        for(Map.Entry<NBTTagCompound,PropertyContainer> entry : propMap.entrySet()){
-//todo            if(KinaLib.lib.areItemStackEqual(ItemStack.loadItemStackFromNBT(entry.getKey()), copy)){
-//todo                return entry.getValue();
-//todo            }
-//todo        }
-//todo        if(!(stack.getItem() instanceof ItemBlock))return new PropertyContainer("Light","Holdable","Hand","Brastable");
-//todo        return new PropertyContainer("Normal", "Box", "Stone", "Stone");
+        //todo        ItemStack copy=stack.copy().splitStack(1);
+        //todo        copy.writeToNBT(copy.getTagCompound()==null?new NBTTagCompound():copy.getTagCompound());
+        //todo        for(Map.Entry<NBTTagCompound,PropertyContainer> entry : propMap.entrySet()){
+        //todo            if(KinaLib.lib.areItemStackEqual(ItemStack.loadItemStackFromNBT(entry.getKey()), copy)){
+        //todo                return entry.getValue();
+        //todo            }
+        //todo        }
+        //todo        if(!(stack.getItem() instanceof ItemBlock))return new PropertyContainer("Light","Holdable","Hand","Brastable");
+        //todo        return new PropertyContainer("Normal", "Box", "Stone", "Stone");
     }
 
     public static class PropertyContainer{

@@ -9,11 +9,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public enum EnumEPCreativeTab{
     BLOCK(new CreativeTabs("ep_block"){
         public Item getTabIconItem(){
-            return Item.getItemFromBlock(EnumEPBlock.ExperienceAbsorber.getBlock());
+            return Item.getItemFromBlock(EnumEPBlock.MachineCore.getBlock());
         }
+
         @SideOnly(Side.CLIENT)
-        public String getTranslatedTabLabel()
-        {
+        public String getTranslatedTabLabel(){
             return "ExperiencePower Block";
         }
     }),
@@ -21,9 +21,9 @@ public enum EnumEPCreativeTab{
         public Item getTabIconItem(){
             return Items.enchanted_book;
         }
+
         @SideOnly(Side.CLIENT)
-        public String getTranslatedTabLabel()
-        {
+        public String getTranslatedTabLabel(){
             return "ExperiencePower Item";
         }
     }),;
@@ -31,7 +31,7 @@ public enum EnumEPCreativeTab{
     private CreativeTabs creativeTab;
 
     EnumEPCreativeTab(CreativeTabs tab){
-        creativeTab=tab;
+        creativeTab = tab;
     }
 
     public CreativeTabs getCreativeTab(){

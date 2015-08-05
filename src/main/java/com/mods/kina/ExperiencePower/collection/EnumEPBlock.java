@@ -14,8 +14,8 @@ import net.minecraft.item.ItemStack;
  */
 public enum EnumEPBlock{
     /*ExperienceConduit(new BlockExpConduit()),*/
-    ExperienceAbsorber(new BlockExpAbsorber()),
-    ExperienceDischarger(new BlockExpDischarger()),
+    /*ExperienceAbsorber(new BlockExpAbsorber()),
+    ExperienceDischarger(new BlockExpDischarger()),*/
     BlowFan(new BlockBlowFan()),
     TrainingBarrel(new BlockTrainingBarrel()),
     ExperienceCrop(new BlockExpWheat()),
@@ -25,6 +25,7 @@ public enum EnumEPBlock{
     ItemPipe(new BlockBasicPipe()),
     MachineCore(new BlockMachineCore()),
     Workbench(new BlockEPWorkbench()),
+    RotaryMachine(new BlockRotaryMachine()),
     //ItemSuctionPipe(new BlockSuctionPipe()),
     ;
 
@@ -37,7 +38,7 @@ public enum EnumEPBlock{
     }
 
     EnumEPBlock(Block block, Class<? extends ItemBlock> itemBlock){
-        this(block, itemBlock,new Object[0]);
+        this(block, itemBlock, new Object[0]);
     }
 
     EnumEPBlock(Block block, Class<? extends ItemBlock> itemBlock, Object... itemCtorArgs){
@@ -73,7 +74,7 @@ public enum EnumEPBlock{
             }
         };
     }
-    
+
     public void postRegister(){
         if(block instanceof BlockEPBase){
             ((BlockEPBase) block).postRegister();

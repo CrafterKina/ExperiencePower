@@ -1,5 +1,5 @@
 {
   "variants": {
-    "normal":  { "model": "kina_ExperiencePower:exp_absorber" }
+    "normal": {"model": "kina_ExperiencePower:exp_absorber"}
   }
 }

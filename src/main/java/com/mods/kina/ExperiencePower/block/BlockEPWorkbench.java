@@ -3,7 +3,6 @@ package com.mods.kina.ExperiencePower.block;
 import com.mods.kina.ExperiencePower.base.BlockEPBase;
 import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
 import com.mods.kina.ExperiencePower.collection.EnumEPGuiContainer;
-import com.mods.kina.ExperiencePower.collection.StaticFieldCollection;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,8 +29,7 @@ public class BlockEPWorkbench extends BlockEPBase{
     }
 
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ){
-        if(!worldIn.isRemote)
-            playerIn.openGui(StaticFieldCollection.epCore, EnumEPGuiContainer.EPWorkbench.ordinal(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+        if(!worldIn.isRemote) EnumEPGuiContainer.Workbench.openGui(worldIn, pos, playerIn);
         return true;
     }
 }

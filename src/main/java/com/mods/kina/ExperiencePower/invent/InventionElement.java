@@ -125,7 +125,7 @@ public class InventionElement{
     public EnumEPInventionPage getPage(){
         return parentPage;
     }
-    
+
     public InventionElement setPage(EnumEPInventionPage page){
         parentPage = page;
         return this;

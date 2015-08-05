@@ -24,7 +24,7 @@ import static com.mods.kina.ExperiencePower.collection.ConfigurableFieldCollecti
 public class ItemMold extends ItemEPBase{
     public ItemMold(){
         setUnlocalizedName("mold");
-        setCreativeTab(EnumEPCreativeTab.ITEM.getCreativeTab());
+        setCreativeTab(EnumEPCreativeTab.ITEM);
         //setHasSubtypes(true);
         setMaxStackSize(1);
     }
@@ -39,7 +39,7 @@ public class ItemMold extends ItemEPBase{
 
     public static NBTTagCompound getNBT(ItemStack stack){
         NBTTagCompound tagCompound = stack.getSubCompound("cast", false);
-        if(tagCompound == null) return null;
+        if(tagCompound == null) return new NBTTagCompound();
         return tagCompound;
     }
 
@@ -67,9 +67,8 @@ public class ItemMold extends ItemEPBase{
         }
     }
 
-    public String getItemStackDisplayName(ItemStack stack)
-    {
-        return EnumEPItem.Cast.getItem().getItemStackDisplayName(stack)+g11nItem("mold");
+    public String getItemStackDisplayName(ItemStack stack){
+        return EnumEPItem.Cast.getItem().getItemStackDisplayName(stack) + g11nItem("mold");
     }
 
     public String getUnlocalizedName(ItemStack stack){

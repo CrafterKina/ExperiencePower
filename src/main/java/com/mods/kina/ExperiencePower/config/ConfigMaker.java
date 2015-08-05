@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.File;
+import java.io.Serializable;
 import java.lang.reflect.Array;
 
 public class ConfigMaker{
@@ -18,10 +19,25 @@ public class ConfigMaker{
             for(EnumConfigCategory cc : EnumConfigCategory.values())
                 for(EnumConfigCategory.PropContainer pc : cc.propSet){
                     pc.insertTo.setAccessible(true);
+                    Property property;
                     if(pc.defaultValue.getClass().isArray()){
                         pc.insertTo.set(null, getInsertObject(config.get(cc.toString(), pc.key, arrayToString(pc.defaultValue), pc.comment, pc.type), pc.type));
                     }else{
-                        pc.insertTo.set(null, getInsertObject(config.get(cc.toString(), pc.key, primitiveToString(pc.defaultValue), pc.comment, pc.type), pc.type));
+                        property = config.get(cc.toString(), pc.key, primitiveToString(pc.defaultValue), pc.comment, pc.type);
+                        switch(pc.type){
+                            case INTEGER:
+                                pc.insertTo.setInt(null, property.getInt());
+                                break;
+                            case BOOLEAN:
+                                pc.insertTo.setBoolean(null, property.getBoolean());
+                                break;
+                            case DOUBLE:
+                                pc.insertTo.setDouble(null, property.getDouble());
+                                break;
+                            default:
+                                pc.insertTo.set(null, property.getString());
+                                break;
+                        }
                     }
                 }
         } catch(Exception e){
@@ -32,7 +48,7 @@ public class ConfigMaker{
     }
 
     //第一引数から得られるTypeはすべてStringっぽいので、オリジナルのTypeも渡す。
-    private static Object getInsertObject(Property property, Property.Type type){
+    private static Serializable getInsertObject(Property property, Property.Type type){
         switch(type){
             case INTEGER:
                 return property.isList() ? property.getIntList() : property.getInt();

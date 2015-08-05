@@ -46,13 +46,17 @@ public class BlockOre extends BlockEPBase{
     }
 
     /**
-     * This returns a complete list of items dropped from this block.
-     *
-     * @param world The current world
-     * @param pos Block position in world
-     * @param state Current state
-     * @param fortune Breakers fortune level
-     * @return A ArrayList containing all items this block drops
+     This returns a complete list of items dropped from this block.
+
+     @param world
+     The current world
+     @param pos
+     Block position in world
+     @param state
+     Current state
+     @param fortune
+     Breakers fortune level
+     @return A ArrayList containing all items this block drops
      */
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
         return Lists.newArrayList(new ItemStack(state.getBlock(), 1, ((OreType) state.getValue(TYPE)).ordinal()));
@@ -88,6 +92,7 @@ public class BlockOre extends BlockEPBase{
 
     /**
      RenderPassを利用しないのでgetRenderColorと同じで良い
+
      @see #getRenderColor
      */
     @SideOnly(Side.CLIENT)

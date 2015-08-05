@@ -1,4 +1,4 @@
-package com.mods.kina.ExperiencePower.render.tileentity;
+package com.mods.kina.ExperiencePower.render.renderer.tileentity;
 
 import com.mods.kina.ExperiencePower.tileentity.TileEntitySimpleExpInjector;
 import net.minecraft.client.Minecraft;

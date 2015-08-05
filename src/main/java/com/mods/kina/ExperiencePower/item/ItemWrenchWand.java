@@ -23,7 +23,7 @@ import java.util.List;
 public class ItemWrenchWand extends ItemEPBase implements IWrench{
     public ItemWrenchWand(){
         setUnlocalizedName("wrench_wand");
-        setCreativeTab(EnumEPCreativeTab.ITEM.getCreativeTab());
+        setCreativeTab(EnumEPCreativeTab.ITEM);
         setMaxStackSize(1);
         setHasSubtypes(true);
         setFull3D();
@@ -53,8 +53,8 @@ public class ItemWrenchWand extends ItemEPBase implements IWrench{
     }
 
     private void changeWrenchColor(World world, ItemStack stack, Entity entity, boolean isSelected, boolean isUsing){
-        if(stack.getItemDamage()>0)stack.setItemDamage(0);
-        setColor(stack,0xffffff);
+        if(stack.getItemDamage() > 0) stack.setItemDamage(0);
+        setColor(stack, 0xffffff);
         if(!isSelected) return;
         MovingObjectPosition rayTrace = entity.rayTrace((double) Minecraft.getMinecraft().playerController.getBlockReachDistance(), 1);
         if(rayTrace == null || rayTrace.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) return;
@@ -73,7 +73,7 @@ public class ItemWrenchWand extends ItemEPBase implements IWrench{
     }
 
     public ItemStack setColor(ItemStack stack, int color){
-        stack.getSubCompound("wrench",true).setInteger("color",color);
+        stack.getSubCompound("wrench", true).setInteger("color", color);
         return stack;
     }
 

@@ -13,9 +13,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class IInventoryImpl extends TileEntity implements IInventory{
+    protected ItemStack[] inventoryContents;
     private String inventoryTitle;
     private int slotsCount;
-    private ItemStack[] inventoryContents;
     private boolean hasCustomName;
 
     public IInventoryImpl(String title, boolean hasCustomName, int slotsCount){

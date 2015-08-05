@@ -18,11 +18,14 @@ public enum EnumEPItem{
     ArmorPump(new ItemArmorPump()),
     InventionNote(new ItemInventionNote()),
     Mold(new ItemMold()),
-    Cast(new ItemCast()),;
+    Cast(new ItemCast()),
+    MemoryBook(new ItemBlockMemoryBook()),
+    MixingBlade(new ItemSeparateBlade()),;
 
     private Item item;
+
     EnumEPItem(Item item){
-        this.item=item;
+        this.item = item;
     }
 
     public Item getItem(){

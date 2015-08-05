@@ -39,16 +39,17 @@ public abstract class BlockEPContainerBase extends BlockEPBase implements ITileE
      * The type of render function that is called for this block
      * デフォルトに戻す。
      */
-    public int getRenderType()
-    {
+    public int getRenderType(){
         return 3;
     }
 
     /**
      Returns a new instance of a block's tile entity class. Called on placing the block.
 
-     @param world Worldのインスタンス
-     @param meta 設置されるBlockのメタデータ値。
+     @param world
+     Worldのインスタンス
+     @param meta
+     設置されるBlockのメタデータ値。
      */
     public abstract TileEntity createNewTileEntity(World world, int meta);
 

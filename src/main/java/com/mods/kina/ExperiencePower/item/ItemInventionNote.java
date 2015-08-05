@@ -21,18 +21,18 @@ import java.util.List;
 public class ItemInventionNote extends ItemEPBase{
     @EPProp
     public static boolean enableInventionSystem = true;
+
     public ItemInventionNote(){
-        setCreativeTab(EnumEPCreativeTab.ITEM.getCreativeTab());
+        setCreativeTab(EnumEPCreativeTab.ITEM);
         setUnlocalizedName("invention_note");
     }
 
     /**
      発見ノート(仮称)のGUIを開く。
      */
-    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn){
+    public void onItemRightClick(ItemStack itemStackIn, EntityPlayer playerIn){
         if(enableInventionSystem)
             Minecraft.getMinecraft().displayGuiScreen(new GuiInventionNote(Minecraft.getMinecraft().currentScreen, itemStackIn));
-        return itemStackIn;
     }
 
     /**
@@ -50,8 +50,7 @@ public class ItemInventionNote extends ItemEPBase{
     }
 
     /**
-     ページの中での要素のIDを取得。
-     もう少しスマートにしたい。
+     ページの中での要素のIDを取得。 もう少しスマートにしたい。
      */
     public int getIDFromPage(int page, InventionElement element){
         for(int i = 0; i < EnumEPInventionPage.values()[page].getPage().getElements().size(); i++){
@@ -59,10 +58,9 @@ public class ItemInventionNote extends ItemEPBase{
         }
         return -1;
     }
-    
+
     /**
-     この要素は確認済みなのかどうか。
-     未発見・発見・発明の三段階に分けたほうがいいかも。
+     この要素は確認済みなのかどうか。 未発見・発見・発明の三段階に分けたほうがいいかも。
      */
     public boolean hasInventionUnlocked(List<List<Byte>> list, int page, int invent){
         return list.get(page).get(invent) == 1;

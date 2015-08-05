@@ -83,7 +83,7 @@ public class BlockBasicPipe extends BlockEPContainerBase implements IWrenchable,
     }
 
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer){
-        BlockFieldHelper.instance.putField(pos,"placeFace",facing);
+        BlockFieldHelper.instance.putField(pos, "placeFace", facing);
         return getDefaultState();
     }
 

@@ -11,10 +11,12 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import static com.mods.kina.ExperiencePower.collection.EnumEPBlock.*;
 import static com.mods.kina.ExperiencePower.collection.EnumEPItem.Wrench;
+import static com.mods.kina.ExperiencePower.collection.StaticFieldCollection.MODID;
 
 public class CraftRecipeRegistrar{
 
@@ -46,6 +48,7 @@ public class CraftRecipeRegistrar{
     private static void registerShapelessRecipes(){
         UtilRecipe.instance.addShapelessRecipeToWorkbench(new ItemStack(TrainingBarrel.getBlock()), 5, 0, Blocks.hay_block);
         //UtilRecipe.instance.addShapelessRecipeToWorkbench(new ItemStack(Ingot.getItem(), 1, 3), 10, 0, Items.iron_ingot);
+        RecipeSorter.register(MODID.toLowerCase() + ":shapelessnbt", NBTShapelessRecipes.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
         for(ItemMold.Type type : ItemMold.Type.values())
             for(EnumMetal metal : EnumMetal.values())
                 for(ItemStack result : OreDictionary.getOres(type.name().toLowerCase() + metal.name())){

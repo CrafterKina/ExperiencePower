@@ -16,7 +16,7 @@ public class PlayerNBTIO{
         return player.getEntityData();
     }
 
-    public void setNBTTag( String tagName,NBTBase nbt){
+    public void setNBTTag(String tagName, NBTBase nbt){
         getNBT().setTag(tagName, nbt);
     }
 

@@ -1,5 +1,6 @@
 package com.mods.kina.ExperiencePower.base;
 
+import com.mods.kina.ExperiencePower.collection.EnumEPCreativeTab;
 import com.mods.kina.ExperiencePower.collection.StaticFieldCollection;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -19,6 +20,11 @@ public class BlockEPBase extends Block{
     @Override
     public String getUnlocalizedName(){
         return super.getUnlocalizedName().replaceFirst("tile\\.", "kina.tile.");
+    }
+
+    public Block setCreativeTab(EnumEPCreativeTab tab){
+        setCreativeTab(tab.getCreativeTab());
+        return this;
     }
 
     public ItemMeshDefinition getMeshDef(){

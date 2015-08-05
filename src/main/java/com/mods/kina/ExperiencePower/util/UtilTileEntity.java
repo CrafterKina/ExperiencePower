@@ -12,13 +12,16 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.List;
 
-public class UtilTileEntity{
-    public static final UtilTileEntity instance = new UtilTileEntity();
+public enum UtilTileEntity{
+    instance;
 
+    /**
+     ModIDをプレフィックスにする。対策を怠った奴は知らんってForgeがいってた。
+     */
     public void registerTileEntity(Class<? extends TileEntity> te, String id){
         try{
             GameRegistry.registerTileEntity(te, StaticFieldCollection.MODID + "." + id);
-        }catch(IllegalArgumentException ignored){
+        } catch(IllegalArgumentException ignored){
         }
     }
 

@@ -1,9 +1,9 @@
 package com.mods.kina.ExperiencePower.collection;
 
-import com.mods.kina.ExperiencePower.base.ContainerMachineBase;
-import com.mods.kina.ExperiencePower.base.GuiMachineBase;
 import com.mods.kina.ExperiencePower.container.ContainerEPWorkbench;
+import com.mods.kina.ExperiencePower.container.ContainerRotaryMachine;
 import com.mods.kina.ExperiencePower.gui.GuiEPWorkbench;
+import com.mods.kina.ExperiencePower.gui.GuiRotaryMachine;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -11,7 +11,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 public enum EnumEPGuiContainer{
-    EPWorkbench(ContainerEPWorkbench.class, GuiEPWorkbench.class);
+    Workbench(ContainerEPWorkbench.class, GuiEPWorkbench.class),
+    RotaryMachine(ContainerRotaryMachine.class, GuiRotaryMachine.class);
     //ExperienceFurnace(ContainerExpFurnace.class, GuiExpFurnace.class),;
 
     private Class<? extends Container> container;
@@ -22,18 +23,14 @@ public enum EnumEPGuiContainer{
         this.gui = gui;
     }
 
-    EnumEPGuiContainer(){
-        this(ContainerMachineBase.class, GuiMachineBase.class);
-    }
-
     public static EnumEPGuiContainer getGuiContainer(int id){
         EnumEPGuiContainer[] epGui = EnumEPGuiContainer.values();
         if(epGui.length < id) return null;
         else return epGui[id];
     }
 
-    public static void openGui(World world, BlockPos pos, EntityPlayer player, EnumEPGuiContainer gui){
-        player.openGui(StaticFieldCollection.epCore, gui.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+    public void openGui(World world, BlockPos pos, EntityPlayer player){
+        player.openGui(StaticFieldCollection.epCore, ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
     }
 
     public Class<? extends Container> getContainer(){

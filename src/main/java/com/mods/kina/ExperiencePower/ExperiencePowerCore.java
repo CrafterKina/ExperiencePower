@@ -9,13 +9,9 @@ import com.mods.kina.ExperiencePower.plugin.PluginLoader;
 import com.mods.kina.ExperiencePower.proxy.CommonProxy;
 import com.mods.kina.ExperiencePower.register.*;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 /**
@@ -30,21 +26,25 @@ public class ExperiencePowerCore{
     /**
      蔵鯖での処理分け。
      */
-    @SidedProxy(modId = StaticFieldCollection.MODID,clientSide = "com.mods.kina.ExperiencePower.proxy.ClientProxy",serverSide = "com.mods.kina.ExperiencePower.proxy.CommonProxy")
+    @SidedProxy(modId = StaticFieldCollection.MODID, clientSide = "com.mods.kina.ExperiencePower.proxy.ClientProxy", serverSide = "com.mods.kina.ExperiencePower.proxy.CommonProxy")
     public static CommonProxy proxy;
+
+    @Mod.EventHandler
+    public void fingerprintWarning(FMLFingerprintViolationEvent event){
+        System.out.println("fingerprintStart");
+        //MinecraftForge.EVENT_BUS.register(EventHandler.kina);
+        System.out.println("fingerprintEnd");
+    }
 
     /**
      初期化前処理
      */
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e){
+        System.out.println("preInitStart");
         EPPropProcessor.instance.process();
         ConfigMaker.createConfig(e);
-        MinecraftForge.EVENT_BUS.register(EventHandler.normal);
-        MinecraftForge.EVENT_BUS.register(EventHandler.client);
-        MinecraftForge.TERRAIN_GEN_BUS.register(EventHandler.terrainGen);
-        MinecraftForge.ORE_GEN_BUS.register(EventHandler.oreGen);
-        FMLCommonHandler.instance().bus().register(EventHandler.fml);
+        EventHandler.register();
         BlockRegistrar.registerBlock();
         ItemRegistrar.registerItem();
         BlockRegistrar.registerModel();
@@ -54,7 +54,8 @@ public class ExperiencePowerCore{
         OreDictionaryRegistrar.registerOres();
         AchievementRegistrar.registerAchievement();
         InventionRegistrar.registerInvention();
-        NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
+        NetworkRegistry.INSTANCE.registerGuiHandler(core, proxy);
+        System.out.println("preInitEnd");
     }
 
     /**
@@ -62,7 +63,9 @@ public class ExperiencePowerCore{
      */
     @Mod.EventHandler
     public void init(FMLInitializationEvent e){
+        System.out.println("initStart");
         EntityRegistrar.registerEntity();
+        System.out.println("initEnd");
     }
 
     /**
@@ -70,9 +73,16 @@ public class ExperiencePowerCore{
      */
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent e){
+        System.out.println("postInitStart");
         SmeltRecipeRegistrar.registerRecipes();
         CraftRecipeRegistrar.registerRecipes();
         PluginLoader.load();
+        System.out.println("postInitEnd");
+    }
+
+    @Mod.EventHandler
+    public void loadComplete(FMLLoadCompleteEvent e){
+        System.out.println("loaded");
     }
 
 }

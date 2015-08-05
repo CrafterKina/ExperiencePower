@@ -19,7 +19,7 @@ import java.util.List;
 public class ItemCast extends ItemEPBase{
     public ItemCast(){
         setUnlocalizedName("cast");
-        setCreativeTab(EnumEPCreativeTab.ITEM.getCreativeTab());
+        setCreativeTab(EnumEPCreativeTab.ITEM);
         setHasSubtypes(true);
     }
 
@@ -32,7 +32,7 @@ public class ItemCast extends ItemEPBase{
 
     public static NBTTagCompound getNBT(ItemStack stack){
         NBTTagCompound tagCompound = stack.getSubCompound("cast", false);
-        if(tagCompound == null) return null;
+        if(tagCompound == null) return new NBTTagCompound();
         return tagCompound;
     }
 
@@ -43,8 +43,7 @@ public class ItemCast extends ItemEPBase{
         return EnumMetal.valueOf(getNBT(stack).getString("content")).getColor();
     }
 
-    @SuppressWarnings("unchecked")
-    public void getSubItems(Item itemIn, CreativeTabs tab, List list){
+    public void getCreativeItemStacks(Item itemIn, CreativeTabs tab, List<ItemStack> list){
         for(ItemMold.Type type : ItemMold.Type.values()){
             for(EnumMetal metal : EnumMetal.values()){
                 if(type == ItemMold.Type.Ingot && (metal == EnumMetal.Iron || metal == EnumMetal.Gold)) continue;
@@ -53,9 +52,8 @@ public class ItemCast extends ItemEPBase{
         }
     }
 
-    public String getItemStackDisplayName(ItemStack stack)
-    {
-        return (g11n(getNBT(stack).getString("content").toLowerCase())+g11nItem(getNBT(stack).getString("type").toLowerCase())).trim();
+    public String getItemStackDisplayName(ItemStack stack){
+        return (g11n(getNBT(stack).getString("content").toLowerCase()) + g11nItem(getNBT(stack).getString("type").toLowerCase())).trim();
     }
 
     public String getUnlocalizedName(ItemStack stack){

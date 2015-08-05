@@ -1,7 +1,7 @@
 package com.mods.kina.ExperiencePower.collection;
 
-import com.mods.kina.ExperiencePower.entity.core.EntityMonsterBook;
-import com.mods.kina.ExperiencePower.entity.render.RenderMonsterBook;
+import com.mods.kina.ExperiencePower.entity.core.EntityOrefish;
+import com.mods.kina.ExperiencePower.entity.render.RenderOrefish;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
@@ -9,7 +9,9 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public enum EnumEPEntity{
-    MonsterBook(EntityMonsterBook.class, new RenderMonsterBook(Minecraft.getMinecraft().getRenderManager()));
+    //MonsterBook(EntityMonsterBook.class, new RenderMonsterBook(Minecraft.getMinecraft().getRenderManager())),
+    Orefish(EntityOrefish.class, new RenderOrefish(Minecraft.getMinecraft().getRenderManager())),;
+
     private final Class<? extends Entity> entityClass;
     private final int trackingRange;
     private final int updateFrequency;

@@ -541,7 +541,7 @@ public class GuiInventionNote extends GuiScreen{
             }
         return s;
     }
-    
+
     private TextureAtlasSprite func_175371_a(Block p_175371_1_){
         return Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(p_175371_1_.getDefaultState());
     }

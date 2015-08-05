@@ -48,19 +48,17 @@ public class BlockBlowFan extends BlockEPContainerBase implements IWrenchingInfo
     }
 
     /**
-     * Convert the given metadata into a BlockState for this Block
+     Convert the given metadata into a BlockState for this Block
      */
-    public IBlockState getStateFromMeta(int meta)
-    {
+    public IBlockState getStateFromMeta(int meta){
         return this.getDefaultState().withProperty(FACING, BlockPistonBase.getFacing(meta));
     }
 
     /**
-     * Convert the BlockState into the correct metadata value
+     Convert the BlockState into the correct metadata value
      */
-    public int getMetaFromState(IBlockState state)
-    {
-        return ((EnumFacing)state.getValue(FACING)).getIndex();
+    public int getMetaFromState(IBlockState state){
+        return ((EnumFacing) state.getValue(FACING)).getIndex();
     }
 
     /**
@@ -76,14 +74,14 @@ public class BlockBlowFan extends BlockEPContainerBase implements IWrenchingInfo
     }
 
     protected BlockState createBlockState(){
-        return new BlockState(this,FACING);
+        return new BlockState(this, FACING);
     }
 
     public void renderInfo(World world, BlockPos pos, double d0, double d1, double d2){
         TileEntityBlowFan blowFan = (TileEntityBlowFan) world.getTileEntity(pos);
         float f1 = 0.002F;
-        if(world.isBlockIndirectlyGettingPowered(pos)==0)return;
-        if(blowFan.getAvailableRange()==null)return;
+        if(world.isBlockIndirectlyGettingPowered(pos) == 0) return;
+        if(blowFan.getAvailableRange() == null) return;
         RenderGlobal.drawOutlinedBoundingBox(blowFan.getAvailableRange()/*.expand(f1, f1, f1)*/.offset(-d0, -d1, -d2), Color.green.getRGB());
     }
 

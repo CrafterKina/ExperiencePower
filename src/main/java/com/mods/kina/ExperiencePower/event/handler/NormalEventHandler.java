@@ -15,22 +15,24 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.player.AchievementEvent;
+import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
- MinecraftForge.EVENT_BUSのEvent。
- Normalと言うよりTerrainGenでないEvent。
+ MinecraftForge.EVENT_BUSのEvent。 Normalと言うよりTerrainGenでないEvent。
  */
 public class NormalEventHandler{
     @EPProp
-    public static final boolean enableGetExpOnAchievementGet = true;
+    public static/* final */ boolean enableGetExpOnAchievementGet = true;
     @EPProp
-    public static final boolean enableDropStickFromLeaves = true;
+    public static/* final */ boolean enableDropStickFromLeaves = true;
     @EPProp
-    public static final boolean enableDropExpFromCrops = true;
+    public static/* final */ boolean enableDropExpFromCrops = true;
+
     /**
      実績解除時に経験値を獲得。
      */
@@ -89,5 +91,13 @@ public class NormalEventHandler{
             e.getItem(2).getSubCompound("cast", false).setBoolean("smelted", true);
             e.setItem(1, null);
         }
+    }
+
+    public void onAnvilUpdate(AnvilUpdateEvent e){
+
+    }
+
+    public void onAnvilRepair(AnvilRepairEvent e){
+
     }
 }

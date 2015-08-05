@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class SmeltRecipeRegistrar{
     @EPProp(comment = "[WIP]remove easier recipes added by other mods.")
-    public static final boolean disableEasierRecipes = false;
+    public static/* final */ boolean disableEasierRecipes = false;
 
     public static void registerRecipes(){
         registerBucket();

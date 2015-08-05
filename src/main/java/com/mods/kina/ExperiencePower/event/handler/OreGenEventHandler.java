@@ -13,8 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.Random;
 
 /**
- MinecraftForge.ORE_GEN_BUSのEvent。
- TerrainGenの中でも特に鉱石生成のEvent。
+ MinecraftForge.ORE_GEN_BUSのEvent。 TerrainGenの中でも特に鉱石生成のEvent。
  */
 public class OreGenEventHandler{
     private static final WorldGenerator copperGen = new WorldGenMinable(EnumEPBlock.Ore.getBlock().getDefaultState(), 9);

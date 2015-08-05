@@ -19,7 +19,7 @@ public class OreDictionaryRegistrar{
             for(EnumMetal metal : EnumMetal.values()){
                 OreDictionary.registerOre(type.name().toLowerCase() + metal.name(), ItemCast.setNBT(new ItemStack(EnumEPItem.Cast.getItem()), type.name(), metal.name()));
                 OreDictionary.registerOre("mold" + type.name() + metal.name(), ItemMold.setNBT(new ItemStack(EnumEPItem.Mold.getItem()), type.name(), metal.name(), true));
-        }
+            }
         registerOres("fenceWood", new ItemStack(Blocks.oak_fence), new ItemStack(Blocks.spruce_fence), new ItemStack(Blocks.birch_fence), new ItemStack(Blocks.jungle_fence), new ItemStack(Blocks.dark_oak_fence), new ItemStack(Blocks.acacia_fence));
     }
 
